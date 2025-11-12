@@ -1,6 +1,8 @@
 import 'package:citizencentric/presentation/resources/theme_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../presentation/resources/routes_manager.dart';
+
 class MyApp extends StatefulWidget {
 
   MyApp._internal();// private named constructor
@@ -19,19 +21,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       // Application Theme
+      debugShowCheckedModeBanner: false,
+      // rooute
+      onGenerateRoute: RouteGenerator.getRoute,
+      // inittialRoute
+      initialRoute: Routes.splashRoute,
+     // theme
       theme: getApplicationTheme(),
-      // home
-      home: Scaffold(
-        appBar: AppBar(title: Text('MyApp',style: TextStyle(
-          color: Colors.black
-        ),),),
-        body: Center(
-          child: Text('Flutter',style: TextStyle(
-            color: Colors.black,
-            fontSize: 16
-          ),),
-        ),
-      ),
     );
   }
 }
