@@ -11,6 +11,21 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Register Page',style: TextStyle(
+            color: Colors.black
+          ),),
+        ),
+        body: Center(
+          child: Text('Register',style: TextStyle(
+            color: Colors.black,
+            fontSize: 16
+          ),),
+        ),
+      ),
+    );
   }
 }

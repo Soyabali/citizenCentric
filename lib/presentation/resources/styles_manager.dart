@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'font_manager.dart';
 
@@ -34,8 +35,7 @@ TextStyle getBoldStyle(
 
 // semi bold text style
 
-TextStyle getSemiBoldStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
+TextStyle getSemiBoldStyle({double fontSize = FontSize.s12, required Color color}) {
   return _getTextStyle(
       fontSize, FontConstants.fontFamily, FontWeightManager.semiBold, color);
 }
