@@ -13,7 +13,6 @@ enum StateRendererType {
   // POPUP STATES
   POPUP_LOADING_STATE,
   POPUP_ERROR_STATE,
-
   // FULL SCREEN STATES
   FULL_SCREEN_LOADING_STATE,
   FULL_SCREEN_ERROR_STATE,
@@ -47,14 +46,34 @@ class StateRenderer extends StatelessWidget {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
         return _getPopUpDialog(
-            context, [_getAnimatedImage(JsonAssets.loading)]);
+            context, [
+              _getAnimatedImage(JsonAssets.loading)
+        ]
+        );
       case StateRendererType.POPUP_ERROR_STATE:
-        return _getPopUpDialog(context,
-            [
-          _getAnimatedImage(JsonAssets.error),
-          _getMessage(message),
-          _getRetryButton(AppStrings.ok, context)
-          ]);
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => _getPopUpDialog(context,
+                [
+              _getAnimatedImage(JsonAssets.error),
+              _getMessage(message),
+              _getRetryButton(AppStrings.ok, context)
+            ]),
+          );
+        });
+        return Container();
+        // return _getPopUpDialog(context,
+        //     [
+        //       // list of item
+        //   _getAnimatedImage(JsonAssets.error),
+        //   _getMessage(message),
+        //    _getRetryButton(AppStrings.ok, context)
+        //
+        //     ]
+        // );
 
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn(
@@ -136,17 +155,23 @@ class StateRenderer extends StatelessWidget {
           child: ElevatedButton(
               onPressed: () {
                 print('-----------137-----');
-                if (stateRendererType ==
-                    StateRendererType.FULL_SCREEN_ERROR_STATE) {
-                  retryActionFunction
-                      ?.call(); // to call the API function again to retry
-                  //Navigator.of(context).pop();
-                  if (Navigator.canPop(context)) {
-                    Navigator.pop(context);
-                  }
-                } else {
-                  Navigator.of(context).pop(); // popup state error so we need to dismiss the dialog
+               // Navigator.of(context).pop();
+                // popupContext
+                if (Navigator.canPop(context)) {
+                  Navigator.of(context, rootNavigator: true).pop();
                 }
+              // Navigator.of(context, rootNavigator: true).pop();
+              //   if (stateRendererType ==
+              //       StateRendererType.FULL_SCREEN_ERROR_STATE) {
+              //     retryActionFunction
+              //         ?.call(); // to call the API function again to retry
+              //     //Navigator.of(context).pop();
+              //     if (Navigator.canPop(context)) {
+              //       Navigator.pop(context);
+              //     }
+              //   } else {
+              //     Navigator.of(context).pop(); // popup state error so we need to dismiss the dialog
+              //   }
               },
               child: Text(buttonTitle)),
         ),

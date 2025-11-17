@@ -10,21 +10,18 @@ class LoginViewModel extends BaseViewModel implements LoginViewModelInputs,Login
 
   StreamController _userMobileNumberStreamController = StreamController<String>.broadcast();
   StreamController _userPasswordStreamController = StreamController<String>.broadcast();
-
-  StreamController _isAllInputsValidStreamController =
-  StreamController<void>.broadcast();
+  StreamController _isAllInputsValidStreamController = StreamController<void>.broadcast();
   StreamController isUserLoggedInSuccessfullyStreamController = StreamController<bool>();
 
-
-//var loginObject = LoginObject("","");
+  //var loginObject = LoginObject("","");
 
   var loginObject = LoginObject(
         userMobileNumber: "",
         password: "",
   );
+
 LoginUseCase _loginUseCase;
 LoginViewModel(this._loginUseCase);
-
 
   @override
   void start() {

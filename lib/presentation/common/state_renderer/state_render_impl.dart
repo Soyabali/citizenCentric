@@ -5,14 +5,15 @@ import '../../../data/mapper/mappper.dart';
 import '../../resources/strings_manager.dart';
 
 abstract class FlowState {
-  StateRendererType getStateRendererType();
 
+  StateRendererType getStateRendererType();
   String getMessage();
 }
 
 // Loading State (POPUP, FULL SCREEN)
 
 class LoadingState extends FlowState {
+
   StateRendererType stateRendererType;
   String message;
 
@@ -27,7 +28,9 @@ class LoadingState extends FlowState {
 }
 
 // error state (POPUP, FULL LOADING)
+
 class ErrorState extends FlowState {
+
   StateRendererType stateRendererType;
   String message;
 
@@ -56,8 +59,8 @@ class ContentState extends FlowState {
 // EMPTY STATE
 
 class EmptyState extends FlowState {
-  String message;
 
+  String message;
   EmptyState(this.message);
 
   @override

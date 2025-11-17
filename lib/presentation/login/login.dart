@@ -2,6 +2,7 @@
 import 'package:citizencentric/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:citizencentric/presentation/login/login_viewmodel.dart';
 import 'package:flutter/material.dart';
+import '../../app/app_prefs.dart';
 import '../../app/di.dart';
 import 'package:flutter/scheduler.dart';
 import '../resources/assets_manager.dart';
@@ -23,6 +24,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
 
   LoginViewModel _viewModel = instance<LoginViewModel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
+
   TextEditingController _userMobileNumberController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -35,10 +38,10 @@ class _LoginViewState extends State<LoginView> {
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream.listen((isSuccessLoggedIn) {
 
       SchedulerBinding.instance?.addPostFrameCallback((_) {
+        _appPreferences.setIsUserLoggedIn();
         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
       });
       });
-
   }
 
   @override
@@ -73,7 +76,11 @@ class _LoginViewState extends State<LoginView> {
             key: _formKey,
             child: Column(
               children: [
-                Image(image: AssetImage(ImageAssets.splashLogo)),
+                SizedBox(
+                  height: 200,
+                  child: Image(image: AssetImage(ImageAssets.splashLogo)),
+                ),
+
                 SizedBox(height: AppSize.s28),
                 Padding(
                   padding: EdgeInsets.only(
@@ -122,13 +129,6 @@ class _LoginViewState extends State<LoginView> {
                       stream: _viewModel.outputIsAllInputsValid,
                       builder: (context, snapshot) {
 
-                        // return ElevatedButton(
-                        //     onPressed: (snapshot.data ?? false)
-                        //         ? () {
-                        //       _viewModel.login();
-                        //     }
-                        //         : null,
-                        //     child: Text(AppStrings.login));
                         return SizedBox(
                           width: double.infinity,
                           height: AppSize.s40,
@@ -136,7 +136,6 @@ class _LoginViewState extends State<LoginView> {
                               onPressed: (snapshot.data ?? false)
                                ? (){
                                _viewModel.login();
-
                               }
                               : null,
                               child: Text(AppStrings.login)),

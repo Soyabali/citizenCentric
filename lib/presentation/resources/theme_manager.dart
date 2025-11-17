@@ -42,7 +42,7 @@ ThemeData getApplicationTheme() {
             textStyle: getRegularStyle(color: ColorManager.white),
             backgroundColor: ColorManager.primary,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppSize.s12)))),
+            borderRadius: BorderRadius.circular(AppSize.s12)))),
 
     // Text theme
       textTheme: TextTheme(

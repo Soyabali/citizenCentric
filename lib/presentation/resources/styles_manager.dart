@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'font_manager.dart';
 
-
 TextStyle _getTextStyle(
     double fontSize, String fontFamily, FontWeight fontWeight, Color color) {
   return TextStyle(
@@ -14,7 +13,9 @@ TextStyle _getTextStyle(
 
 // regular style
 
-TextStyle getRegularStyle({double fontSize = FontSize.s12, required Color color}) {
+TextStyle getRegularStyle({
+  double fontSize = FontSize.s12,
+  required Color color}) {
   return _getTextStyle(
       fontSize, FontConstants.fontFamily, FontWeightManager.regular, color);
 }
@@ -40,11 +41,11 @@ TextStyle getSemiBoldStyle({double fontSize = FontSize.s12, required Color color
       fontSize, FontConstants.fontFamily, FontWeightManager.semiBold, color);
 }
 
-
 // medium text style
 
 TextStyle getMediumStyle(
     {double fontSize = FontSize.s12, required Color color}) {
   return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.medium, color);
+      fontSize, FontConstants.fontFamily,
+      FontWeightManager.medium, color);
 }
