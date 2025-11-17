@@ -10,13 +10,24 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        Container(
-          height: 200,
-          color: Colors.black,
-        )
-      ],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+       home: Scaffold(
+         // appBar
+         backgroundColor: Colors.white,
+         appBar: AppBar(
+           title: Text('Home Page',style: TextStyle(
+             color: Colors.black,
+             fontSize: 16
+           ),),
+         ),
+         body: Center(
+           child: Text('Flutter Application',style: TextStyle(
+             color: Colors.black,
+             fontSize: 16
+           ),),
+         ),
+       ),
     );
   }
 }

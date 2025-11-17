@@ -3,8 +3,7 @@ import 'package:citizencentric/presentation/common/state_renderer/state_render_i
 import 'package:citizencentric/presentation/login/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import '../../app/di.dart';
-import '../../app/di.dart' as SchedulerBinding;
-import '../register/register.dart';
+import 'package:flutter/scheduler.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
@@ -16,12 +15,13 @@ class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
   @override
+
   _LoginViewState createState() => _LoginViewState();
+
 }
 
 class _LoginViewState extends State<LoginView> {
 
-  //LoginViewModel _viewModel = LoginViewModel(loginUseCase); // todo pass here login useCase
   LoginViewModel _viewModel = instance<LoginViewModel>();
   TextEditingController _userMobileNumberController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -30,27 +30,14 @@ class _LoginViewState extends State<LoginView> {
 
   _bind() {
     _viewModel.start();
-    _userMobileNumberController
-        .addListener(() => _viewModel.setMobileNumber(_userMobileNumberController.text));
-    _passwordController
-        .addListener(() => _viewModel.setPassword(_passwordController.text));
+    _userMobileNumberController.addListener(() => _viewModel.setMobileNumber(_userMobileNumberController.text));
+    _passwordController.addListener(() => _viewModel.setPassword(_passwordController.text));
+    _viewModel.isUserLoggedInSuccessfullyStreamController.stream.listen((isSuccessLoggedIn) {
 
-    _viewModel.isUserLoggedInSuccessfullyStreamController.stream
-        .listen((isSuccessLoggedIn) {
-
-      // navigate to main screen
-      // SchedulerBinding.instance?.addPostFrameCallback((_) {
-      //   Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-      // });
-      Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-     //  Navigator.push(
-     //    context,
-     //    MaterialPageRoute<void>(
-     //      builder: (context) => const RegisterView(),
-     //    ),
-     //  );
-
-        });
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+      });
+      });
 
   }
 

@@ -13,8 +13,8 @@ class LoginViewModel extends BaseViewModel implements LoginViewModelInputs,Login
 
   StreamController _isAllInputsValidStreamController =
   StreamController<void>.broadcast();
-  StreamController isUserLoggedInSuccessfullyStreamController = StreamController<
-      bool>();
+  StreamController isUserLoggedInSuccessfullyStreamController = StreamController<bool>();
+
 
 //var loginObject = LoginObject("","");
 
@@ -69,6 +69,7 @@ LoginViewModel(this._loginUseCase);
            isUserLoggedInSuccessfullyStreamController.add(true);
         });
   }
+
   @override
   setMobileNumber(String mobileNumber) {
     inputMobileNumber.add(mobileNumber);
