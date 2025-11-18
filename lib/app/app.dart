@@ -4,7 +4,7 @@ import '../presentation/resources/routes_manager.dart';
 
 class MyApp extends StatefulWidget {
 
-  MyApp._internal();// private named constructor
+  MyApp._internal(); // private named constructor
   int appState=0;
   static final MyApp instance = MyApp._internal();// single instance --singleton
 

@@ -14,6 +14,7 @@ class LoginViewModel extends BaseViewModel implements LoginViewModelInputs,Login
   StreamController isUserLoggedInSuccessfullyStreamController = StreamController<bool>();
 
   //var loginObject = LoginObject("","");
+  bool _showedErrorOnce = false;
 
   var loginObject = LoginObject(
         userMobileNumber: "",
@@ -39,7 +40,7 @@ LoginViewModel(this._loginUseCase);
   // inputpart
 
   @override
-  Sink get inputMobileNumber => _userMobileNumberStreamController.sink;
+  Sink get inputMobileNumber => _userMobileNumberStreamController.sink;// this is way to put data into the stream
   Sink get inputPassword => _userPasswordStreamController.sink;
   Sink get inputIsAllInputValid => _isAllInputsValidStreamController.sink;
 
@@ -80,7 +81,6 @@ LoginViewModel(this._loginUseCase);
     loginObject = loginObject.copyWith(password: password);
     _validate();
   }
-
   // output part
   @override
   // TODO: implement outputIsMobileNumberValid
@@ -93,7 +93,7 @@ LoginViewModel(this._loginUseCase);
   // TODO: implement outputIsAllInputsValid
   Stream<bool> get outputIsAllInputsValid => _isAllInputsValidStreamController.stream.map((_)=>_isAllInputsValid());
 
-  // create a private function to validaton
+  // create a private function for a  Validaton
   bool _isPasswordValid(String password) {
     return password.isNotEmpty;
   }
@@ -105,7 +105,7 @@ LoginViewModel(this._loginUseCase);
     inputIsAllInputValid.add(null);
   }
 
-  bool _isAllInputsValid(){
+  bool _isAllInputsValid() {
     return _isMobileNumberValid(loginObject.userMobileNumber) && _isPasswordValid(loginObject.password);
   }
 

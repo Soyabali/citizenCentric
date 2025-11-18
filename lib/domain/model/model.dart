@@ -1,3 +1,6 @@
+// here we put a model every api or every response.
+// we put a slider model after that we put a login model after that as a need.
+
 
 // model Dashboard
 class SliderObject {
@@ -9,6 +12,7 @@ class SliderObject {
 }
 
 // model LoginScreen
+// here Authentication class is a model class of login Api you should give name such as LoginModel
 
 class Authentication {
   final String result;

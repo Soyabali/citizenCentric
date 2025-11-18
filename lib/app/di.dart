@@ -42,7 +42,7 @@ final sharedPrefs = await SharedPreferences.getInstance();
            () => RepositoryImpl(instance(), instance()));
 
  }
-
+ // login di
 initLoginModule(){
   if(!GetIt.I.isRegistered<LoginUseCase>()){
     instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));

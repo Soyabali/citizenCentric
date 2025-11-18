@@ -1,3 +1,5 @@
+// this is extension logic its means should not go null on a String or int
+
 extension NonNullString on String? {
   String orEmpty() {
     if (this == null) {

@@ -51,7 +51,6 @@ class StateRenderer extends StatelessWidget {
         ]
         );
       case StateRendererType.POPUP_ERROR_STATE:
-
         WidgetsBinding.instance.addPostFrameCallback((_) {
           showDialog(
             context: context,
@@ -77,18 +76,28 @@ class StateRenderer extends StatelessWidget {
 
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn(
-            [_getAnimatedImage(JsonAssets.loading), _getMessage(message)]);
+            [
+              _getAnimatedImage(JsonAssets.loading),
+              _getMessage(message)
+            ]
+        );
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
-        return _getItemsInColumn([
+        return _getItemsInColumn(
+            [
           _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
           _getRetryButton(AppStrings.retry_again, context)
-        ]);
+        ]
+        );
       case StateRendererType.CONTENT_SCREEN_STATE:
         return Container();
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getItemsInColumn(
-            [_getAnimatedImage(JsonAssets.empty), _getMessage(message)]);
+            [
+              _getAnimatedImage(JsonAssets.empty),
+              _getMessage(message)
+            ]
+        );
       default:
         return Container();
     }
@@ -109,7 +118,9 @@ class StateRenderer extends StatelessWidget {
               BoxShadow(
                   color: Colors.black26,
                   blurRadius: AppSize.s12,
-                  offset: Offset(AppSize.s0, AppSize.s12))
+                  offset: Offset(
+                  AppSize.s0,
+                  AppSize.s12))
             ]),
         child: _getDialogContent(context, children),
       ),
@@ -140,7 +151,9 @@ class StateRenderer extends StatelessWidget {
         child: Text(
           message,
           style:
-          getMediumStyle(color: ColorManager.black, fontSize: FontSize.s16),
+          getMediumStyle(
+          color: ColorManager.black,
+          fontSize: FontSize.s16),
         ),
       ),
     );

@@ -21,12 +21,20 @@ enum DataSource {
 }
 //
 class ErrorHandler implements Exception {
-  late Failure failure;
+  late Failure failure; // Falure is also a class in which code and msg are here
 
   ErrorHandler.handle(dynamic error) {
     if (error is DioException) {
       // dio error so its error from response of the API
       failure = _handleError(error);
+      // here you got it carefully  {{failure = _handleError(error);}}, here {failure} is an Object of Failure
+      // class And _handleError is a function that return error in a future . In this function i pass a parameter
+      // that a parameter is an error of DioException . in this function i am used a switch it may multiple case
+      // of DioEception according to case {DataSource.CONNECT_TIMEOUT.getFailure();}, something as
+      // Actully DataSource is a enum in this enum i mention multiple case of http response failure.
+      // here {getFailure()} is a function that return errorCODE and msg, according to case
+
+
     } else {
       // default error
       failure = DataSource.DEFAULT.getFailure();

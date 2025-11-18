@@ -21,12 +21,12 @@ class _SplashViewState extends State<SplashView> {
   AppPreferences _appPreferences = instance<AppPreferences>();
 
   _startDelay() {
-    _timer = Timer(Duration(seconds: 2), _goNext);
+    _timer = Timer(Duration(seconds: 2), _goNext_2);
   }
 
-  // _goNext() {
-  //   Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
-  // }
+  _goNext_2() {
+    Navigator.pushReplacementNamed(context, Routes.onBoardingRoute);
+  }
   _goNext() async {
     _appPreferences.isUserLoggedIn().then((isUserLoggedIn) =>
     {

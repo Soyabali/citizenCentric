@@ -1,9 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
-
 part 'response.g.dart'; // Required for json_serializable
 
 
 // this a login Api response
+// this is a response file i will write this file according to api response
+// in this file i am used JsonSerializable and with a command i generate another generated file
+//  response.g.dart file
 
 @JsonSerializable()
 class AuthenticationResponse {

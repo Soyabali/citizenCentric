@@ -58,7 +58,8 @@ class _LoginViewState extends State<LoginView> {
       body: StreamBuilder(
           stream: _viewModel.outputState,
           builder: (context,snapshot){
-            return snapshot.data?.getScreenWidget(context,_getContentWidget(),(){
+            return snapshot.data?.getScreenWidget(context,_getContentWidget(),()
+            {
               _viewModel.login();
             }) ?? _getContentWidget();
           }),
@@ -84,7 +85,8 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(height: AppSize.s28),
                 Padding(
                   padding: EdgeInsets.only(
-                      left: AppPadding.p28, right: AppPadding.p28),
+                      left: AppPadding.p28,
+                      right: AppPadding.p28),
                   child: StreamBuilder<bool>(
                     stream: _viewModel.outputIsMobileNumberValid,
                     builder: (context, snapshot) {
@@ -92,8 +94,8 @@ class _LoginViewState extends State<LoginView> {
                         keyboardType: TextInputType.phone,
                         controller: _userMobileNumberController,
                         decoration: InputDecoration(
-                            hintText: AppStrings.username,
-                            labelText: AppStrings.username,
+                            hintText: AppStrings.mobilenumber,
+                            labelText: AppStrings.mobilenumber,
                             errorText: (snapshot.data ?? true)
                                 ? null
                                 : AppStrings.usernameError),

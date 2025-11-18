@@ -1,6 +1,6 @@
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
-abstract class NetworkInfo {
+abstract class NetworkInfo { // this is a class that is used to check internet is connected or not
   Future<bool> get isConnected;
 }
 
