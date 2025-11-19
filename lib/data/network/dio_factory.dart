@@ -8,7 +8,8 @@ import '../../app/constant.dart';
 const String APPLICATION_JSON = "application/json";
 const String CONTENT_TYPE = "content-type";
 const String ACCEPT = "accept";
-const String AUTHORIZATION = "authorization";
+const String AUTHORIZATION = "token";
+//const String AUTHORIZATION = "authorization";
 const String DEFAULT_LANGUAGE = "language";
 
 const int _timeOut = 60000; // in milliseconds
@@ -21,10 +22,12 @@ class DioFactory {
     Dio dio = Dio();
     int _timeOut = 60 * 1000; // 1 min
     String language = await _appPreferences.getAppLanguage();
+    String token = await _appPreferences.getUserToken();
+
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
-      AUTHORIZATION: Constant.token,
+      AUTHORIZATION : token,         //AUTHORIZATION: Constant.token,
       DEFAULT_LANGUAGE: language  // todo get lang from app prefs
     };
 

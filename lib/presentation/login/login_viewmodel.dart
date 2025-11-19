@@ -11,11 +11,10 @@ class LoginViewModel extends BaseViewModel implements LoginViewModelInputs,Login
   StreamController _userMobileNumberStreamController = StreamController<String>.broadcast();
   StreamController _userPasswordStreamController = StreamController<String>.broadcast();
   StreamController _isAllInputsValidStreamController = StreamController<void>.broadcast();
-  StreamController isUserLoggedInSuccessfullyStreamController = StreamController<bool>();
+  StreamController isUserLoggedInSuccessfullyStreamController = StreamController<String>();
 
   //var loginObject = LoginObject("","");
   bool _showedErrorOnce = false;
-
   var loginObject = LoginObject(
         userMobileNumber: "",
         password: "",
@@ -62,9 +61,11 @@ LoginViewModel(this._loginUseCase);
           // right - Success data
           // here you get a data from a model carefully chose a model
           //print("success --Get data ----xx ${data.firstName}")
+          print("User Token → ${data.token}");
            inputState.add(ContentState());
+
            // navigate the main screen after login
-           isUserLoggedInSuccessfullyStreamController.add(true);
+           isUserLoggedInSuccessfullyStreamController.add(data.token);
         });
   }
 
@@ -124,5 +125,4 @@ abstract class LoginViewModelOutputs {
   Stream<bool> get outputIsMobileNumberValid;
   Stream<bool> get outputIsPasswordValid;
   Stream<bool> get outputIsAllInputsValid;
-
 }

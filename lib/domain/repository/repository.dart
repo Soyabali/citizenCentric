@@ -21,7 +21,8 @@ abstract class Repository {
   // here login is a function name.hew have a parameter LoginRequest loginRequest
   // LoginRequest is a class that have a parameter to api or api body field mentions.
   //-----------------AAA----------------.
-
+  // --- ChangePassword repository
+  Future<Either<Failure,ChangePasswordModel>> changePassword(ChangePassWordRequest changePasswordRequest);
 
 
 }

@@ -21,7 +21,7 @@ class _SplashViewState extends State<SplashView> {
   AppPreferences _appPreferences = instance<AppPreferences>();
 
   _startDelay() {
-    _timer = Timer(Duration(seconds: 2), _goNext_2);
+    _timer = Timer(Duration(seconds: 2), _goNext);
   }
 
   _goNext_2() {

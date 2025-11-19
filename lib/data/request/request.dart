@@ -7,3 +7,10 @@ class LoginRequest {
   String sPassword;
   LoginRequest(this.sContactNo, this.sPassword);
 }
+//  ----changePasswordRequest
+class ChangePassWordRequest {
+  String sContactNo;
+  String sOldPassword;
+  String sNewPassword;
+  ChangePassWordRequest(this.sContactNo, this.sOldPassword,this.sNewPassword);
+}

@@ -1,0 +1,175 @@
+import 'dart:async';
+
+import 'package:citizencentric/presentation/base/baseviewmodel.dart';
+import 'package:citizencentric/presentation/common/freezed_data_classes.dart';
+import '../../domain/usecase/change_password_usecase.dart';
+import '../common/state_renderer/state_render_impl.dart';
+import '../common/state_renderer/state_renderer.dart';
+
+class ChangePasswordUiModel extends BaseViewModel implements ChangePasswordUiModelInputs,ChangePasswordUiModelOutputs {
+
+  /// todo here i will create a viewModel of the change Password
+
+  StreamController _oldPasswordStreamController = StreamController<String>.broadcast();
+  StreamController _newPasswordStreamController = StreamController<String>.broadcast();
+  StreamController _confirmPasswordStreamController = StreamController<String>.broadcast();
+  StreamController _isAllInputsValidStreamController = StreamController<void>.broadcast();
+  StreamController isUserLoggedInSuccessfullyStreamController = StreamController<bool>();
+
+  // ChangePasswordObject
+
+  var changePasswordObject = ChangePasswordObject(
+    sOldPassword: '',
+    sNewPassword: '',
+    sContactNo: '',
+  );
+
+  ChangPasswordUseCase  _changePassWordUseCase;
+  ChangePasswordUiModel(this._changePassWordUseCase);
+
+  // input part
+
+  @override
+  void start() {
+    // start a loading
+    inputState.add(ContentState());
+  }
+
+  @override
+  void dispose() {
+    _oldPasswordStreamController.close();
+    _newPasswordStreamController.close();
+    _confirmPasswordStreamController.close();
+    _isAllInputsValidStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
+    super.dispose();
+  }
+
+  @override
+  changePassword() async {
+    {
+
+         print('-------51-----change coll----');
+
+      inputState.add(
+          LoadingState(stateRendererType:StateRendererType.POPUP_LOADING_STATE));
+      (await _changePassWordUseCase.execute(
+          ChangePassWordInput(
+              changePasswordObject.sOldPassword,
+              changePasswordObject.sNewPassword,
+              changePasswordObject.sContactNo))).fold(
+              (failure)=>{
+            // left -falure
+            //print('-------failed-------'),
+            // print(failure.message)
+            inputState.add(ErrorState(
+                StateRendererType.POPUP_ERROR_STATE, failure.message))
+          },
+           (data) {
+            // right - Success data
+            // here you get a data from a model carefully chose a model
+            //print("success --Get data ----xx ${data.firstName}")
+            inputState.add(ContentState());
+            // navigate the main screen after login
+            isUserLoggedInSuccessfullyStreamController.add(true);
+          });
+    }
+
+  }
+
+  @override
+  setOldPassword(String oldPassword) {
+    inputOldPassword.add(oldPassword);
+    changePasswordObject = changePasswordObject.copyWith(sOldPassword: oldPassword);
+    _validate();
+
+  }
+
+  @override
+  setNewPassword(String newPassword) {
+    inputNewPassword.add(newPassword);// Add data from a ui
+    changePasswordObject = changePasswordObject.copyWith(sNewPassword: newPassword);
+    _validate();
+  }
+
+  @override
+  setConfirmPassword(String confirmPassword) {
+    inputConfirmPassword.add(confirmPassword);// add data to ui
+    changePasswordObject = changePasswordObject.copyWith(sContactNo: confirmPassword);
+    _validate();
+  }
+
+  // output parts
+
+  @override
+  Sink get inputOldPassword => _oldPasswordStreamController.sink;
+
+  @override
+  Sink get inputNewPassword => _newPasswordStreamController.sink;
+
+  @override
+  Sink get inputConfirmPassword => _confirmPasswordStreamController.sink;
+
+  Sink get inputIsAllInputValid => _isAllInputsValidStreamController.sink;
+
+  // output
+
+  @override
+  // TODO: implement outputIsOldPasswordValid
+  Stream<bool> get outputIsOldPasswordValid => _oldPasswordStreamController.stream.map((oldPassword) => _isOldPasswordValid(oldPassword));
+
+  @override
+  // TODO: implement outputIsNewPasswordValid
+  Stream<bool> get outputIsNewPasswordValid => _newPasswordStreamController.stream.map((newPassword) => _isNewPasswordValid(newPassword));
+
+   @override
+  // TODO: implement outputIsConfirmPasswordValid
+  Stream<bool> get outputIsConfirmPasswordValid => _confirmPasswordStreamController.stream.map((confirmPassword) => _isConfirmPasswordValid(confirmPassword));
+
+  Stream<bool> get outputIsAllInputsValid => _isAllInputsValidStreamController.stream.map((_)=>_isAllInputsValid());
+
+// private function
+
+ _isOldPasswordValid(String oldPassword){
+   return oldPassword.isNotEmpty;
+ }
+ _isNewPasswordValid(String newPassword) {
+   return newPassword.isNotEmpty;
+ }
+ _isConfirmPasswordValid(String confirmPassword){
+   return confirmPassword.isNotEmpty;
+ }
+
+  _validate() {
+    inputIsAllInputValid.add(null);
+  }
+
+  bool _isAllInputsValid() {
+    return _isOldPasswordValid(
+        changePasswordObject.sOldPassword) &&
+        _isNewPasswordValid(changePasswordObject.sNewPassword) &&
+        _isConfirmPasswordValid(changePasswordObject.sContactNo);
+  }
+}
+abstract class ChangePasswordUiModelInputs{
+   // four functions for actions
+  setOldPassword(String oldPassword);
+  setNewPassword(String newPassword);
+  setConfirmPassword(String confirmPassword);
+  changePassword();
+  // three sinks for streams
+  Sink get inputOldPassword;
+  Sink get inputNewPassword;
+  Sink get inputConfirmPassword;
+  Sink get inputIsAllInputValid;
+
+
+}
+abstract class ChangePasswordUiModelOutputs{
+   // three sink
+   Stream<bool> get outputIsOldPasswordValid;
+   Stream<bool> get outputIsNewPasswordValid;
+   Stream<bool> get outputIsConfirmPasswordValid;
+   Stream<bool> get outputIsAllInputsValid;
+
+}

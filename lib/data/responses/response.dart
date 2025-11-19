@@ -125,3 +125,20 @@ class AuthenticationResponse {
       _$AuthenticationResponseFromJson(json);
   Map<String, dynamic> toJson() => _$AuthenticationResponseToJson(this);
 }
+ //  ---ChangePasswordResponse----.
+
+@JsonSerializable()
+class ChangePasswordResponse {
+  @JsonKey(name: "Result")
+  String? Result;
+  @JsonKey(name: "Msg")
+  String? Msg;
+
+  ChangePasswordResponse({
+   this.Result,
+   this.Msg
+});
+  factory ChangePasswordResponse.fromJson(Map<String, dynamic> json) =>
+      _$ChangePasswordResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$ChangePasswordResponseToJson(this);
+}

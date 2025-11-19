@@ -17,4 +17,11 @@ abstract class AppServiceClient {
       @Field("sContactNo") String sContactNo,// this is the field of api
       @Field("sPassword") String sPassword);
 
+  //  Api ChangePassword
+  @POST("hrmsReplacePassword/hrmsReplacePassword")
+  Future<List<ChangePasswordResponse>> changePassword(
+      @Field("sContactNo") String sContactNo,// this is the field of api
+      @Field("sOldPassword") String sPassword,
+      @Field("sNewPassword") String sNewPassword);
+
 }

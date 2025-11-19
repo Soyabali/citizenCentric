@@ -87,3 +87,14 @@ Map<String, dynamic> _$AuthenticationResponseToJson(
   'iPaymentUpload': instance.paymentUpload,
   'iPaymentAction': instance.paymentAction,
 };
+
+ChangePasswordResponse _$ChangePasswordResponseFromJson(
+  Map<String, dynamic> json,
+) => ChangePasswordResponse(
+  Result: json['Result'] as String?,
+  Msg: json['Msg'] as String?,
+);
+
+Map<String, dynamic> _$ChangePasswordResponseToJson(
+  ChangePasswordResponse instance,
+) => <String, dynamic>{'Result': instance.Result, 'Msg': instance.Msg};

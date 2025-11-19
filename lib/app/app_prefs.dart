@@ -4,6 +4,8 @@ import '../presentation/resources/language_manager.dart';
 const String PREFS_KEY_LANG = "PREFS_KEY_LANG";
 const String PREFS_KEY_ONBOARDING_SCREEN = "PREFS_KEY_ONBOARDING_SCREEN";
 const String PREFS_KEY_IS_USER_LOGGED_IN = "PREFS_KEY_IS_USER_LOGGED_IN";
+const String PREFS_KEY_IS_USER_CHANGE_PASSWORD_IN = "PREFS_KEY_IS_USER_CHANGE_PASSWORD_IN";
+const String PREFS_KEY_TOKEN = "PREFS_KEY_TOKEN";
 
 class AppPreferences {
 
@@ -24,8 +26,16 @@ class AppPreferences {
     _sharedPreferences.setBool(PREFS_KEY_ONBOARDING_SCREEN, true);
   }
 
-  Future<bool> isOnBoardingScreenViewed() async {
-    return _sharedPreferences.getBool(PREFS_KEY_ONBOARDING_SCREEN) ?? false;
+  Future<void> setUserToken(String token) async {
+    _sharedPreferences.setString(PREFS_KEY_TOKEN, token);
+  }
+
+  Future<String> getUserToken() async {
+    return _sharedPreferences.getString(PREFS_KEY_TOKEN) ?? "TOKEN NOT SAVED";
+  }
+
+
+  Future<bool> isOnBoardingScreenViewed() async {return _sharedPreferences.getBool(PREFS_KEY_ONBOARDING_SCREEN) ?? false;
   }
 
   Future<void> setIsUserLoggedIn() async {
@@ -34,5 +44,13 @@ class AppPreferences {
 
   Future<bool> isUserLoggedIn() async {
     return _sharedPreferences.getBool(PREFS_KEY_IS_USER_LOGGED_IN) ?? false;
+  }
+  // changePassword
+  Future<void> setIsUserChangePassword() async {
+    _sharedPreferences.setBool(PREFS_KEY_IS_USER_CHANGE_PASSWORD_IN, true);
+  }
+
+  Future<bool> isUserChangePassword() async {
+    return _sharedPreferences.getBool(PREFS_KEY_IS_USER_CHANGE_PASSWORD_IN) ?? false;
   }
 }

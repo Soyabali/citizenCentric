@@ -2,6 +2,7 @@
 import 'package:citizencentric/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
 import '../../app/di.dart';
+import '../change_password/change_password.dart';
 import '../forgot_password/forgot_password.dart';
 import '../login/login.dart';
 import '../main/main_view.dart';
@@ -18,6 +19,7 @@ class Routes {
   static const String registerRoute = "/register";
   static const String forgotPasswordRoute = "/forgotPassword";
   static const String mainRoute = "/main";
+  static const String changePasswordRoute = "/changePassword";
   static const String storeDetailsRoute = "/storeDetails";
 }
 class RouteGenerator {
@@ -38,6 +40,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => MainView());
       case Routes.storeDetailsRoute:
         return MaterialPageRoute(builder: (_) => StoreDetailsView());
+        // ChangePassword
+      case Routes.changePasswordRoute:
+        initChangePasswordModule();
+        return MaterialPageRoute(builder: (_) => ChangePassword());
       default:
         return unDefinedRoute();
     }

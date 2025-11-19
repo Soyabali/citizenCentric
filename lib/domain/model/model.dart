@@ -91,4 +91,16 @@ class Authentication {
     required this.paymentAction,
   });
 }
+// ChangePasswordModel
+class ChangePasswordModel {
+ final String Result;
+ final String Msg;
+
+ ChangePasswordModel(
+ {
+  required this.Result,
+   required this.Msg,
+
+});
+}
 

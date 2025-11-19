@@ -9,3 +9,12 @@ abstract class LoginObject with _$LoginObject {
   required String password,
  }) = _LoginObject;
 }
+// changePasswordObject
+@freezed
+abstract class ChangePasswordObject with _$ChangePasswordObject {
+ factory ChangePasswordObject({
+  required String sContactNo,
+  required String sOldPassword,
+  required String sNewPassword,
+ }) = _ChangePasswordObject;
+}

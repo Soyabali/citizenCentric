@@ -50,3 +50,16 @@ extension AuthenticationResponseMapper on AuthenticationResponse {
     );
   }
 }
+// changePassworMapper
+extension ChangePasswordResponseMapper on ChangePasswordResponse {
+  // AuthenticationResponse is a response auto generate file
+  // Authentication this is a model class
+  ChangePasswordModel toDomain() {
+    return ChangePasswordModel(
+      //result: result ?? EMPTY,
+      //msg: msg ?? EMPTY,
+      Result: Result ?? EMPTY,
+      Msg: Msg ?? EMPTY,
+    );
+  }
+}

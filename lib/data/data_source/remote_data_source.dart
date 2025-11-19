@@ -5,6 +5,7 @@ import '../responses/response.dart';
 
 abstract class RemoteDataSource {
   Future<List<AuthenticationResponse>> login(LoginRequest loginRequest);
+  Future<List<ChangePasswordResponse>> changePassword(ChangePassWordRequest loginRequest);
   // LoginRequest : This is the LoginBody class
   // AuthenticationResponse : this is a AutoGenerateFile of a login response
 }
@@ -14,7 +15,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   AppServiceClient _appServiceClient;// This is a file where i mention api endPoint
   // and if api is a post type here i declare the body of the api
   RemoteDataSourceImplementer(this._appServiceClient);
-
+  // login
   @override
   Future<List<AuthenticationResponse>>  login(LoginRequest loginRequest) async {
    // AuthenticationResponse , this is api response auto generate file
@@ -23,5 +24,16 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
     return await _appServiceClient.login(
     loginRequest.sContactNo,
     loginRequest.sPassword);
+  }
+  // changePassword
+  Future<List<ChangePasswordResponse>> changePassword(ChangePassWordRequest changePasswordRequest) async {
+    // AuthenticationResponse , this is api response auto generate file
+    // LoginRequest , is a Api body field mention.
+
+    return await _appServiceClient.changePassword(
+        changePasswordRequest.sContactNo,
+        changePasswordRequest.sOldPassword,
+        changePasswordRequest.sNewPassword
+    );
   }
 }

@@ -35,10 +35,13 @@ class _LoginViewState extends State<LoginView> {
     _viewModel.start();
     _userMobileNumberController.addListener(() => _viewModel.setMobileNumber(_userMobileNumberController.text));
     _passwordController.addListener(() => _viewModel.setPassword(_passwordController.text));
-    _viewModel.isUserLoggedInSuccessfullyStreamController.stream.listen((isSuccessLoggedIn) {
+    _viewModel.isUserLoggedInSuccessfullyStreamController.stream.listen((token) {
 
       SchedulerBinding.instance?.addPostFrameCallback((_) {
         _appPreferences.setIsUserLoggedIn();
+        _appPreferences.setUserToken(token);
+
+        resetModules();
         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
       });
       });
@@ -81,7 +84,6 @@ class _LoginViewState extends State<LoginView> {
                   height: 200,
                   child: Image(image: AssetImage(ImageAssets.splashLogo)),
                 ),
-
                 SizedBox(height: AppSize.s28),
                 Padding(
                   padding: EdgeInsets.only(
@@ -124,6 +126,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 SizedBox(height: AppSize.s28),
+
                 Padding(
                     padding: EdgeInsets.only(
                         left: AppPadding.p28, right: AppPadding.p28),
@@ -146,6 +149,7 @@ class _LoginViewState extends State<LoginView> {
                       },
                     )),
                 SizedBox(height: AppSize.s28),
+
                 Padding(
                   padding: EdgeInsets.only(
                     top: AppPadding.p8,
@@ -157,15 +161,15 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(
-                              context, Routes.forgotPasswordRoute);
+                          Navigator.pushNamed(
+                              context, Routes.changePasswordRoute);
                         },
-                        child: Text(AppStrings.forgetPassword,
+                        child: Text(AppStrings.changePassword,
                             style: Theme.of(context).textTheme.bodyLarge),
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(
+                          Navigator.pushNamed(
                               context, Routes.registerRoute);
                         },
                         child: Text(AppStrings.registerText,

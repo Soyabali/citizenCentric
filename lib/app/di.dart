@@ -7,8 +7,11 @@ import '../data/network/app_api.dart';
 import '../data/network/dio_factory.dart';
 import '../data/network/network_info.dart';
 import '../data/repository/repository_impl.dart';
+import '../domain/model/model.dart';
 import '../domain/repository/repository.dart';
+import '../domain/usecase/change_password_usecase.dart';
 import '../domain/usecase/login_usecase.dart';
+import '../presentation/change_password/change_password_ui_model.dart';
 import '../presentation/login/login_viewmodel.dart';
 
 final instance = GetIt.instance;
@@ -49,3 +52,18 @@ initLoginModule(){
     instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
   }
 }
+// changePassword di
+initChangePasswordModule(){
+  if(!GetIt.I.isRegistered<ChangPasswordUseCase>()){
+    instance.registerFactory<ChangPasswordUseCase>(() => ChangPasswordUseCase(instance()));
+    instance.registerFactory<ChangePasswordUiModel>(() => ChangePasswordUiModel(instance()));
+  }
+}
+
+resetModules() {
+  instance.reset(dispose: false);
+  initAppModule();
+  initLoginModule();
+  initChangePasswordModule();
+
+ }

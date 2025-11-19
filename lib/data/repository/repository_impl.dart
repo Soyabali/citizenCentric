@@ -53,7 +53,7 @@ class RepositoryImpl extends Repository {
           if (item.result == "1") {
 
             print("----item.result --55--:  ${item.result}");
-            print("-Token: ${item.token}");
+            print("-Token  56: ${item.token}");
 
             // here i applied dart important concept left and right as a above mentions {{Either}} concept.
             // here you applied a logic {item.result == "1")}, if condition is true
@@ -131,4 +131,43 @@ class RepositoryImpl extends Repository {
       // that is written a switch case
     }
   }
+
+  // -----ChangePassword repository---
+  Future<Either<Failure, ChangePasswordModel>> changePassword(ChangePassWordRequest changePasswordRequest) async {
+
+    if (await _networkInfo.isConnected) {
+      try {
+
+        final responses = await _remoteDataSource.changePassword(changePasswordRequest); // List<AuthenticationResponse>
+        for (var item in responses) {
+          if (item.Result == "1") {
+
+            print("----item.result --145--:  ${item.Result}");
+
+            return Right(item.toDomain()); // Return first success case
+          }else{
+            print('-----xxxxxxxx------failed---149-----');
+          }
+        }
+        // If no item was successful:
+        return Left(
+          // is another part of a {{Either}} concept. Left if api response failed then go under Left
+
+          Failure(
+            int.tryParse(responses.first.Result ?? '') ?? ApiInternalStatus.FAILURE,
+            responses.first.Msg ?? ResponseMessage.DEFAULT,
+          ),
+
+        );
+
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+
+
 }
