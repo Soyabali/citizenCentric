@@ -18,3 +18,11 @@ abstract class ChangePasswordObject with _$ChangePasswordObject {
   required String sNewPassword,
  }) = _ChangePasswordObject;
 }
+// ----StaffListObject----
+@freezed
+abstract class StaffListObject with _$StaffListObject {
+ factory StaffListObject({
+  required String sEmpCode,
+
+ }) = _StaffListObject;
+}

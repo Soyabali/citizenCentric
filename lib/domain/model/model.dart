@@ -91,7 +91,7 @@ class Authentication {
     required this.paymentAction,
   });
 }
-// ChangePasswordModel
+// ----------ChangePasswordModel -------------
 class ChangePasswordModel {
  final String Result;
  final String Msg;
@@ -104,3 +104,23 @@ class ChangePasswordModel {
 });
 }
 
+// -----------STAFFLIST MODEL------------------
+
+class StaffListModel {
+  final String sEmpCode;
+  final String sEmpName;
+  final String sContactNo;
+  final String sLocName;
+  final String sDsgName;
+  final String sEmpImage;
+
+ // constructor
+  StaffListModel({
+    required this.sEmpCode,
+    required this.sEmpName,
+    required this.sContactNo,
+    required this.sLocName,
+    required this.sDsgName,
+    required this.sEmpImage,
+});
+}

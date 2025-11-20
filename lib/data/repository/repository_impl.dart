@@ -168,6 +168,33 @@ class RepositoryImpl extends Repository {
     }
   }
 
+  // ------StaffList---------
+
+  Future<Either<Failure, List<StaffListModel>>> staffList(StaffListRequest request) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final responses = await _remoteDataSource.stafflist(request);
+
+        if (responses.isNotEmpty) {
+          print("-----------Success----- --");
+         // return Right(responses.first.toDomain());
+          final list = responses.map((e) => e.toDomain()).toList();
+          return Right(list);
+        }
+        return Left(Failure(
+          ResponseCode.NO_DATA,
+          "No staff found",
+        ));
+
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+
 
 
 }

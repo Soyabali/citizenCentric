@@ -138,7 +138,39 @@ class ChangePasswordResponse {
    this.Result,
    this.Msg
 });
+   // Fromjson
   factory ChangePasswordResponse.fromJson(Map<String, dynamic> json) =>
       _$ChangePasswordResponseFromJson(json);
+  // Tojson
   Map<String, dynamic> toJson() => _$ChangePasswordResponseToJson(this);
+}
+//------StaffListResponse-----
+@JsonSerializable()
+class StafListResponse {
+  @JsonKey(name: "sEmpCode")
+  String? sEmpCode;
+  @JsonKey(name: "sEmpName")
+  String? sEmpName;
+  @JsonKey(name: "sContactNo")
+  String? sContactNo;
+  @JsonKey(name: "sLocName")
+  String? sLocName;
+  @JsonKey(name: "sDsgName")
+  String? sDsgName;
+  @JsonKey(name: "sEmpImage")
+  String? sEmpImage;
+
+  StafListResponse({
+    this.sEmpCode,
+    this.sEmpName,
+    this.sContactNo,
+    this.sLocName,
+    this.sDsgName,
+    this.sEmpImage,
+  });
+  // Fromjson
+  factory StafListResponse.fromJson(Map<String, dynamic> json) =>
+      _$StafListResponseFromJson(json);
+  // Tojson
+  Map<String, dynamic> toJson() => _$StafListResponseToJson(this);
 }

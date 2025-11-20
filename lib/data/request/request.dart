@@ -8,9 +8,21 @@ class LoginRequest {
   LoginRequest(this.sContactNo, this.sPassword);
 }
 //  ----changePasswordRequest
+
 class ChangePassWordRequest {
   String sContactNo;
   String sOldPassword;
   String sNewPassword;
   ChangePassWordRequest(this.sContactNo, this.sOldPassword,this.sNewPassword);
+}
+// ---------StaffListRequest---------
+
+class StaffListRequest {
+  String sEmpCode;
+  // constructor
+  StaffListRequest(this.sEmpCode);
+
+  Map<String, dynamic> toJson() => {
+    "sEmpCode": sEmpCode,
+  };
 }

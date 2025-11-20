@@ -102,6 +102,9 @@ class ResponseCode {
   static const int SEND_TIMEOUT = -5;
   static const int CACHE_ERROR = -6;
   static const int NO_INTERNET_CONNECTION = -7;
+  static const int NO_DATA = -99;
+
+
 }
 
 class ResponseMessage {

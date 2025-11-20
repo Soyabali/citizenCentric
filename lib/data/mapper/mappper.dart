@@ -50,7 +50,7 @@ extension AuthenticationResponseMapper on AuthenticationResponse {
     );
   }
 }
-// changePassworMapper
+// --------changePassworMapper-------
 extension ChangePasswordResponseMapper on ChangePasswordResponse {
   // AuthenticationResponse is a response auto generate file
   // Authentication this is a model class
@@ -60,6 +60,21 @@ extension ChangePasswordResponseMapper on ChangePasswordResponse {
       //msg: msg ?? EMPTY,
       Result: Result ?? EMPTY,
       Msg: Msg ?? EMPTY,
+    );
+  }
+}
+//--------StaffListMapper---------
+extension StaffListResponseMapper on StafListResponse {
+  // AuthenticationResponse is a response auto generate file
+  // Authentication this is a model class
+  StaffListModel toDomain() {
+    return StaffListModel(
+      sEmpCode: sEmpCode ?? EMPTY,
+      sEmpName: sEmpName ?? EMPTY,
+      sContactNo: sContactNo ?? EMPTY,
+      sLocName: sLocName ?? EMPTY,
+      sDsgName: sDsgName ?? EMPTY,
+      sEmpImage: sEmpImage ?? EMPTY
     );
   }
 }

@@ -98,3 +98,23 @@ ChangePasswordResponse _$ChangePasswordResponseFromJson(
 Map<String, dynamic> _$ChangePasswordResponseToJson(
   ChangePasswordResponse instance,
 ) => <String, dynamic>{'Result': instance.Result, 'Msg': instance.Msg};
+
+StafListResponse _$StafListResponseFromJson(Map<String, dynamic> json) =>
+    StafListResponse(
+      sEmpCode: json['sEmpCode'] as String?,
+      sEmpName: json['sEmpName'] as String?,
+      sContactNo: json['sContactNo'] as String?,
+      sLocName: json['sLocName'] as String?,
+      sDsgName: json['sDsgName'] as String?,
+      sEmpImage: json['sEmpImage'] as String?,
+    );
+
+Map<String, dynamic> _$StafListResponseToJson(StafListResponse instance) =>
+    <String, dynamic>{
+      'sEmpCode': instance.sEmpCode,
+      'sEmpName': instance.sEmpName,
+      'sContactNo': instance.sContactNo,
+      'sLocName': instance.sLocName,
+      'sDsgName': instance.sDsgName,
+      'sEmpImage': instance.sEmpImage,
+    };

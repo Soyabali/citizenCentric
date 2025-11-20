@@ -1,4 +1,6 @@
 import 'package:citizencentric/app/app_prefs.dart';
+import 'package:citizencentric/domain/usecase/staffList_usecase.dart';
+import 'package:citizencentric/presentation/main/home/home_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,6 +59,14 @@ initChangePasswordModule(){
   if(!GetIt.I.isRegistered<ChangPasswordUseCase>()){
     instance.registerFactory<ChangPasswordUseCase>(() => ChangPasswordUseCase(instance()));
     instance.registerFactory<ChangePasswordUiModel>(() => ChangePasswordUiModel(instance()));
+  }
+}
+
+// home di
+initHomeModule() {
+  if (!GetIt.I.isRegistered<StaffListUseCase>()) {
+    instance.registerFactory<StaffListUseCase>(() => StaffListUseCase(instance()));
+    instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
   }
 }
 
