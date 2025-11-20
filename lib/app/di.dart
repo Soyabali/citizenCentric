@@ -4,6 +4,7 @@ import 'package:citizencentric/presentation/main/home/home_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../data/data_source/local_data_source.dart';
 import '../data/data_source/remote_data_source.dart';
 import '../data/network/app_api.dart';
 import '../data/network/dio_factory.dart';
@@ -42,9 +43,13 @@ final sharedPrefs = await SharedPreferences.getInstance();
    instance.registerLazySingleton<RemoteDataSource>(
            () => RemoteDataSourceImplementer(instance()));
 
+   // local data source
+   instance.registerLazySingleton<LocalDataSource>(
+           () => LocalDataSourceImplementer());
+
    // repository
    instance.registerLazySingleton<Repository>(
-           () => RepositoryImpl(instance(), instance()));
+           () => RepositoryImpl(instance(), instance(), instance()));
 
  }
  // login di

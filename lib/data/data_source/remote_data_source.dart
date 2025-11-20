@@ -44,12 +44,6 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
 
   //  -----STAFFLIST-------
 
-  // Future<List<StafListResponse>>  stafflist(StaffListRequest staffListRequest) async {
-  //
-  //   return await _appServiceClient.staffList(
-  //       staffListRequest.sEmpCode);
-  //}
-
   Future<List<StafListResponse>> stafflist(StaffListRequest staffListRequest) async {
     // here you pass a entire object into the _appServiceClent not a particular fields
     return await _appServiceClient.staffList(staffListRequest);

@@ -7,17 +7,22 @@ import 'package:citizencentric/data/request/request.dart';
 import 'package:citizencentric/domain/model/model.dart';
 import 'package:citizencentric/domain/repository/repository.dart';
 import 'package:dartz/dartz.dart';
+import '../data_source/local_data_source.dart';
 import '../network/error_handler.dart';
 
 class RepositoryImpl extends Repository {
 
   RemoteDataSource _remoteDataSource;
+  LocalDataSource _localDataSource;
   NetworkInfo _networkInfo;
-  RepositoryImpl(this._remoteDataSource, this._networkInfo);
+
+  RepositoryImpl(this._remoteDataSource, this._localDataSource,
+      this._networkInfo);
 
 
   @override
-  Future<Either<Failure, Authentication>> login(LoginRequest loginRequest) async {
+  Future<Either<Failure, Authentication>> login(
+      LoginRequest loginRequest) async {
     // this is the most important key concept to understand what is done here on a login function
     // first of all i understand {{Future<Either<Failure, Authentication>>}} , actully
     // login function return in a Future {{Either<Failure, Authentication>}} , here
@@ -41,7 +46,8 @@ class RepositoryImpl extends Repository {
       // we create a {{NetworkInfo}} class that is used to check internet
 
       try {
-        final responses = await _remoteDataSource.login(loginRequest); // List<AuthenticationResponse>
+        final responses = await _remoteDataSource.login(
+            loginRequest); // List<AuthenticationResponse>
         // here you get a api response this is a most important point
         // to fetch data FROM a Api you should carefully {{what type of data your api return}}
         // accoding to api response you fetch , different - 2 api have a send differnt - 2 data format
@@ -51,7 +57,6 @@ class RepositoryImpl extends Repository {
 
         for (var item in responses) {
           if (item.result == "1") {
-
             print("----item.result --55--:  ${item.result}");
             print("-Token  56: ${item.token}");
 
@@ -72,7 +77,8 @@ class RepositoryImpl extends Repository {
         return Left(
           // is another part of a {{Either}} concept. Left if api response failed then go under Left
           Failure(
-            int.tryParse(responses.first.result ?? '') ?? ApiInternalStatus.FAILURE,
+            int.tryParse(responses.first.result ?? '') ??
+                ApiInternalStatus.FAILURE,
             responses.first.msg ?? ResponseMessage.DEFAULT,
           ),
           //  here you should be got it if response is faild then i called {{Failure}} class
@@ -82,9 +88,10 @@ class RepositoryImpl extends Repository {
           // here this is another class {{ResponseMessage.DEFAULT}}, this is a class
           // that mention a msg
         );
-
       } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+        return Left(ErrorHandler
+            .handle(error)
+            .failure);
         // This is anothe important part if i get an error and comes in a catch block
         // then i return {{Left(ErrorHandler.handle(error).failure);}}, we should clearly
         // understand here {{Left}} is a Either concept clear
@@ -133,19 +140,18 @@ class RepositoryImpl extends Repository {
   }
 
   // -----ChangePassword repository---
-  Future<Either<Failure, ChangePasswordModel>> changePassword(ChangePassWordRequest changePasswordRequest) async {
-
+  Future<Either<Failure, ChangePasswordModel>> changePassword(
+      ChangePassWordRequest changePasswordRequest) async {
     if (await _networkInfo.isConnected) {
       try {
-
-        final responses = await _remoteDataSource.changePassword(changePasswordRequest); // List<AuthenticationResponse>
+        final responses = await _remoteDataSource.changePassword(
+            changePasswordRequest); // List<AuthenticationResponse>
         for (var item in responses) {
           if (item.Result == "1") {
-
             print("----item.result --145--:  ${item.Result}");
 
             return Right(item.toDomain()); // Return first success case
-          }else{
+          } else {
             print('-----xxxxxxxx------failed---149-----');
           }
         }
@@ -154,14 +160,16 @@ class RepositoryImpl extends Repository {
           // is another part of a {{Either}} concept. Left if api response failed then go under Left
 
           Failure(
-            int.tryParse(responses.first.Result ?? '') ?? ApiInternalStatus.FAILURE,
+            int.tryParse(responses.first.Result ?? '') ??
+                ApiInternalStatus.FAILURE,
             responses.first.Msg ?? ResponseMessage.DEFAULT,
           ),
 
         );
-
       } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+        return Left(ErrorHandler
+            .handle(error)
+            .failure);
       }
     } else {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
@@ -169,32 +177,72 @@ class RepositoryImpl extends Repository {
   }
 
   // ------StaffList---------
-
+  // not a confuse getHome == functin name change staffList
   Future<Either<Failure, List<StaffListModel>>> staffList(StaffListRequest request) async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final responses = await _remoteDataSource.stafflist(request);
+    try {
+      // get from cache
+     // final response = await _localDataSource.stafflist(request);
+      final response = await _localDataSource.getHomeFromCache();
+      final list = response.map((e) => e.toDomain()).toList();
+      print("-----------cache Data sucess-------xxxxxxxxxxx-- --");
+      print('-------list--cache data---$list');
+      return Right(list);
+    } catch (cacheError) {
+      // we have cache error so we should call api
+      if (await _networkInfo.isConnected) {
+        try {
+          final responses = await _remoteDataSource.stafflist(request);
 
-        if (responses.isNotEmpty) {
-          print("-----------Success----- --");
-         // return Right(responses.first.toDomain());
-          final list = responses.map((e) => e.toDomain()).toList();
-          return Right(list);
+          if (responses.isNotEmpty) {
+            print("-----------Success-----xxxx --");
+            // return Right(responses.first.toDomain());
+            // to store response into the localdata base
+
+            _localDataSource.saveHomeToCache(responses);
+            final list = responses.map((e) => e.toDomain()).toList();
+            return Right(list);
+          }
+          return Left(Failure(
+            ResponseCode.NO_DATA,
+            "No staff found",
+          ));
+        } catch (error) {
+          return Left(ErrorHandler
+              .handle(error)
+              .failure);
         }
-        return Left(Failure(
-          ResponseCode.NO_DATA,
-          "No staff found",
-        ));
-
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+      } else {
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
       }
-    } else {
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
-
-
-
-
 }
+
+
+// Future<Either<Failure, List<StaffListModel>>> staffList(StaffListRequest request) async {
+  //   if (await _networkInfo.isConnected) {
+  //     try {
+  //       final responses = await _remoteDataSource.stafflist(request);
+  //
+  //       if (responses.isNotEmpty) {
+  //         print("-----------Success----- --");
+  //        // return Right(responses.first.toDomain());
+  //         final list = responses.map((e) => e.toDomain()).toList();
+  //         return Right(list);
+  //       }
+  //       return Left(Failure(
+  //         ResponseCode.NO_DATA,
+  //         "No staff found",
+  //       ));
+  //
+  //     } catch (error) {
+  //       return Left(ErrorHandler.handle(error).failure);
+  //     }
+  //   } else {
+  //     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  //   }
+  // }
+
+
+
+
