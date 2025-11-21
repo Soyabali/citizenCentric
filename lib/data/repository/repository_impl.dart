@@ -181,7 +181,6 @@ class RepositoryImpl extends Repository {
   Future<Either<Failure, List<StaffListModel>>> staffList(StaffListRequest request) async {
     try {
       // get from cache
-     // final response = await _localDataSource.stafflist(request);
       final response = await _localDataSource.getHomeFromCache();
       final list = response.map((e) => e.toDomain()).toList();
       print("-----------cache Data sucess-------xxxxxxxxxxx-- --");
@@ -219,29 +218,7 @@ class RepositoryImpl extends Repository {
 }
 
 
-// Future<Either<Failure, List<StaffListModel>>> staffList(StaffListRequest request) async {
-  //   if (await _networkInfo.isConnected) {
-  //     try {
-  //       final responses = await _remoteDataSource.stafflist(request);
-  //
-  //       if (responses.isNotEmpty) {
-  //         print("-----------Success----- --");
-  //        // return Right(responses.first.toDomain());
-  //         final list = responses.map((e) => e.toDomain()).toList();
-  //         return Right(list);
-  //       }
-  //       return Left(Failure(
-  //         ResponseCode.NO_DATA,
-  //         "No staff found",
-  //       ));
-  //
-  //     } catch (error) {
-  //       return Left(ErrorHandler.handle(error).failure);
-  //     }
-  //   } else {
-  //     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
-  //   }
-  // }
+
 
 
 
