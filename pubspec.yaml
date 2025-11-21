@@ -49,6 +49,8 @@ dependencies:
   freezed_annotation: ^3.1.0
   rxdart: ^0.28.0
   carousel_slider: ^5.1.1
+  easy_localization: ^3.0.8
+  flutter_phoenix: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +88,7 @@ flutter:
   assets:
      - assets/images/
      - assets/json/
+     - assets/translations/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

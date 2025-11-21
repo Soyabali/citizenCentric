@@ -1,5 +1,6 @@
 import 'package:citizencentric/presentation/main/search_page.dart';
 import 'package:citizencentric/presentation/main/settings_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../resources/color_manager.dart';
@@ -24,12 +25,12 @@ class _MainViewState extends State<MainView> {
     SettingPage()
   ];
   List<String> titles = [
-    AppStrings.home,
-    AppStrings.search,
-    AppStrings.notifications,
-    AppStrings.settings,
+    AppStrings.home.tr(),
+    AppStrings.search.tr(),
+    AppStrings.notifications.tr(),
+    AppStrings.settings.tr(),
   ];
-  var _title = AppStrings.home;
+  var _title = AppStrings.home.tr();
   var _currentIndex = 0;
 
   @override
@@ -49,10 +50,10 @@ class _MainViewState extends State<MainView> {
           currentIndex: _currentIndex,
           onTap: onTap,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home),label: AppStrings.home),
-            BottomNavigationBarItem(icon: Icon(Icons.search),label: AppStrings.search),
-            BottomNavigationBarItem(icon: Icon(Icons.notifications),label: AppStrings.notifications),
-            BottomNavigationBarItem(icon: Icon(Icons.settings),label: AppStrings.settings),
+            BottomNavigationBarItem(icon: Icon(Icons.home),label: AppStrings.home.tr()),
+            BottomNavigationBarItem(icon: Icon(Icons.search),label: AppStrings.search.tr()),
+            BottomNavigationBarItem(icon: Icon(Icons.notifications),label: AppStrings.notifications.tr()),
+            BottomNavigationBarItem(icon: Icon(Icons.settings),label: AppStrings.settings.tr()),
           ],
         ),
       ),

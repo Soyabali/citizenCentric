@@ -1,5 +1,6 @@
 
 import 'package:citizencentric/presentation/common/state_renderer/state_render_impl.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../app/app_prefs.dart';
 import '../../app/di.dart';
@@ -102,11 +103,11 @@ class _LoginViewState extends State<ChangePassword> {
                           keyboardType: TextInputType.phone,
                           controller: _userOldPassword,
                           decoration: InputDecoration(
-                              hintText: AppStrings.mobilenumber,
-                              labelText: AppStrings.mobilenumber,
+                              hintText: AppStrings.mobilenumber.tr(),
+                              labelText: AppStrings.mobilenumber.tr(),
                               errorText: (snapshot.data ?? true)
                                   ? null
-                                  : AppStrings.usernameError),
+                                  : AppStrings.usernameError.tr()),
                         );
                       },
                     ),
@@ -123,11 +124,11 @@ class _LoginViewState extends State<ChangePassword> {
                           keyboardType: TextInputType.phone,
                           controller: _userNewPassword,
                           decoration: InputDecoration(
-                              hintText: AppStrings.oldpassword,
-                              labelText: AppStrings.oldpassword,
+                              hintText: AppStrings.oldpassword.tr(),
+                              labelText: AppStrings.oldpassword.tr(),
                               errorText: (snapshot.data ?? true)
                                   ? null
-                                  : AppStrings.usernameError),
+                                  : AppStrings.usernameError.tr()),
                         );
                       },
                     ),
@@ -144,11 +145,11 @@ class _LoginViewState extends State<ChangePassword> {
                           keyboardType: TextInputType.phone,
                           controller: _userConfirmPassword,
                           decoration: InputDecoration(
-                              hintText: AppStrings.conformpassword,
-                              labelText: AppStrings.conformpassword,
+                              hintText: AppStrings.conformpassword.tr(),
+                              labelText: AppStrings.conformpassword.tr(),
                               errorText: (snapshot.data ?? true)
                                   ? null
-                                  : AppStrings.usernameError),
+                                  : AppStrings.usernameError.tr()),
                         );
                       },
                     ),
@@ -171,7 +172,7 @@ class _LoginViewState extends State<ChangePassword> {
                                   _viewModel.changePassword();
                                 }
                                     : null,
-                                child: Text(AppStrings.changePassword)),
+                                child: Text(AppStrings.changePassword).tr()),
                           );
 
                         },

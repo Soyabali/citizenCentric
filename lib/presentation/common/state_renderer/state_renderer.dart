@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../../data/mapper/mappper.dart';
@@ -33,7 +34,7 @@ class StateRenderer extends StatelessWidget {
         String? message,
         String? title,
         required this.retryActionFunction})
-      : message = message ?? AppStrings.loading,
+      : message = message ?? AppStrings.loading.tr(),
         title = title ?? EMPTY,
         super(key: key);
 
@@ -86,7 +87,7 @@ class StateRenderer extends StatelessWidget {
             [
           _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
-          _getRetryButton(AppStrings.retry_again, context)
+          _getRetryButton(AppStrings.retry_again.tr(), context)
         ]
         );
       case StateRendererType.CONTENT_SCREEN_STATE:
