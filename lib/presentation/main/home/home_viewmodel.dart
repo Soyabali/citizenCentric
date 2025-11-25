@@ -76,11 +76,10 @@ class HomeViewModel extends BaseViewModel implements HomeViewModelInputs,HomeVie
   @override
   Stream<List<StaffListModel>> get outputStores => _storeStreamController.stream.map((stores) => stores);
 }
-abstract class HomeViewModelInputs{
+abstract class HomeViewModelInputs {
   Sink get inputStores;
   Sink get inputServices;
   Sink get inputBanners;
-
 }
 abstract class HomeViewModelOutputs{
 

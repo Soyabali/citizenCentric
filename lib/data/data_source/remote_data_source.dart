@@ -9,7 +9,7 @@ abstract class RemoteDataSource {
   Future<List<StafListResponse>> stafflist(StaffListRequest staffListRequest);
 
   // LoginRequest : This is the LoginBody class
-  // AuthenticationResponse : this is a AutoGenerateFile of a login response
+  // AuthenticationResponse : this is login response
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {

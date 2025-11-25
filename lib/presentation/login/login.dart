@@ -50,6 +50,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void initState() {
+    // here you should call a isolate to call a _bind() function every where in a application.
     _bind();
     super.initState();
   }
@@ -127,14 +128,13 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 SizedBox(height: AppSize.s28),
-
                 Padding(
                     padding: EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28),
+                        left: AppPadding.p28,
+                        right: AppPadding.p28),
                     child: StreamBuilder<bool>(
                       stream: _viewModel.outputIsAllInputsValid,
                       builder: (context, snapshot) {
-
                         return SizedBox(
                           width: double.infinity,
                           height: AppSize.s40,
@@ -168,14 +168,14 @@ class _LoginViewState extends State<LoginView> {
                         child: Text(AppStrings.changePassword,
                             style: Theme.of(context).textTheme.bodyLarge).tr(),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, Routes.registerRoute);
-                        },
-                        child: Text(AppStrings.registerText,
-                            style: Theme.of(context).textTheme.bodyLarge).tr(),
-                      )
+                      // TextButton(
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(
+                      //         context, Routes.registerRoute);
+                      //   },
+                      //   child: Text(AppStrings.registerText,
+                      //       style: Theme.of(context).textTheme.bodyLarge).tr(),
+                      // )
                     ],
                   ),
                 )

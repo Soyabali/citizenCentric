@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citizencentric/presentation/resources/strings_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
 import '../../../app/di.dart';
 import '../../../domain/model/model.dart';
 import '../../common/state_renderer/state_render_impl.dart';
@@ -13,6 +12,7 @@ import '../../resources/values_manager.dart';
 import 'home_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
+
   const HomePage({super.key});
 
   @override
@@ -21,12 +21,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  HomeViewModel _viewModel = instance<HomeViewModel>();
+  HomeViewModel _viewModel = instance<HomeViewModel>();// MODEL
 
   @override
   void initState() {
     _bind();
     super.initState();
+  }
+  void didChangeDependencies(){
+    // call a api in a view
+    _bind();
+    print("-----Call a api in a didChangeDependencies-----");
+    super.didChangeDependencies();
   }
 
   //   // bind view to ViewModel

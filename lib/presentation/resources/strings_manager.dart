@@ -41,6 +41,7 @@ class AppStrings {
   static const String inviteYourFriends = "invite_your_friends";
   static const String logout = "logout";
   static const String resetpassword = "reset_password";
+  static const String somethingWentWrong="Some ThingWentWrong";
   // error
   static const String badRequestError = "bad_request_error";
   static const String noContent = "no_content";

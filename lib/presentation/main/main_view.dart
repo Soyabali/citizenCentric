@@ -2,12 +2,12 @@ import 'package:citizencentric/presentation/main/search_page.dart';
 import 'package:citizencentric/presentation/main/settings_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
 import '../resources/color_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
 import 'home/home_page.dart';
 import 'notification_page.dart';
+
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);

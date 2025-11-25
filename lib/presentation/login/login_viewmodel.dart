@@ -54,8 +54,7 @@ LoginViewModel(this._loginUseCase);
           // left -falure
           //print('-------failed-------'),
          // print(failure.message)
-          inputState.add(ErrorState(
-              StateRendererType.POPUP_ERROR_STATE, failure.message))
+          inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message))
         },
         (data) {
           // right - Success data
@@ -63,8 +62,7 @@ LoginViewModel(this._loginUseCase);
           //print("success --Get data ----xx ${data.firstName}")
           print("User Token → ${data.token}");
            inputState.add(ContentState());
-
-           // navigate the main screen after login
+           // to store the token in app Prefs
            isUserLoggedInSuccessfullyStreamController.add(data.token);
         });
   }

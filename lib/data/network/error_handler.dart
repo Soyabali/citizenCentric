@@ -1,7 +1,6 @@
 
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import '../../presentation/resources/strings_manager.dart';
 import 'failure.dart';
 
@@ -91,10 +90,8 @@ class ResponseCode {
   static const int BAD_REQUEST = 400; // failure, api rejected the request
   static const int FORBIDDEN = 403; // failure, api rejected the request
   static const int UNAUTHORISED = 401; // failure user is not authorised
-  static const int NOT_FOUND =
-  404; // failure, api url is not correct and not found
-  static const int INTERNAL_SERVER_ERROR =
-  500; // failure, crash happened in server side
+  static const int NOT_FOUND = 404; // failure, api url is not correct and not found
+  static const int INTERNAL_SERVER_ERROR = 500; // failure, crash happened in server side
 
   // local status code
   static const int DEFAULT = -1;
