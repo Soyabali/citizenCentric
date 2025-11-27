@@ -1,14 +1,17 @@
 
 // Step 1: Import flutter_riverpod and your provider file
 
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';// <--- UPDATE THIS PATH
 import 'dart:io'; // Needed for the 'File' type
-
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import '../../app/camra.dart';
 import '../../app/di.dart';
 import '../../data/network/network_info.dart';
-import '../../domain/model/model.dart';
+import '../hive-database/hive_database.dart';
 import '../riverpod/user_place.dart';
 
 // Step 2: Change StatefulWidget to ConsumerStatefulWidget
@@ -32,6 +35,24 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
   // You will also need an image file to save. Let's add a placeholder.
   File? _selectedImage;
 
+  final box = HiveService.myBox;
+  late StreamSubscription<InternetStatus> _listener;
+
+  @override
+  void initState() {
+
+    super.initState();
+    // Listen to internet changes
+    _listener = InternetConnection().onStatusChange.listen((status) {
+      if (status == InternetStatus.connected) {
+        print("Internet Connected → Auto Syncing...");
+        _handlePush();   // 🔥 Auto Push / Sync Hive Data
+      } else {
+        print("Internet Disconnected");
+      }
+    });
+  }
+
   @override
   void dispose() {
     _field1Controller.dispose();
@@ -42,187 +63,100 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
   }
 
   // In your formdatastore.dart file
-
   void _handlePush() async {
-    // First, validate the form. If it fails, do nothing.
-    if (!_formKey.currentState!.validate()) {
-      print("Form is not valid. Please fill all fields.");
-      return;
-    }
+    final box = Hive.box('myBox');
 
-    if (_selectedImage == null) {
-      print("No image selected.");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Please select an image.')));
-      return;
-    }
-
-    // --- Check for internet connection ---
-    if (await _networkInfo.isConnected) {
+    if (await _networkInfo.isConnected)
+    {
       print('Internet is connected.');
+      // Convert Hive data into List<Map>
+      final dataMap = box.toMap();
+      final List<Map<String, dynamic>> items = [];
 
-      // --- SOLUTION STARTS HERE ---
-      // 1. LOAD: Explicitly tell the provider to load data from the database into its state.
-      print('Checking for local data in database...');
-      await ref.read(userPlacesProvider.notifier).loadPlaces();
-
-      // 2. READ: NOW, read the state. It will contain the data you just loaded.
-      final List<Place> localPlaces = ref.read(userPlacesProvider);
-
-      print('------ Found ${localPlaces.length} locally stored items. ---');
-
-      // --- SOLUTION ENDS HERE ---
-
-
-      // 3. Check if there is any local data to sync.
-      if (localPlaces.isNotEmpty) {
-        print('--- Syncing ${localPlaces.length} item(s) to server... ---');
-
-        // Loop through the local data and "upload" it.
-        for (final place in localPlaces) {
-          print('Uploading: Title: ${place.title}, Image Path: ${place.image.path}');
-          // TODO: Implement your actual API call here to upload each `place`.
-          // For example: await myApi.uploadPlace(place);
-        }
-        print('--- Sync complete. ---');
-
-        // After successful upload, clear the local database.
-        await ref.read(userPlacesProvider.notifier).clearAllPlaces();
-        if (mounted) { // Good practice to check if widget is still visible
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Successfully synced local data to server!')));
-        }
-
-      } else {
-        print('No local data to sync.');
-      }
-
-      // --- Now, submit the CURRENT form data to the API ---
-      print('Submitting current form data via API...');
-      // TODO: Add your API call logic here...
-
-      // Clear the form after successful API submission
-      _field1Controller.clear();
-      _field2Controller.clear();
-      _field3Controller.clear();
-      _field4Controller.clear();
-      setState(() {
-        _selectedImage = null;
+      dataMap.forEach((key, value) {
+        items.add({"key": key, "value": value});
       });
+
+      print("Items List Length: ${items.length}");
+
+      if (items.isNotEmpty) {
+        print("Data is already in the database");
+
+        // SHOW all items
+        for (var item in items) {
+          print("${item['key']} : ${item['value']}");
+        }
+
+        // TODO: CALL YOUR API HERE
+        print("⏫ Sending to server...");
+        // await ApiService.send(items);
+
+        // After sending → clear local db
+        await box.clear();
+        print("Local data cleared after sync.");
+      } else {
+        print("Save new data");
+
+      }
 
     } else {
-      // --- NO INTERNET CONNECTION ---
-      print('No internet connection. Saving data to local database.');
+      print('No Internet! Saving data locally.');
 
-      ref.read(userPlacesProvider.notifier).addPlace(
-        _field1Controller.text,
-        _selectedImage!,
-      );
+      // Put data in local hive
+      box.put('name', 'Soyaib Ali');
+      box.put('Company', 'Synergy');
+      box.put('city', 'Noida');
 
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No internet. Saved data locally.')));
-      }
-
-      // Clear the form...
-      _field1Controller.clear();
-      _field2Controller.clear();
-      _field3Controller.clear();
-      _field4Controller.clear();
-      setState(() {
-        _selectedImage = null;
-      });
+      print("Local Data Saved Successfully.");
     }
   }
 
+
   // void _handlePush() async {
-  //   // First, validate the form. If it fails, do nothing.
-  //   if (!_formKey.currentState!.validate()) {
-  //     print("Form is not valid. Please fill all fields.");
-  //     return;
-  //   }
-  //   // Use a real image picker in a real app
-  //  // _selectedImage = File('path/to/your/dummy/image.jpg');
-  //   if (_selectedImage == null) {
-  //     print("No image selected.");
-  //     ScaffoldMessenger.of(context)
-  //         .showSnackBar(const SnackBar(content: Text('Please select an image.')));
-  //     return;
-  //   }
-  //
   //   // --- Check for internet connection ---
   //   if (await _networkInfo.isConnected) {
   //     print('Internet is connected.');
   //
-  //     // --- NEW LOGIC STARTS HERE ---
-  //     // 1. Get the current list of locally stored places from the provider.
-  //     final List<Place> localPlaces = ref.read(userPlacesProvider);
-  //     print('------67---- Found ${localPlaces.length} locally stored items. ---');
+  //     final box = Hive.box('myBox');
+  //     //box.clear();
+  //     // List that will store key-value pairs
+  //     final List<Map<String, dynamic>> items = [];
+  //     // Convert Hive data to Map
+  //     final Map dataMap = box.toMap();// data convert into the map
+  //     // Convert Map → List of Maps
+  //     dataMap.forEach((key, value) {
+  //       items.add({
+  //         "key": key,
+  //         "value": value,
+  //       });
+  //     });
   //
+  //     print("Items List: ${items.length}");
+  //     if(items.length > 0){
+  //       print("Data is already in the database");
+  //       print("Total Items: ${items.length}");
   //
-  //     // 2. Check if there is any local data to sync.
-  //     if (localPlaces.isNotEmpty) {
-  //       print('--- Found ${localPlaces.length} locally stored items. Syncing to server... ---');
-  //
-  //       // 3. Loop through the local data and "upload" it.
-  //       for (final place in localPlaces) {
-  //         print('Uploading: Title: ${place.title}, Image Path: ${place.image.path}');
-  //         // TODO: Implement your actual API call here to upload each `place`.
-  //         // For example: await myApi.uploadPlace(place);
+  //       // Show items
+  //       for (var item in items) {
+  //         print("${item['key']} : ${item['value']}");
   //       }
-  //       print('--- Sync complete. ---');
   //
-  //       // 4. After successful upload, clear the local database.
-  //       // We call the new method on our provider.
-  //       await ref.read(userPlacesProvider.notifier).clearAllPlaces();
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //           const SnackBar(content: Text('Successfully synced local data to server!')));
-  //     } else {
-  //        print('No local data to sync.');
-  //      }
-  //     // --- NEW LOGIC ENDS ---
-  //
-  //
-  //     // --- Now, submit the CURRENT form data to the API ---
-  //     print('Submitting current form data via API...');
-  //     final String field1Value = _field1Controller.text;
-  //     // TODO: Add your API call logic here for the new data from the form.
-  //     // For example: await myApi.uploadPlace(Place(title: field1Value, image: _selectedImage!));
-  //
-  //     // Clear the form after successful API submission
-  //     _field1Controller.clear();
-  //     _field2Controller.clear();
-  //     _field3Controller.clear();
-  //     _field4Controller.clear();
-  //     setState(() {
-  //       _selectedImage = null;
-  //     });
-  //
+  //     }else{
+  //       print("Save new data");
+  //     }
   //   } else {
+  //
   //     // --- NO INTERNET CONNECTION ---
-  //     // This part remains the same.
   //     print('No internet connection. Saving data to local database.');
+  //     // first step : you should store data in a locally
+  //     box.put('name', 'Soyaib Ali');
+  //     box.put('Company', 'Synergy');
+  //     box.put('city', 'Noida');
+  //     print('----- Data Store in a hive --locally : ');
   //
-  //     ref.read(userPlacesProvider.notifier).addPlace(
-  //       _field1Controller.text,
-  //       _selectedImage!,
-  //     );
-  //
-  //     print('Data for "${_field1Controller.text}" saved locally!');
-  //
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(content: Text('No internet. Saved data locally.')));
-  //
-  //     // Clear the form for the next entry
-  //     _field1Controller.clear();
-  //     _field2Controller.clear();
-  //     _field3Controller.clear();
-  //     _field4Controller.clear();
-  //     setState(() {
-  //       _selectedImage = null;
-  //     });
   //   }
   // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -303,6 +237,7 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
                   ),
                   child: const Text('Push'),
                 ),
+
               ],
             ),
           ),

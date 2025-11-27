@@ -82,6 +82,7 @@ dev_dependencies:
   freezed: ^3.2.3
   flutter_launcher_icons: ^0.14.1
 
+
 flutter_icons:
   android : true
   ios : true
