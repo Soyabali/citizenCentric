@@ -4,7 +4,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../app/di.dart';
 import '../change_password/change_password.dart';
+import '../firebase/auth/auth.dart';
+import '../firebase/firebasehome.dart';
+import '../firebase/firebaselogin.dart';
 import '../forgot_password/forgot_password.dart';
+import '../formdatastore/formdatastore.dart';
 import '../login/login.dart';
 import '../main/main_view.dart';
 import '../onboarding/onboarding.dart';
@@ -22,6 +26,8 @@ class Routes {
   static const String mainRoute = "/main";
   static const String changePasswordRoute = "/changePassword";
   static const String storeDetailsRoute = "/storeDetails";
+  static const String firebaseHome = "/firebaseHome";
+  static const String formDataStore = "/formDataStore";
 }
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
@@ -46,6 +52,12 @@ class RouteGenerator {
       case Routes.changePasswordRoute:
         initChangePasswordModule();
         return MaterialPageRoute(builder: (_) => ChangePassword());
+        // firebase
+      case Routes.firebaseHome:
+        initFirebaseModule();
+        return MaterialPageRoute(builder: (_) => FirebaseHome());
+      case Routes.formDataStore:
+        return MaterialPageRoute(builder: (_) => FormDataStore());
       default:
         return unDefinedRoute();
     }

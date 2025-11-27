@@ -38,6 +38,8 @@ class AppStrings {
   static const String stores = "stores";
   static const String changeLanguage = "change_language";
   static const String contactUs = "contact_us";
+  static const String firebase = "FireBase";
+  static const String formDataStorage = "Form Data Storage";
   static const String inviteYourFriends = "invite_your_friends";
   static const String logout = "logout";
   static const String resetpassword = "reset_password";

@@ -1,6 +1,9 @@
 import 'package:citizencentric/app/app_prefs.dart';
 import 'package:citizencentric/domain/usecase/staffList_usecase.dart';
 import 'package:citizencentric/presentation/main/home/home_viewmodel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,49 +20,72 @@ import '../domain/usecase/login_usecase.dart';
 import '../presentation/change_password/change_password_ui_model.dart';
 import '../presentation/login/login_viewmodel.dart';
 
+
+import 'package:citizencentric/app/app_prefs.dart';
+import 'package:citizencentric/domain/usecase/staffList_usecase.dart';
+// ... other imports
+
 final instance = GetIt.instance;
 
- initAppModule() async {
+// CORRECTED initAppModule
+Future<void> initAppModule() async {
 
-final sharedPrefs = await SharedPreferences.getInstance();
-// shared prefs instance
- instance.registerLazySingleton<SharedPreferences>(()=> sharedPrefs);
+  // shared prefs instance
+  if (!GetIt.I.isRegistered<SharedPreferences>()) {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
+  }
 
-   // app prefs instance
-   instance.registerLazySingleton<AppPreferences>(()=>AppPreferences(instance()));
+  // app prefs instance
+  if (!GetIt.I.isRegistered<AppPreferences>()) {
+    instance.registerLazySingleton<AppPreferences>(() => AppPreferences(instance()));
+  }
 
-   // network info
-   instance.registerLazySingleton<NetworkInfo>(
-           () => NetworkInfoImpl(InternetConnection()));
+  // network info
+  if (!GetIt.I.isRegistered<NetworkInfo>()) {
+    instance.registerLazySingleton<NetworkInfo>(
+            () => NetworkInfoImpl(InternetConnection()));
+  }
 
-   // dio factory
-   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
+  // dio factory
+  if (!GetIt.I.isRegistered<DioFactory>()) {
+    instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
+  }
 
-   // app  service client
-   final dio = await instance<DioFactory>().getDio();
-   instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient(dio));
+  // app service client
+  if (!GetIt.I.isRegistered<AppServiceClient>()) {
+    final dio = await instance<DioFactory>().getDio();
+    instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient(dio));
+  }
 
-   // remote data source
-   instance.registerLazySingleton<RemoteDataSource>(
-           () => RemoteDataSourceImplementer(instance()));
+  // remote data source
+  if (!GetIt.I.isRegistered<RemoteDataSource>()) {
+    instance.registerLazySingleton<RemoteDataSource>(
+            () => RemoteDataSourceImplementer(instance()));
+  }
 
-   // local data source
-   instance.registerLazySingleton<LocalDataSource>(
-           () => LocalDataSourceImplementer());
+  // local data source
+  if (!GetIt.I.isRegistered<LocalDataSource>()) {
+    instance.registerLazySingleton<LocalDataSource>(
+            () => LocalDataSourceImplementer());
+  }
 
-   // repository
-   instance.registerLazySingleton<Repository>(
-           () => RepositoryImpl(instance(), instance(), instance()));
+  // repository
+  if (!GetIt.I.isRegistered<Repository>()) {
+    instance.registerLazySingleton<Repository>(
+            () => RepositoryImpl(instance(), instance(), instance()));
+  }
+}
 
- }
- // login di
+// login di - THIS IS ALREADY CORRECT
 initLoginModule(){
   if(!GetIt.I.isRegistered<LoginUseCase>()){
     instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
     instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
   }
 }
-// changePassword di
+
+// changePassword di - THIS IS ALREADY CORRECT
 initChangePasswordModule(){
   if(!GetIt.I.isRegistered<ChangPasswordUseCase>()){
     instance.registerFactory<ChangPasswordUseCase>(() => ChangPasswordUseCase(instance()));
@@ -67,7 +93,7 @@ initChangePasswordModule(){
   }
 }
 
-// home di
+// home di - THIS IS ALREADY CORRECT
 initHomeModule() {
   if (!GetIt.I.isRegistered<StaffListUseCase>()) {
     instance.registerFactory<StaffListUseCase>(() => StaffListUseCase(instance()));
@@ -75,10 +101,106 @@ initHomeModule() {
   }
 }
 
+// resetModules - THIS LOGIC IS NOW SAFE
 resetModules() {
   instance.reset(dispose: false);
   initAppModule();
   initLoginModule();
   initChangePasswordModule();
+}
 
- }
+// firebaseAuth - THIS IS ALREADY CORRECT
+initFirebaseModule() {
+  if (!GetIt.I.isRegistered<FirebaseAuth>()) {
+    instance.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+  }
+
+  if (!GetIt.I.isRegistered<FirebaseFirestore>()) {
+    instance.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  }
+
+  if (!GetIt.I.isRegistered<FirebaseStorage>()) {
+    instance.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
+  }
+}
+
+
+// final instance = GetIt.instance;
+//
+//  initAppModule() async {
+//
+// final sharedPrefs = await SharedPreferences.getInstance();
+// // shared prefs instance
+//  instance.registerLazySingleton<SharedPreferences>(()=> sharedPrefs);
+//
+//    // app prefs instance
+//    instance.registerLazySingleton<AppPreferences>(()=>AppPreferences(instance()));
+//
+//    // network info
+//    instance.registerLazySingleton<NetworkInfo>(
+//            () => NetworkInfoImpl(InternetConnection()));
+//
+//    // dio factory
+//    instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
+//
+//    // app  service client
+//    final dio = await instance<DioFactory>().getDio();
+//    instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient(dio));
+//
+//    // remote data source
+//    instance.registerLazySingleton<RemoteDataSource>(
+//            () => RemoteDataSourceImplementer(instance()));
+//
+//    // local data source
+//    instance.registerLazySingleton<LocalDataSource>(
+//            () => LocalDataSourceImplementer());
+//
+//    // repository
+//    instance.registerLazySingleton<Repository>(
+//            () => RepositoryImpl(instance(), instance(), instance()));
+//
+//  }
+//  // login di
+// initLoginModule(){
+//   if(!GetIt.I.isRegistered<LoginUseCase>()){
+//     instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
+//     instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
+//   }
+// }
+// // changePassword di
+// initChangePasswordModule(){
+//   if(!GetIt.I.isRegistered<ChangPasswordUseCase>()){
+//     instance.registerFactory<ChangPasswordUseCase>(() => ChangPasswordUseCase(instance()));
+//     instance.registerFactory<ChangePasswordUiModel>(() => ChangePasswordUiModel(instance()));
+//   }
+// }
+//
+// // home di
+// initHomeModule() {
+//   if (!GetIt.I.isRegistered<StaffListUseCase>()) {
+//     instance.registerFactory<StaffListUseCase>(() => StaffListUseCase(instance()));
+//     instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
+//   }
+// }
+//
+// resetModules() {
+//   instance.reset(dispose: false);
+//   initAppModule();
+//   initLoginModule();
+//   initChangePasswordModule();
+//
+//  }
+//  // firebaseAuth
+// initFirebaseModule() {
+//   if (!GetIt.I.isRegistered<FirebaseAuth>()) {
+//     instance.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+//   }
+//
+//   if (!GetIt.I.isRegistered<FirebaseFirestore>()) {
+//     instance.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+//   }
+//
+//   if (!GetIt.I.isRegistered<FirebaseStorage>()) {
+//     instance.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
+//   }
+// }

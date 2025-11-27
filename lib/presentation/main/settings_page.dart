@@ -48,7 +48,7 @@ class _SettingsPageState extends State<SettingPage> {
         ),
         ListTile(
           title: Text(
-            AppStrings.contactUs,
+            AppStrings.firebase,
             style: Theme.of(context).textTheme.headlineSmall,
           ).tr(),
           leading: SvgPicture.asset(ImageAssets.contactUsIc),
@@ -58,7 +58,22 @@ class _SettingsPageState extends State<SettingPage> {
             child: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
           ),
           onTap: () {
-            _contactUs();
+            _firebase();
+          },
+        ),
+        ListTile(
+          title: Text(
+            AppStrings.formDataStorage,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ).tr(),
+          leading: SvgPicture.asset(ImageAssets.contactUsIc),
+          trailing: Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
+            child: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
+          ),
+          onTap: () {
+            _formDataStorage();
           },
         ),
         ListTile(
@@ -105,8 +120,13 @@ class _SettingsPageState extends State<SettingPage> {
     Phoenix.rebirth(context); // restart to apply language changes
   }
 
-  void _contactUs() {
+  void _firebase() {
     // its a task for you to open any web bage with dummy content
+    Navigator.pushReplacementNamed(context, Routes.firebaseHome);
+  }
+  void _formDataStorage() {
+    // its a task for you to open any web bage with dummy content
+    Navigator.pushNamed(context, Routes.formDataStore);
   }
 
   void _inviteFriends() {
@@ -119,88 +139,3 @@ class _SettingsPageState extends State<SettingPage> {
     Navigator.pushReplacementNamed(context, Routes.loginRoute);
   }
 }
-
-// class SettingPage extends StatefulWidget {
-//   const SettingPage({super.key});
-//
-//   @override
-//   State<SettingPage> createState() => _SettingPageState();
-// }
-//
-// class _SettingPageState extends State<SettingPage> {
-//
-//   AppPreferences _appPreferences = instance<AppPreferences>();
-//   LocalDataSource _localDataSource = instance<LocalDataSource>();
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView(
-//       padding: EdgeInsets.all(AppPadding.p8),
-//       children: [
-//         ListTile(
-//           title: Text(
-//             AppStrings.changeLanguage,
-//             style: Theme.of(context).textTheme.headlineSmall,
-//           ).tr(),
-//           leading: SvgPicture.asset(ImageAssets.changeLangIc),
-//           trailing: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
-//
-//           onTap: () {
-//             _changeLanguage();
-//           },
-//         ),
-//         ListTile(
-//           title: Text(
-//             AppStrings.contactUs,
-//             style: Theme.of(context).textTheme.headlineSmall,
-//           ).tr(),
-//           leading: SvgPicture.asset(ImageAssets.contactUsIc),
-//           trailing: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
-//           onTap: () {
-//             _contactUs();
-//           },
-//         ),
-//         ListTile(
-//           title: Text(
-//             AppStrings.inviteYourFriends,
-//             style: Theme.of(context).textTheme.headlineSmall,
-//           ).tr(),
-//           leading: SvgPicture.asset(ImageAssets.inviteFriendsIc),
-//           trailing: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
-//           onTap: () {
-//
-//           },
-//         ),
-//         ListTile(
-//           title: Text(
-//             AppStrings.logout,
-//             style: Theme.of(context).textTheme.headlineSmall,
-//           ).tr(),
-//           leading: SvgPicture.asset(ImageAssets.logoutIc),
-//           trailing: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
-//           onTap: () {
-//             _logout();
-//           },
-//         )
-//       ],
-//     );
-//   }
-//   void _changeLanguage() {
-//     // i will apply localisation later
-//   }
-//
-//   void _contactUs() {
-//     // its a task for you to open any web bage with dummy content
-//   }
-//
-//   void _inviteFriends() {
-//     // its a task to share app name with friends
-//   }
-//
-//   void _logout() {
-//     _appPreferences.logout(); // clear login flag from app prefs
-//     _localDataSource.clearCache();
-//     Navigator.pushReplacementNamed(context, Routes.loginRoute);
-//   }
-// }

@@ -1,6 +1,8 @@
 // here we put a model every api or every response.
 // we put a slider model after that we put a login model after that as a need.
-
+import 'dart:io';
+import 'package:uuid/uuid.dart';
+const uuid = Uuid();
 
 // model Dashboard
 class SliderObject {
@@ -123,4 +125,17 @@ class StaffListModel {
     required this.sDsgName,
     required this.sEmpImage,
 });
+}
+// -----LocalSTORAGE DEMY MODEL
+
+class Place {
+  Place({
+    required this.title,
+    required this.image,
+    String? id,
+  }) : id = id ?? uuid.v4();
+
+  final String id;
+  final String title;
+  final File image;
 }

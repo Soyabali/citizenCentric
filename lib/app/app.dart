@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../presentation/resources/routes_manager.dart';
 import 'di.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class MyApp extends StatefulWidget {
 
@@ -27,6 +28,19 @@ class _MyAppState extends State<MyApp> {
       context.setLocale(locale)
     });
     super.didChangeDependencies();
+  }
+
+  void setupPushNotifications() async {
+    final fcm = FirebaseMessaging.instance;
+    // here you pick a token and send a notification befafe of token
+    final token = await fcm.getToken();
+    print("=--22---------- $token");// you could send this token (via Http or the Firebase SDK)TO A BACKED
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setupPushNotifications();
   }
 
   @override
