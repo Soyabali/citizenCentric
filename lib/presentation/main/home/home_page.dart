@@ -28,14 +28,14 @@ class _HomePageState extends State<HomePage> {
     _bind();
     super.initState();
   }
-  void didChangeDependencies(){
+  void didChangeDependencies() {
     // call a api in a view
     _bind();
     print("-----Call a api in a didChangeDependencies-----");
     super.didChangeDependencies();
   }
 
-  //   // bind view to ViewModel
+  // bind view to ViewModel
 
   _bind() {
     _viewModel.start();
@@ -51,14 +51,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Center(
       child: SingleChildScrollView(
-        child: StreamBuilder<FlowState>(
+        child: StreamBuilder<FlowState>( // FlowState is a class Rendering state dialog
           stream: _viewModel.outputState,
-          builder: (context, snapshot) {
+          builder: (context, snapshot)
+          {
             return snapshot.data?.getScreenWidget(context, _getContentWidgets(),
                     () {
                   _viewModel.start();
-                }) ??
-                Container();
+                }) ?? Container();
           },
         ),
       ),

@@ -26,6 +26,7 @@ enum StateRendererType {
 }
 
 class StateRenderer extends StatelessWidget {
+
   StateRendererType stateRendererType;
   String message;
   String title;
@@ -41,7 +42,9 @@ class StateRenderer extends StatelessWidget {
         title = title ?? EMPTY,
         super(key: key);
 
-  LoginViewModel _viewModel = instance<LoginViewModel>();
+ /// todo here this may be big mistake you should see carefully.
+  ///
+ // LoginViewModel _viewModel = instance<LoginViewModel>();
 
 
   @override
@@ -150,7 +153,7 @@ class StateRenderer extends StatelessWidget {
                 if (Navigator.canPop(context)) {
                   Navigator.of(context, rootNavigator: true).pop();
                 }
-                _viewModel.inputState.add(ContentState());
+              //  _viewModel.inputState.add(ContentState());
 
                 // if (stateRendererType ==
                 //     StateRendererType.FULL_SCREEN_ERROR_STATE) {
@@ -177,223 +180,3 @@ class StateRenderer extends StatelessWidget {
     );
   }
 }
-
-// enum StateRendererType {
-//   // POPUP STATES
-//   POPUP_LOADING_STATE,
-//   POPUP_ERROR_STATE,
-//   // FULL SCREEN STATES
-//   FULL_SCREEN_LOADING_STATE,
-//   FULL_SCREEN_ERROR_STATE,
-//   CONTENT_SCREEN_STATE, // THE UI OF THE SCREEN
-//   EMPTY_SCREEN_STATE // EMPTY VIEW WHEN WE RECEIVE NO DATA FROM API SIDE FOR LIST SCREEN
-// }
-//
-// class StateRenderer extends StatelessWidget {
-//
-//   StateRendererType stateRendererType;
-//   String message;
-//   String title;
-//   Function? retryActionFunction;
-//
-//   StateRenderer(
-//       {Key? key,
-//         required this.stateRendererType,
-//         String? message,
-//         String? title,
-//         required this.retryActionFunction})
-//       : message = message ?? AppStrings.loading.tr(),
-//         title = title ?? EMPTY,
-//         super(key: key);
-//
-//   LoginViewModel _viewModel = instance<LoginViewModel>();
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return _getStateWidget(context);
-//   }
-//
-//   Widget _getStateWidget(BuildContext context) {
-//     switch (stateRendererType) {
-//       case StateRendererType.POPUP_LOADING_STATE:
-//         return _getPopUpDialog(
-//             context, [
-//               _getAnimatedImage(JsonAssets.loading)
-//              ]
-//         );
-//       case StateRendererType.POPUP_ERROR_STATE:
-//         WidgetsBinding.instance.addPostFrameCallback((_) {
-//           showDialog(
-//             context: context,
-//             barrierDismissible: false,
-//             builder: (_) => _getPopUpDialog(context,
-//                 [
-//               _getAnimatedImage(JsonAssets.error),
-//               _getMessage(message),
-//               _getRetryButton(AppStrings.ok, context)
-//             ]),
-//           );
-//         });
-//         return Container();
-//
-//         // return _getPopUpDialog(context,
-//         //     [
-//         //       // list of item
-//         //    _getAnimatedImage(JsonAssets.error),
-//         //    _getMessage(message),
-//         //    _getRetryButton(AppStrings.ok.tr(), context)
-//         //
-//         //     ]
-//         // );
-//
-//       case StateRendererType.FULL_SCREEN_LOADING_STATE:
-//         return _getItemsInColumn(
-//             [
-//               _getAnimatedImage(JsonAssets.loading),
-//               _getMessage(message)
-//             ]
-//         );
-//       case StateRendererType.FULL_SCREEN_ERROR_STATE:
-//         return _getItemsInColumn(
-//             [
-//           _getAnimatedImage(JsonAssets.error),
-//           _getMessage(message),
-//           _getRetryButton(AppStrings.retry_again.tr(), context)
-//         ]
-//         );
-//       case StateRendererType.CONTENT_SCREEN_STATE:
-//         return Container();
-//       case StateRendererType.EMPTY_SCREEN_STATE:
-//         return _getItemsInColumn(
-//             [
-//               _getAnimatedImage(JsonAssets.empty),
-//               _getMessage(message)
-//             ]
-//         );
-//       default:
-//         return Container();
-//     }
-//   }
-//
-//   Widget _getPopUpDialog(BuildContext context, List<Widget> children) {
-//     return Dialog(
-//       shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(AppSize.s14)),
-//       elevation: AppSize.s1_5,
-//       backgroundColor: Colors.transparent,
-//       child: Container(
-//         decoration: BoxDecoration(
-//             color: ColorManager.white,
-//             shape: BoxShape.rectangle,
-//             borderRadius: BorderRadius.circular(AppSize.s14),
-//             boxShadow: [
-//               BoxShadow(
-//                   color: Colors.black26,
-//                   blurRadius: AppSize.s12,
-//                   offset: Offset(
-//                   AppSize.s0,
-//                   AppSize.s12))
-//             ]),
-//         child: _getDialogContent(context, children),
-//       ),
-//     );
-//   }
-//
-//   Widget _getDialogContent(BuildContext context, List<Widget> children) {
-//     return Column(
-//       mainAxisSize: MainAxisSize.min,
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: children,
-//     );
-//   }
-//
-//   Widget _getAnimatedImage(String animationName) {
-//     return SizedBox(
-//       height: AppSize.s100,
-//       width: AppSize.s100,
-//       child: Lottie.asset(animationName),
-//     );
-//   }
-//
-//   Widget _getMessage(String message) {
-//     return Center(
-//       child: Padding(
-//         padding: const EdgeInsets.all(AppPadding.p18),
-//         child: Text(
-//           message,
-//           style:
-//           getMediumStyle(
-//           color: ColorManager.black,
-//           fontSize: FontSize.s16),
-//         ),
-//       ),
-//     );
-//   }
-//   Widget _getRetryButton(String buttonTitle, BuildContext context) {
-//     return Center(
-//       child: Padding(
-//         padding: const EdgeInsets.all(AppPadding.p18),
-//         child: SizedBox(
-//           width: AppSize.s180,
-//           child: ElevatedButton(
-//             onPressed: () {
-//               // Close dialog
-//               if (Navigator.canPop(context)) {
-//                 Navigator.of(context, rootNavigator: true).pop();
-//               }
-//
-//               // IMPORTANT: Reset UI state
-//               _viewModel.inputState.add(ContentState());
-//             },
-//             child: Text(buttonTitle),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   // Widget _getRetryButton(String buttonTitle, BuildContext context) {
-//   //   return Center(
-//   //     child: Padding(
-//   //       padding: const EdgeInsets.all(AppPadding.p18),
-//   //       child: SizedBox(
-//   //         width: AppSize.s180,
-//   //         child: ElevatedButton(
-//   //             onPressed: () {
-//   //               print('-----------137-----');
-//   //              // Navigator.of(context).pop();
-//   //               // popupContext
-//   //               if (Navigator.canPop(context)) {
-//   //                 Navigator.of(context, rootNavigator: true).pop();
-//   //               }
-//   //             // Navigator.of(context, rootNavigator: true).pop();
-//   //             //   if (stateRendererType ==
-//   //             //       StateRendererType.FULL_SCREEN_ERROR_STATE) {
-//   //             //     retryActionFunction
-//   //             //         ?.call(); // to call the API function again to retry
-//   //             //     //Navigator.of(context).pop();
-//   //             //     if (Navigator.canPop(context)) {
-//   //             //       Navigator.pop(context);
-//   //             //     }
-//   //             //   } else {
-//   //             //     Navigator.of(context).pop(); // popup state error so we need to dismiss the dialog
-//   //             //   }
-//   //             },
-//   //             child: Text(buttonTitle)),
-//   //       ),
-//   //     ),
-//   //   );
-//   // }
-//
-//   Widget _getItemsInColumn(List<Widget> children) {
-//     return Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: children,
-//       ),
-//     );
-//   }
-// }

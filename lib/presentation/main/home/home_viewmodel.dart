@@ -13,7 +13,7 @@ class HomeViewModel extends BaseViewModel implements HomeViewModelInputs,HomeVie
 
   // StaffListUsecase
   StaffListUseCase _staffListUseCase;
-  StreamController _bannersStreamController = BehaviorSubject<List<StaffListModel>>();
+  StreamController _bannersStreamController = BehaviorSubject<List<StaffListModel>>();// take a model data in a streamController
   StreamController _serviceStreamController = BehaviorSubject<List<StaffListModel>>();
   StreamController _storeStreamController = BehaviorSubject<List<StaffListModel>>();
   HomeViewModel(this._staffListUseCase);
@@ -36,7 +36,7 @@ class HomeViewModel extends BaseViewModel implements HomeViewModelInputs,HomeVie
     // here i dont pass any argument i only give a StaffListInput but not any
     // argument in this class, if you need then you should entr
     // as a login api
-    (await _staffListUseCase.execute(StaffListInput(""))).fold(
+    (await _staffListUseCase.execute(StaffListInput(stfffListObject.sEmpCode))).fold(
         (failure) {
           inputState.add(ErrorState(StateRendererType.FULL_SCREEN_ERROR_STATE, failure.message));
         },(list){
@@ -60,7 +60,7 @@ class HomeViewModel extends BaseViewModel implements HomeViewModelInputs,HomeVie
    //  Input Part
 
   @override
-  Sink get inputBanners => _bannersStreamController.sink;
+  Sink get inputBanners => _bannersStreamController.sink;// put the model data into the stream
 
   @override
   Sink get inputServices => _serviceStreamController.sink;
@@ -82,6 +82,8 @@ abstract class HomeViewModelInputs {
   Sink get inputBanners;
 }
 abstract class HomeViewModelOutputs{
+
+  // here we pass a same data : StaffListModel .
 
   Stream<List<StaffListModel>> get outputStores;
 

@@ -2,11 +2,13 @@ import 'package:citizencentric/app/app_prefs.dart';
 import 'package:citizencentric/presentation/resources/theme_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../presentation/resources/routes_manager.dart';
+import '../presentation/riverpod/main_view_controller..dart';
 import 'di.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
 
   MyApp._internal(); // private named constructor
   int appState=0;
@@ -15,10 +17,10 @@ class MyApp extends StatefulWidget {
   factory MyApp() => instance; // factort for the class instance
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
 
   AppPreferences _appPreferences = instance<AppPreferences>();
 
@@ -45,6 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = ref.watch(appThemeProvider);// lisen them state with provider
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -55,8 +58,9 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: RouteGenerator.getRoute,
       // inittialRoute
       initialRoute: Routes.splashRoute,
-     // theme
-      theme: getApplicationTheme(),
+      // theme
+      //theme: getApplicationTheme(),
+      theme: isDarkTheme ? getDarkTheme() : getApplicationTheme(),
     );
   }
 }

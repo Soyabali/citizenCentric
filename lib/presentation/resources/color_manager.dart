@@ -13,6 +13,7 @@ class ColorManager {
   static Color white = HexColor.fromHex("#FFFFFF");
   static Color error = HexColor.fromHex("#e61f34");
   static Color black= HexColor.fromHex("#000000"); // red color
+  static Color darkBackground = HexColor.fromHex("#121212");
 }
 
 extension HexColor on Color {

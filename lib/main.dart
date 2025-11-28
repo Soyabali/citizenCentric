@@ -10,15 +10,15 @@ import 'firebase_options.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // 1. Import Riverpod
 
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await initAppModule();
-  await HiveService.init();// have data base
+  //await initAppModule();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await HiveService.init();// have data base
   // Add a dependece here add all di.
   await initAppModule();
   initLoginModule(); // <--- ADD THIS LINE

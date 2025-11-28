@@ -91,4 +91,113 @@ ThemeData getApplicationTheme() {
   borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
   )
   );
+
+}
+
+//    -----get application DarkTheme-----
+
+ThemeData getDarkTheme() {
+  return ThemeData(
+    brightness: Brightness.dark,
+
+    // Main colors
+    primaryColor: ColorManager.darkPrimary,
+    primaryColorLight: ColorManager.grey2,
+    primaryColorDark: ColorManager.black,
+    disabledColor: ColorManager.grey2,
+    hintColor: ColorManager.grey1,
+
+    scaffoldBackgroundColor: ColorManager.black,
+
+    // Card Theme
+    cardTheme: CardThemeData(
+      color: ColorManager.darkBackground,
+      shadowColor: ColorManager.black.withOpacity(0.4),
+      elevation: AppSize.s2,
+    ),
+
+    // AppBar Theme
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      color: ColorManager.darkBackground,
+      elevation: AppSize.s2,
+      shadowColor: ColorManager.grey2,
+      titleTextStyle: getRegularStyle(
+        color: ColorManager.white,
+        fontSize: FontSize.s16,
+      ),
+      iconTheme: IconThemeData(color: ColorManager.white),
+    ),
+
+    // Button Theme
+    buttonTheme: ButtonThemeData(
+      shape: const StadiumBorder(),
+      disabledColor: ColorManager.grey2,
+      buttonColor: ColorManager.darkPrimary,
+      splashColor: ColorManager.grey1,
+    ),
+
+    // Elevated Button
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorManager.darkPrimary,
+        textStyle: getRegularStyle(color: ColorManager.white),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSize.s12),
+        ),
+      ),
+    ),
+
+    // Text Theme
+    textTheme: TextTheme(
+      displayLarge:
+      getSemiBoldStyle(color: ColorManager.white, fontSize: FontSize.s16),
+
+      titleMedium:
+      getMediumStyle(color: ColorManager.grey, fontSize: FontSize.s14),
+
+      bodySmall: getRegularStyle(color: ColorManager.grey1),
+
+      bodyLarge: getRegularStyle(color: ColorManager.grey2),
+
+      displaySmall:
+      getBoldStyle(color: ColorManager.darkPrimary, fontSize: FontSize.s16),
+
+      headlineLarge:
+      getRegularStyle(color: ColorManager.darkPrimary, fontSize: FontSize.s14),
+    ),
+
+    // Input Field Theme
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: ColorManager.darkBackground.withOpacity(.7),
+
+      contentPadding: const EdgeInsets.all(AppPadding.p8),
+
+      hintStyle: getRegularStyle(color: ColorManager.grey1),
+      labelStyle: getMediumStyle(color: ColorManager.grey2),
+      errorStyle: getRegularStyle(color: ColorManager.error),
+
+      // Borders
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.grey2),
+        borderRadius: BorderRadius.circular(AppSize.s8),
+      ),
+
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.darkPrimary),
+        borderRadius: BorderRadius.circular(AppSize.s8),
+      ),
+
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.error),
+        borderRadius: BorderRadius.circular(AppSize.s8),
+      ),
+
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.darkPrimary),
+        borderRadius: BorderRadius.circular(AppSize.s8),
+      ),
+    ),
+  );
 }

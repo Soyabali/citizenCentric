@@ -10,7 +10,7 @@ class StaffListUseCase implements BaseUseCase<StaffListInput, List<StaffListMode
 {
   //  BaseUseCase , this is a BaseUseCase class that here i manage a login or Any Other UseCase.
   // LoginUseCaseInput this is a class that have a parameter to api or api body field mentions.
-  // Authentication , this is a model class , where we stored the parapeter.
+  // StaffListModel , this is a model class , where we stored the parapeter.
 
   Repository _repository;
   // this is a Repository class that here i manage a login or Any Other Repository.
@@ -18,6 +18,7 @@ class StaffListUseCase implements BaseUseCase<StaffListInput, List<StaffListMode
   StaffListUseCase(this._repository);// this is a constructor that take a parameter _repository.
 
   // Authentication this is a loginModel class
+
   @override
   Future<Either<Failure, List<StaffListModel>>> execute(StaffListInput input) async {
     return await _repository.staffList(StaffListRequest(input.sEmpCode));
