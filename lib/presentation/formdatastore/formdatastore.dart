@@ -24,6 +24,7 @@ class FormDataStore extends ConsumerStatefulWidget {
 }
 
 // Step 4: Change State to ConsumerState<FormDataStore>
+
 class _FormDataStoreState extends ConsumerState<FormDataStore> {
   final TextEditingController _field1Controller = TextEditingController();
   final TextEditingController _field2Controller = TextEditingController();
@@ -35,7 +36,7 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
   // You will also need an image file to save. Let's add a placeholder.
   File? _selectedImage;
 
-  final box = HiveService.myBox;
+  final box = HiveService.myBox;// hive database access
   late StreamSubscription<InternetStatus> _listener;
 
   @override
@@ -70,7 +71,7 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
     {
       print('Internet is connected.');
       // Convert Hive data into List<Map>
-      final dataMap = box.toMap();
+      final dataMap = box.toMap();// To get a stored data as a Map
       final List<Map<String, dynamic>> items = [];
 
       dataMap.forEach((key, value) {
@@ -90,13 +91,11 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
         // TODO: CALL YOUR API HERE
         print("⏫ Sending to server...");
         // await ApiService.send(items);
-
         // After sending → clear local db
         await box.clear();
         print("Local data cleared after sync.");
       } else {
         print("Save new data");
-
       }
 
     } else {
@@ -111,51 +110,6 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
     }
   }
 
-
-  // void _handlePush() async {
-  //   // --- Check for internet connection ---
-  //   if (await _networkInfo.isConnected) {
-  //     print('Internet is connected.');
-  //
-  //     final box = Hive.box('myBox');
-  //     //box.clear();
-  //     // List that will store key-value pairs
-  //     final List<Map<String, dynamic>> items = [];
-  //     // Convert Hive data to Map
-  //     final Map dataMap = box.toMap();// data convert into the map
-  //     // Convert Map → List of Maps
-  //     dataMap.forEach((key, value) {
-  //       items.add({
-  //         "key": key,
-  //         "value": value,
-  //       });
-  //     });
-  //
-  //     print("Items List: ${items.length}");
-  //     if(items.length > 0){
-  //       print("Data is already in the database");
-  //       print("Total Items: ${items.length}");
-  //
-  //       // Show items
-  //       for (var item in items) {
-  //         print("${item['key']} : ${item['value']}");
-  //       }
-  //
-  //     }else{
-  //       print("Save new data");
-  //     }
-  //   } else {
-  //
-  //     // --- NO INTERNET CONNECTION ---
-  //     print('No internet connection. Saving data to local database.');
-  //     // first step : you should store data in a locally
-  //     box.put('name', 'Soyaib Ali');
-  //     box.put('Company', 'Synergy');
-  //     box.put('city', 'Noida');
-  //     print('----- Data Store in a hive --locally : ');
-  //
-  //   }
-  // }
 
 
   @override
