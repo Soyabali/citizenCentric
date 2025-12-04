@@ -1,7 +1,10 @@
 
 import 'package:camera/camera.dart';
+import 'package:citizencentric/ml/pose_dector.dart';
 import 'package:citizencentric/ml/realtimeimagelabeling.dart';
+import 'package:citizencentric/ml/smartReply.dart';
 import 'package:citizencentric/ml/textrecognigation.dart';
+import 'package:citizencentric/ml/texttranslation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'barcode_scanning.dart';
@@ -129,58 +132,145 @@ class _MyHomeState extends State<MLHomeScreen> {
                   fontSize: 16
               ),),),
               SizedBox(height: 10),
-              // ElevatedButton(
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: Colors.black,            // Button background
-              //     foregroundColor: Colors.white,            // Text color
-              //     shape: const StadiumBorder(),             // Stadium shape
-              //     padding: const EdgeInsets.symmetric(
-              //       horizontal: 24,
-              //       vertical: 12,
-              //     ),
-              //   ),
-              //   onPressed: () {
-              //     // TODO: your function here
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(builder: (context) => FaceDetectionScreen()));
-              //     // Navigator.push(
-              //     //     context,
-              //     //     MaterialPageRoute(builder: (context) => FaceDection2(cameras: cameras)));
-              //     print('------ImageLabeling-----');
-              //   }, child: Text('FaceDetection',style: TextStyle(
-              //     color: Colors.white,
-              //     fontSize: 16
-              // ),),),
-              // SizedBox(height: 10),
-              // ElevatedButton(
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: Colors.black,            // Button background
-              //     foregroundColor: Colors.white,            // Text color
-              //     shape: const StadiumBorder(),             // Stadium shape
-              //     padding: const EdgeInsets.symmetric(
-              //       horizontal: 24,
-              //       vertical: 12,
-              //     ),
-              //   ),
-              //   onPressed: () {
-              //     // TODO: your function here
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(builder: (context) => ObjectDetectionScreen()));
-              //     // Navigator.push(
-              //     //     context,
-              //     //     MaterialPageRoute(builder: (context) => ObjectDetectionScreen(cameras: cameras)));
-              //
-              //     // Navigator.push(
-              //     //     context,
-              //     //     MaterialPageRoute(builder: (context) => FaceDection2(cameras: cameras)));
-              //     print('------ImageLabeling-----');
-              //   }, child: Text('ObjectDetection',style: TextStyle(
-              //     color: Colors.white,
-              //     fontSize: 16
-              // ),),),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,            // Button background
+                  foregroundColor: Colors.white,            // Text color
+                  shape: const StadiumBorder(),             // Stadium shape
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  // TODO: your function here
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FaceDetectionScreen()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => FaceDection2(cameras: cameras)));
+                  print('------ImageLabeling-----');
+                }, child: Text('FaceDetection',style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16
+              ),),),
+              // Object Dection
+              SizedBox(height: 10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,            // Button background
+                  foregroundColor: Colors.white,            // Text color
+                  shape: const StadiumBorder(),             // Stadium shape
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  // TODO: your function here
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ObjectDetectionScreen()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => ObjectDetectionScreen(cameras: cameras)));
 
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => FaceDection2(cameras: cameras)));
+                  print('------ImageLabeling-----');
+                }, child: Text('ObjectDetection',style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16
+              ),),),
+              // PoseDection
+              SizedBox(height: 10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,            // Button background
+                  foregroundColor: Colors.white,            // Text color
+                  shape: const StadiumBorder(),             // Stadium shape
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  // TODO: your function here
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PoseDetectionScreen()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => ObjectDetectionScreen(cameras: cameras)));
+
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => FaceDection2(cameras: cameras)));
+                  print('------ImageLabeling-----');
+                }, child: Text('PoseDetection',style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16
+              ),),),
+              // TextTranslation
+              SizedBox(height: 10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,            // Button background
+                  foregroundColor: Colors.white,            // Text color
+                  shape: const StadiumBorder(),             // Stadium shape
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  // TODO: your function here
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TextTranslation()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => ObjectDetectionScreen(cameras: cameras)));
+
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => FaceDection2(cameras: cameras)));
+                  print('------ImageLabeling-----');
+                }, child: Text('TextTranslation',style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16
+              ),),),
+              // Smart Reply
+              SizedBox(height: 10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,            // Button background
+                  foregroundColor: Colors.white,            // Text color
+                  shape: const StadiumBorder(),             // Stadium shape
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  // TODO: your function here
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SmartReplyScreen()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => ObjectDetectionScreen(cameras: cameras)));
+
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(builder: (context) => FaceDection2(cameras: cameras)));
+                  print('------ImageLabeling-----');
+                }, child: Text('Smart Reply',style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16
+              ),),),
 
             ],
           ),
