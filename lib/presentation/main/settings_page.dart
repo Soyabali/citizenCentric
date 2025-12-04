@@ -78,7 +78,7 @@ class _SettingsPageState extends State<SettingPage> {
         ),
         ListTile(
           title: Text(
-            AppStrings.inviteYourFriends,
+            AppStrings.mlhome,
             style: Theme.of(context).textTheme.headlineSmall,
           ).tr(),
           leading: SvgPicture.asset(ImageAssets.inviteFriendsIc),
@@ -131,6 +131,7 @@ class _SettingsPageState extends State<SettingPage> {
 
   void _inviteFriends() {
     // its a task to share app name with friends
+    Navigator.pushNamed(context, Routes.mlscreen);
   }
 
   void _logout() {

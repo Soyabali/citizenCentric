@@ -41,6 +41,7 @@ class AppStrings {
   static const String firebase = "FireBase";
   static const String formDataStorage = "Form Data Storage";
   static const String inviteYourFriends = "invite_your_friends";
+  static const String mlhome = "ML HomeScreen";
   static const String logout = "logout";
   static const String resetpassword = "reset_password";
   static const String somethingWentWrong="Some ThingWentWrong";

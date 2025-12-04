@@ -114,7 +114,7 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
 
   @override
   Widget build(BuildContext context) {
-    // You should not return a MaterialApp here. Your main.dart should have the MaterialApp.
+    // You should not return a MaterialApp here. Your mlhome.dart should have the MaterialApp.
     // This causes issues with navigation and themes.
     return Scaffold(
       appBar: AppBar(

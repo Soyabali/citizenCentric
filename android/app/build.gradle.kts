@@ -10,8 +10,11 @@ plugins {
 
 android {
     namespace = "com.citizen.citizencentric"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
+    configurations.all {
+        exclude(group = "com.google.firebase", module = "firebase-iid")
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -27,7 +30,7 @@ android {
         applicationId = "com.citizen.citizencentric"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 21
+        minSdk = 24
         targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -39,6 +42,11 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+}
+configurations.all {
+    resolutionStrategy {
+        force("com.google.android.gms:play-services-base:18.2.0")
     }
 }
 

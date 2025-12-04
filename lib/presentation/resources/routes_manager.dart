@@ -3,6 +3,7 @@ import 'package:citizencentric/presentation/resources/strings_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../app/di.dart';
+import '../../ml/mlhome.dart';
 import '../change_password/change_password.dart';
 import '../firebase/auth/auth.dart';
 import '../firebase/firebasehome.dart';
@@ -28,6 +29,7 @@ class Routes {
   static const String storeDetailsRoute = "/storeDetails";
   static const String firebaseHome = "/firebaseHome";
   static const String formDataStore = "/formDataStore";
+  static const String mlscreen = "/mlscreen";
 }
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
@@ -58,7 +60,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => FirebaseHome());
       case Routes.formDataStore:
         return MaterialPageRoute(builder: (_) => FormDataStore());
-      default:
+      case Routes.mlscreen:
+        return MaterialPageRoute(builder: (_) => MLHomeScreen());
+        default:
         return unDefinedRoute();
     }
   }
