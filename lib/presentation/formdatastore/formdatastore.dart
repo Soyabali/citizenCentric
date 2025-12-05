@@ -102,7 +102,7 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
       print('No Internet! Saving data locally.');
 
       // Put data in local hive
-      box.put('name', 'Soyaib Ali');
+      box.put('name', 'Sangiv');
       box.put('Company', 'Synergy');
       box.put('city', 'Noida');
 

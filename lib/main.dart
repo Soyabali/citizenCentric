@@ -4,6 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'app/app.dart';
 import 'app/di.dart';
 import 'firebase_options.dart';
@@ -18,8 +20,16 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await HiveService.init();// have data base
+ // await HiveService.init();// have data base
   // Add a dependece here add all di.
+
+  // ----hive table----
+  await Hive.initFlutter();
+  await Hive.openBox('loginBox');
+  await Hive.openBox('registrationBox');
+  await Hive.openBox('serverBox');
+  //----end hive table----
+  
   await initAppModule();
   initLoginModule(); // <--- ADD THIS LINE
   initChangePasswordModule(); // <--- ADD THIS LINE

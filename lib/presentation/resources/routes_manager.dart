@@ -9,6 +9,7 @@ import '../firebase/auth/auth.dart';
 import '../firebase/firebasehome.dart';
 import '../firebase/firebaselogin.dart';
 import '../forgot_password/forgot_password.dart';
+import '../formdatastore/formScreen.dart';
 import '../formdatastore/formdatastore.dart';
 import '../login/login.dart';
 import '../main/main_view.dart';
@@ -59,7 +60,8 @@ class RouteGenerator {
         initFirebaseModule();
         return MaterialPageRoute(builder: (_) => FirebaseHome());
       case Routes.formDataStore:
-        return MaterialPageRoute(builder: (_) => FormDataStore());
+        //FormScreen    // return MaterialPageRoute(builder: (_) => FormDataStore());
+        return MaterialPageRoute(builder: (_) => FormScreen());
       case Routes.mlscreen:
         return MaterialPageRoute(builder: (_) => MLHomeScreen());
         default:
