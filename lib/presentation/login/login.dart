@@ -35,6 +35,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
 
   _bind() {
+
     _viewModel.start();
     _userMobileNumberController.addListener(() => _viewModel.setMobileNumber(_userMobileNumberController.text));
     _passwordController.addListener(() => _viewModel.setPassword(_passwordController.text));
@@ -43,13 +44,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
       SchedulerBinding.instance?.addPostFrameCallback((_) {
         _appPreferences.setIsUserLoggedIn();
         _appPreferences.setUserToken(token);
-
         resetModules();
          // to set a currentindex 0 before to main page
          ref.read(mainViewProvider.notifier).changeIndex(0);
         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
       });
     });
+
   }
 
   @override
@@ -114,7 +115,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   SizedBox(height: AppSize.s28),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: AppPadding.p28, right: AppPadding.p28),
+                        left: AppPadding.p28,
+                        right: AppPadding.p28),
                     child: StreamBuilder<bool>(
                       stream: _viewModel.outputIsPasswordValid,
                       builder: (context, snapshot) {
@@ -199,186 +201,3 @@ class _LoginViewState extends ConsumerState<LoginView> {
   }
 }
 
-// class LoginView extends StatefulWidget {
-//
-//   const LoginView({Key? key}) : super(key: key);
-//
-//   @override
-//
-//   _LoginViewState createState() => _LoginViewState();
-//
-// }
-//
-// class _LoginViewState extends State<LoginView> {
-//
-//   LoginViewModel _viewModel = instance<LoginViewModel>();
-//   AppPreferences _appPreferences = instance<AppPreferences>();
-//
-//   TextEditingController _userMobileNumberController = TextEditingController();
-//   TextEditingController _passwordController = TextEditingController();
-//   final _formKey = GlobalKey<FormState>();
-//
-//
-//   _bind() {
-//     _viewModel.start();
-//     _userMobileNumberController.addListener(() => _viewModel.setMobileNumber(_userMobileNumberController.text));
-//     _passwordController.addListener(() => _viewModel.setPassword(_passwordController.text));
-//     _viewModel.isUserLoggedInSuccessfullyStreamController.stream.listen((token) {
-//
-//       SchedulerBinding.instance?.addPostFrameCallback((_) {
-//         _appPreferences.setIsUserLoggedIn();
-//         _appPreferences.setUserToken(token);
-//
-//         resetModules();
-//        // ref.read(mainViewProvider.notifier).changeIndex(0);
-//         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
-//       });
-//       });
-//   }
-//
-//   @override
-//   void initState() {
-//     // here you should call a isolate to call a _bind() function every where in a application.
-//     _bind();
-//     super.initState();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//    // return _getContentWidget();
-//     return Scaffold(
-//       backgroundColor: ColorManager.white,
-//       body: StreamBuilder(
-//           stream: _viewModel.outputState,
-//           builder: (context,snapshot){
-//             return snapshot.data?.getScreenWidget(context,_getContentWidget(),()
-//             {
-//               _viewModel.login();
-//             }) ?? _getContentWidget();
-//           }),
-//     );
-//   }
-//
-//   Widget _getContentWidget() {
-//     //return Scaffold(
-//       //backgroundColor: ColorManager.white,
-//        return Container(
-//         padding: EdgeInsets.only(top: AppPadding.p100),
-//         color: ColorManager.white,
-//         child: SingleChildScrollView(
-//           child: Form(
-//             key: _formKey,
-//             child: Column(
-//               children: [
-//                 SizedBox(
-//                   height: 200,
-//                   child: Image(image: AssetImage(ImageAssets.splashLogo)),
-//                 ),
-//                 SizedBox(height: AppSize.s28),
-//                 Padding(
-//                   padding: EdgeInsets.only(
-//                       left: AppPadding.p28,
-//                       right: AppPadding.p28),
-//                   child: StreamBuilder<bool>(
-//                     stream: _viewModel.outputIsMobileNumberValid,
-//                     builder: (context, snapshot) {
-//                       return TextFormField(
-//                         keyboardType: TextInputType.phone,
-//                         controller: _userMobileNumberController,
-//                         decoration: InputDecoration(
-//                             hintText: AppStrings.mobilenumber.tr(),
-//                             labelText: AppStrings.mobilenumber.tr(),
-//                             errorText: (snapshot.data ?? true)
-//                                 ? null
-//                                 : AppStrings.usernameError),
-//                       );
-//                     },
-//                   ),
-//                 ),
-//                 SizedBox(height: AppSize.s28),
-//                 Padding(
-//                   padding: EdgeInsets.only(
-//                       left: AppPadding.p28, right: AppPadding.p28),
-//                   child: StreamBuilder<bool>(
-//                     stream: _viewModel.outputIsPasswordValid,
-//                     builder: (context, snapshot) {
-//                       return TextFormField(
-//                         keyboardType: TextInputType.visiblePassword,
-//                         controller: _passwordController,
-//                         decoration: InputDecoration(
-//                             hintText: AppStrings.password.tr(),
-//                             labelText: AppStrings.password.tr(),
-//                             errorText: (snapshot.data ?? true)
-//                                 ? null
-//                                 : AppStrings.passwordError.tr()),
-//                       );
-//                     },
-//                   ),
-//                 ),
-//                 SizedBox(height: AppSize.s28),
-//                 Padding(
-//                     padding: EdgeInsets.only(
-//                         left: AppPadding.p28,
-//                         right: AppPadding.p28),
-//                     child: StreamBuilder<bool>(
-//                       stream: _viewModel.outputIsAllInputsValid,
-//                       builder: (context, snapshot) {
-//                         return SizedBox(
-//                           width: double.infinity,
-//                           height: AppSize.s40,
-//                           child: ElevatedButton(
-//                               onPressed: (snapshot.data ?? false)
-//                                ? (){
-//                                _viewModel.login();
-//                               }
-//                               : null,
-//                               child: Text(AppStrings.login.tr())),
-//                         );
-//
-//                       },
-//                     )),
-//                 SizedBox(height: AppSize.s28),
-//
-//                 Padding(
-//                   padding: EdgeInsets.only(
-//                     top: AppPadding.p8,
-//                     left: AppPadding.p28,
-//                     right: AppPadding.p28,
-//                   ),
-//                   child: Row(
-//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                     children: [
-//                       TextButton(
-//                         onPressed: () {
-//                           Navigator.pushNamed(
-//                               context, Routes.changePasswordRoute);
-//                         },
-//                         child: Text(AppStrings.changePassword,
-//                             style: Theme.of(context).textTheme.bodyLarge).tr(),
-//                       ),
-//                       // TextButton(
-//                       //   onPressed: () {
-//                       //     Navigator.pushNamed(
-//                       //         context, Routes.registerRoute);
-//                       //   },
-//                       //   child: Text(AppStrings.registerText,
-//                       //       style: Theme.of(context).textTheme.bodyLarge).tr(),
-//                       // )
-//                     ],
-//                   ),
-//                 )
-//
-//               ],
-//             ),
-//           )
-//         )
-//        );
-//
-//   }
-//
-//   @override
-//   void dispose() {
-//     _viewModel.dispose();
-//     super.dispose();
-//   }
-// }

@@ -61,23 +61,24 @@ LoginViewModel(this._loginUseCase);
           // here you get a data from a model carefully chose a model
           //print("success --Get data ----xx ${data.firstName}")
           print("User Token → ${data.token}");
+          // input
            inputState.add(ContentState());
            // to store the token in app Prefs
-           isUserLoggedInSuccessfullyStreamController.add(data.token);
+           isUserLoggedInSuccessfullyStreamController.add(data.token);// to add a token
         });
   }
 
   @override
-  setMobileNumber(String mobileNumber) {
-    inputMobileNumber.add(mobileNumber);
-    loginObject = loginObject.copyWith(userMobileNumber: mobileNumber);
+  setMobileNumber(String mobileNumber) {// to take mobile no ui screen
+    inputMobileNumber.add(mobileNumber);// here get a mobile no to put int sink (inputMobileNumber)
+    loginObject = loginObject.copyWith(userMobileNumber: mobileNumber);// to give mobile from ui and give  loginObject that take
     _validate();
     //loginObject = loginObject.copyWith(mobileNumber: mobileNumber);
   }
   @override
-  setPassword(String password) {
-    inputPassword.add(password);
-    loginObject = loginObject.copyWith(password: password);
+  setPassword(String password) {// to take password from a ui file
+    inputPassword.add(password);// here pass password to sink (inputPassword)
+    loginObject = loginObject.copyWith(password: password);// to pass get data from a ui to loginObject
     _validate();
   }
   // output part

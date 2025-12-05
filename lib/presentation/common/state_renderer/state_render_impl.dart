@@ -69,6 +69,7 @@ class EmptyState extends FlowState {
 }
 
 // success state
+
 class SuccessState extends FlowState {
   String message;
 
@@ -133,7 +134,6 @@ extension FlowStateExtension on FlowState {
         {
           // i should check if we are showing loading popup to remove it before showing success popup
           dismissDialog(context);
-
           // show popup
           showPopUp(context, StateRendererType.POPUP_SUCCESS, getMessage(),
               title: AppStrings.success.tr());
@@ -148,18 +148,19 @@ extension FlowStateExtension on FlowState {
   }
 
   dismissDialog(BuildContext context) {
-    if (_isThereCurrentDialogShowing(context)) {
-      Navigator.of(context, rootNavigator: true).pop(true);
+
+    if (Navigator.canPop(context)) {
+      Navigator.of(context, rootNavigator: true).pop();
     }
   }
 
-  _isThereCurrentDialogShowing(BuildContext context) =>
-      ModalRoute.of(context)?.isCurrent != true;
+  _isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
 
   showPopUp(BuildContext context, StateRendererType stateRendererType,
       String message,{String title = EMPTY}) {
     WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext context) => StateRenderer(
           stateRendererType: stateRendererType,
           message: message,

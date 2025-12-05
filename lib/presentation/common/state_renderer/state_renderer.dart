@@ -3,9 +3,7 @@ import 'package:citizencentric/presentation/common/state_renderer/state_render_i
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import '../../../app/di.dart';
 import '../../../data/mapper/mappper.dart';
-import '../../login/login_viewmodel.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -41,10 +39,6 @@ class StateRenderer extends StatelessWidget {
       : message = message ?? AppStrings.loading.tr(),
         title = title ?? EMPTY,
         super(key: key);
-
- /// todo here this may be big mistake you should see carefully.
-  ///
- // LoginViewModel _viewModel = instance<LoginViewModel>();
 
 
   @override
@@ -83,7 +77,8 @@ class StateRenderer extends StatelessWidget {
         return Container();
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getItemsInColumn(
-            [_getAnimatedImage(JsonAssets.empty), _getMessage(message)]);
+            [_getAnimatedImage(JsonAssets.empty),
+              _getMessage(message)]);
       default:
         return Container();
     }
@@ -148,27 +143,16 @@ class StateRenderer extends StatelessWidget {
         child: SizedBox(
           width: AppSize.s180,
           child: ElevatedButton(
-              onPressed: () {
-
-                if (Navigator.canPop(context)) {
-                  Navigator.of(context, rootNavigator: true).pop();
-                }
-              //  _viewModel.inputState.add(ContentState());
-
-                // if (stateRendererType ==
-                //     StateRendererType.FULL_SCREEN_ERROR_STATE) {
-                //   retryActionFunction
-                //       ?.call(); // to call the API function again to retry
-                // } else {
-                //   Navigator.of(context)
-                //       .pop(); // popup state error so we need to dismiss the dialog
-                // }
-              },
-              child: Text(buttonTitle)),
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            child: Text(buttonTitle),
+          ),
         ),
       ),
     );
   }
+
 
   Widget _getItemsInColumn(List<Widget> children) {
     return Center(

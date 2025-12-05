@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   }
   void didChangeDependencies() {
     // call a api in a view
-    _bind();
+   // _bind();
     print("-----Call a api in a didChangeDependencies-----");
     super.didChangeDependencies();
   }
@@ -55,10 +55,13 @@ class _HomePageState extends State<HomePage> {
           stream: _viewModel.outputState,
           builder: (context, snapshot)
           {
-            return snapshot.data?.getScreenWidget(context, _getContentWidgets(),
+            final state = snapshot.data;
+            return state?.getScreenWidget(
+                context,
+                _getContentWidgets(),
                     () {
                   _viewModel.start();
-                }) ?? Container();
+                }) ?? _getContentWidgets();
           },
         ),
       ),
@@ -135,14 +138,6 @@ class _HomePageState extends State<HomePage> {
               enlargeCenterPage: true));
     } else {
       return Container();
-    }
-
-    Widget _getServices() {
-      return Center();
-    }
-
-    Widget _getStores() {
-      return Center();
     }
   }
 
