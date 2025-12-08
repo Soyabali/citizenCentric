@@ -1,4 +1,3 @@
-import 'package:citizencentric/presentation/hive-database/hive_database.dart';
 import 'package:citizencentric/presentation/resources/language_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';

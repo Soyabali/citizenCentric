@@ -94,13 +94,14 @@ class Authentication {
   });
 }
 // ----------ChangePasswordModel -------------
+
 class ChangePasswordModel {
  final String Result;
  final String Msg;
 
  ChangePasswordModel(
  {
-  required this.Result,
+   required this.Result,
    required this.Msg,
 
 });

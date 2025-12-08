@@ -47,7 +47,6 @@ class LocalDataSourceImplementer implements LocalDataSource {
 class CachedItem {
   dynamic data;
   int cacheTime = DateTime.now().millisecondsSinceEpoch;
-
   CachedItem(this.data);
 }
 

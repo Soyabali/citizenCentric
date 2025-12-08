@@ -15,7 +15,6 @@ import '../resources/values_manager.dart';
 import '../riverpod/main_view_controller..dart';
 
 class LoginView extends ConsumerStatefulWidget {
-
   const LoginView({Key? key}) : super(key: key);
 
   @override
@@ -33,9 +32,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-
   _bind() {
-
     _viewModel.start();
     _userMobileNumberController.addListener(() => _viewModel.setMobileNumber(_userMobileNumberController.text));
     _passwordController.addListener(() => _viewModel.setPassword(_passwordController.text));
@@ -150,7 +147,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                   _viewModel.login();
                                 }
                                     : null,
-                                child: Text(AppStrings.login.tr())),
+                                child: Text(AppStrings.login.tr())
+                            ),
                           );
 
                         },

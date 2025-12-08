@@ -32,10 +32,7 @@ class RepositoryImpl extends Repository {
           if (item.result == "1") {
             print("----item.result --55--:  ${item.result}");
             print("-Token  56: ${item.token}");
-
             return Right(item.toDomain()); // Return first success case
-
-
           }
         }
         // If no item was successful:
