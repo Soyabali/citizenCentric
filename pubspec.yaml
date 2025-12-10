@@ -77,6 +77,7 @@ dependencies:
   google_mlkit_translation: ^0.13.0
   google_mlkit_language_id: ^0.13.0
   google_mlkit_selfie_segmentation: ^0.10.0
+  google_maps_flutter: ^2.14.0
 
 
 

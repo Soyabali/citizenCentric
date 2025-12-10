@@ -1,4 +1,5 @@
 
+import 'package:citizencentric/presentation/googlemap/google_map.dart';
 import 'package:citizencentric/presentation/resources/strings_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class Routes {
   static const String firebaseHome = "/firebaseHome";
   static const String formDataStore = "/formDataStore";
   static const String mlscreen = "/mlscreen";
+  static const String googlemapHome = "/googleMap";
 }
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
@@ -61,6 +63,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => FormScreen());
       case Routes.mlscreen:
         return MaterialPageRoute(builder: (_) => MLHomeScreen());
+      case Routes.googlemapHome:
+        return MaterialPageRoute(builder: (_) => GoogleMapScreen());
         default:
         return unDefinedRoute();
     }

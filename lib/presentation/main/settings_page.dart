@@ -93,6 +93,21 @@ class _SettingsPageState extends State<SettingPage> {
         ),
         ListTile(
           title: Text(
+            AppStrings.googlmapHome,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ).tr(),
+          leading: SvgPicture.asset(ImageAssets.inviteFriendsIc),
+          trailing: Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
+            child: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
+          ),
+          onTap: () {
+            _googleMapHome();
+          },
+        ),
+        ListTile(
+          title: Text(
             AppStrings.logout,
             style: Theme.of(context).textTheme.headlineSmall,
           ).tr(),
@@ -132,6 +147,10 @@ class _SettingsPageState extends State<SettingPage> {
   void _inviteFriends() {
     // its a task to share app name with friends
     Navigator.pushNamed(context, Routes.mlscreen);
+  }
+  void _googleMapHome() {
+    // its a task to share app name with friends
+    Navigator.pushNamed(context, Routes.googlemapHome);
   }
 
   void _logout() {
