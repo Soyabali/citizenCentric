@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../app/generalFunction.dart';
-import '../app/loader_helper.dart';
-import 'baseurl.dart';
+
+import '../../app/constant.dart';
+import '../../app/loader_helper.dart';
+import '../../presentation/commponent/generalFunction.dart';
+
 
 
 class VerifyAppVersionRepo {
@@ -17,7 +19,7 @@ class VerifyAppVersionRepo {
       print('----version-----17--$sVersion');
     ;
 
-      var baseURL = BaseRepo().baseurl;
+      var baseURL = Constant.baseUrl;
       var endPoint = "VerifyAppVersion/VerifyAppVersion";
       var verifyAppVersionApi = "$baseURL$endPoint";
       print('------------23---verifyAppVersionApi---$verifyAppVersionApi');

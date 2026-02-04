@@ -1,4 +1,3 @@
-
 import 'package:citizencentric/presentation/common/state_renderer/state_renderer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +9,7 @@ abstract class FlowState {
   String getMessage();
 }
 
-// Loading State (POPUP, FULL SCREEN)
-
+// 🔹 Loading State
 class LoadingState extends FlowState {
   StateRendererType stateRendererType;
   String message;
@@ -26,7 +24,7 @@ class LoadingState extends FlowState {
   StateRendererType getStateRendererType() => stateRendererType;
 }
 
-// error state (POPUP, FULL LOADING)
+// 🔹 Error State
 class ErrorState extends FlowState {
   StateRendererType stateRendererType;
   String message;
@@ -40,8 +38,7 @@ class ErrorState extends FlowState {
   StateRendererType getStateRendererType() => stateRendererType;
 }
 
-// CONTENT STATE
-
+// 🔹 Content State
 class ContentState extends FlowState {
   ContentState();
 
@@ -53,8 +50,7 @@ class ContentState extends FlowState {
       StateRendererType.CONTENT_SCREEN_STATE;
 }
 
-// EMPTY STATE
-
+// 🔹 Empty State
 class EmptyState extends FlowState {
   String message;
 
@@ -68,8 +64,7 @@ class EmptyState extends FlowState {
       StateRendererType.EMPTY_SCREEN_STATE;
 }
 
-// success state
-
+// 🔹 Success State
 class SuccessState extends FlowState {
   String message;
 
@@ -82,90 +77,112 @@ class SuccessState extends FlowState {
   StateRendererType getStateRendererType() => StateRendererType.POPUP_SUCCESS;
 }
 
+// 🔹 Extension for FlowState to handle UI rendering
+
 extension FlowStateExtension on FlowState {
-  Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
-      Function retryActionFunction) {
-    switch (this.runtimeType) {
+  static StateRendererType? _currentPopup;
+
+  Widget getScreenWidget(
+      BuildContext context,
+      Widget contentScreenWidget,
+      VoidCallback retryActionFunction,
+      ) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _handlePopup(context);
+    });
+
+    return contentScreenWidget;
+  }
+
+  void _handlePopup(BuildContext context) {
+    switch (runtimeType) {
+
+    /// 🔹 LOADING
       case LoadingState:
-        {
-          if (getStateRendererType() == StateRendererType.POPUP_LOADING_STATE) {
-            // showing popup dialog
-            showPopUp(context, getStateRendererType(), getMessage());
-            // return the content ui of the screen
-            return contentScreenWidget;
-          } else // StateRendererType.FULL_SCREEN_LOADING_STATE
-              {
-            return StateRenderer(
-                stateRendererType: getStateRendererType(),
-                message: getMessage(),
-                retryActionFunction: retryActionFunction);
-          }
+        if (getStateRendererType() ==
+            StateRendererType.POPUP_LOADING_STATE &&
+            _currentPopup != StateRendererType.POPUP_LOADING_STATE) {
+          _currentPopup = StateRendererType.POPUP_LOADING_STATE;
+          _showDialog(
+            context,
+            type: StateRendererType.POPUP_LOADING_STATE,
+            message: getMessage(),
+          );
         }
+        break;
+
+    /// 🔹 ERROR
       case ErrorState:
-        {
-          dismissDialog(context);
-          if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
-            // showing popup dialog
-            showPopUp(context, getStateRendererType(), getMessage());
-            // return the content ui of the screen
-            return contentScreenWidget;
-          }
-          else // StateRendererType.FULL_SCREEN_ERROR_STATE
-              {
-            return StateRenderer(
-                stateRendererType: getStateRendererType(),
-                message: getMessage(),
-                retryActionFunction: retryActionFunction);
-          }
-        }
-      case ContentState:
-        {
-          dismissDialog(context);
-          return contentScreenWidget;
-        }
-      case EmptyState:
-        {
-          return StateRenderer(
-              stateRendererType: getStateRendererType(),
-              message: getMessage(),
-              retryActionFunction: retryActionFunction);
-        }
+        _dismissIfNeeded(context);
+        _currentPopup = StateRendererType.POPUP_ERROR_STATE;
+
+        _showDialog(
+          context,
+          type: StateRendererType.POPUP_ERROR_STATE,
+          message: getMessage(),
+          onDismiss: () {
+            _currentPopup = null;
+          },
+        );
+        break;
+
+    /// 🔹 SUCCESS
       case SuccessState:
-        {
-          // i should check if we are showing loading popup to remove it before showing success popup
-          dismissDialog(context);
-          // show popup
-          showPopUp(context, StateRendererType.POPUP_SUCCESS, getMessage(),
-              title: AppStrings.success.tr());
-          // return content ui of the screen
-          return contentScreenWidget;
-        }
+        _dismissIfNeeded(context);
+        _currentPopup = StateRendererType.POPUP_SUCCESS;
+
+        _showDialog(
+          context,
+          type: StateRendererType.POPUP_SUCCESS,
+          message: getMessage(),
+          title: AppStrings.success.tr(),
+          onDismiss: () {
+            _currentPopup = null;
+          },
+        );
+        break;
+
+    /// 🔹 CONTENT
+      case ContentState:
+        _dismissIfNeeded(context);
+        break;
+
       default:
-        {
-          return contentScreenWidget;
-        }
+        break;
     }
   }
 
-  dismissDialog(BuildContext context) {
-
-    if (Navigator.canPop(context)) {
+  void _dismissIfNeeded(BuildContext context) {
+    if (_currentPopup != null && Navigator.canPop(context)) {
       Navigator.of(context, rootNavigator: true).pop();
+      _currentPopup = null;
     }
   }
 
-  _isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
-
-  showPopUp(BuildContext context, StateRendererType stateRendererType,
-      String message,{String title = EMPTY}) {
-    WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => StateRenderer(
-          stateRendererType: stateRendererType,
+  void _showDialog(
+      BuildContext context, {
+        required StateRendererType type,
+        required String message,
+        String title = EMPTY,
+        VoidCallback? onDismiss,
+      }) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => WillPopScope(
+        onWillPop: () async => false,
+        child: StateRenderer(
+          stateRendererType: type,
           message: message,
           title: title,
-          retryActionFunction: () {},
-        )));
+          retryActionFunction: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+        ),
+      ),
+    ).then((_) {
+      if (onDismiss != null) onDismiss();
+    });
   }
 }
+

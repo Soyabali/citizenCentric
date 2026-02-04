@@ -106,7 +106,6 @@ class _HomePageState extends State<HomePage> {
           return _getBanner(snapshot.data);
         });
   }
-
   // bannerui code
   Widget _getBanner(List<StaffListModel>? banners) {
     if (banners != null) {
@@ -120,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppSize.s12),
                       side: BorderSide(
-                          color: ColorManager.white, width: AppSize.s1_5)),
+                          color: ColorManager.white,
+                          width: AppSize.s1_5)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppSize.s12),
                     child: Image.network(

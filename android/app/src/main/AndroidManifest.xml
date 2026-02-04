@@ -6,14 +6,18 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:label="citizencentric"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAkUfhrldqKHWEk5wEHLrTTPSaURHcmwPQ"/>
+
+        <!-- TODO: Add your Google Maps API key here -->
+<!--        <meta-data android:name="com.google.android.geo.API_KEY"-->
+<!--            android:value="AIzaSyDNGgKI71xlA-q8S8Fsd69-4vRv3CIg6Fk"/>-->
 
         <activity
             android:name=".MainActivity"
@@ -39,6 +43,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2"/>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAkUfhrldqKHWEk5wEHLrTTPSaURHcmwPQ"/>
     </application>
 
     <!-- Required for ML Kit + Camera + Text Processing -->

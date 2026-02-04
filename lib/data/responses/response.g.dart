@@ -6,45 +6,49 @@ part of 'response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+BaseResponse _$BaseResponseFromJson(Map<String, dynamic> json) => BaseResponse(
+  result: json['Result'] as String?,
+  msg: json['Msg'] as String?,
+);
+
+Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) =>
+    <String, dynamic>{'Result': instance.result, 'Msg': instance.msg};
+
+UserDataResponse _$UserDataResponseFromJson(Map<String, dynamic> json) =>
+    UserDataResponse()
+      ..userId = (json['iUserId'] as num?)?.toInt()
+      ..name = json['sName'] as String?
+      ..contactNo = json['sContactNo'] as String?
+      ..designationName = json['sDesgName'] as String?
+      ..designationCode = (json['iDesgCode'] as num?)?.toInt()
+      ..departmentCode = (json['iDeptCode'] as num?)?.toInt()
+      ..userTypeCode = (json['iUserTypeCode'] as num?)?.toInt()
+      ..token = json['sToken'] as String?
+      ..lastLoginAt = json['dLastLoginAt'] as String?
+      ..agencyCode = (json['iAgencyCode'] as num?)?.toInt();
+
+Map<String, dynamic> _$UserDataResponseToJson(UserDataResponse instance) =>
+    <String, dynamic>{
+      'iUserId': instance.userId,
+      'sName': instance.name,
+      'sContactNo': instance.contactNo,
+      'sDesgName': instance.designationName,
+      'iDesgCode': instance.designationCode,
+      'iDeptCode': instance.departmentCode,
+      'iUserTypeCode': instance.userTypeCode,
+      'sToken': instance.token,
+      'dLastLoginAt': instance.lastLoginAt,
+      'iAgencyCode': instance.agencyCode,
+    };
+
 AuthenticationResponse _$AuthenticationResponseFromJson(
   Map<String, dynamic> json,
 ) => AuthenticationResponse(
   result: json['Result'] as String?,
   msg: json['Msg'] as String?,
-  empCode: json['sEmpCode'] as String?,
-  compEmpCode: json['sCompEmpCode'] as String?,
-  firstName: json['sFirstName'] as String?,
-  lastName: json['sLastName'] as String?,
-  contactNo: json['sContactNo'] as String?,
-  dateOfJoining: json['dDOJ'] as String?,
-  dateOfBirth: json['dDOB'] as String?,
-  emergencyContactPerson: json['sEmergencyContactPerson'] as String?,
-  emergencyContactNo: json['sEmergencyContactNo'] as String?,
-  emergencyContactRelation: json['sEmergencyContactRelation'] as String?,
-  bloodGroup: json['sBloodGroup'] as String?,
-  category: json['sCategory'] as String?,
-  designationCode: json['sDsgCode'] as String?,
-  designationName: json['sDsgName'] as String?,
-  departmentCode: json['sDeptCode'] as String?,
-  departmentName: json['sDeptName'] as String?,
-  locationCode: json['sLocCode'] as String?,
-  locationName: json['sLocName'] as String?,
-  locationAddress: json['sLocation'] as String?,
-  bankName: json['sBankName'] as String?,
-  bankAccountNumber: json['sBankAcNo'] as String?,
-  ifscCode: json['sISFCode'] as String?,
-  entitlement: json['Entitlement'] as String?,
-  availed: json['Availed'] as String?,
-  balance: json['Balance'] as String?,
-  token: json['sToken'] as String?,
-  employeeImage: json['sEmpImage'] as String?,
-  companyEmailId: json['sCompEmailId'] as String?,
-  managerName: json['sMngrName'] as String?,
-  managerDesignationName: json['sMngrDesgName'] as String?,
-  managerContactNo: json['sMngrContactNo'] as String?,
-  isEligibleShortLeave: json['iIsEligibleShLv'] as String?,
-  paymentUpload: json['iPaymentUpload'] as String?,
-  paymentAction: json['iPaymentAction'] as String?,
+  data: (json['Data'] as List<dynamic>?)
+      ?.map((e) => UserDataResponse.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$AuthenticationResponseToJson(
@@ -52,40 +56,33 @@ Map<String, dynamic> _$AuthenticationResponseToJson(
 ) => <String, dynamic>{
   'Result': instance.result,
   'Msg': instance.msg,
-  'sEmpCode': instance.empCode,
-  'sCompEmpCode': instance.compEmpCode,
-  'sFirstName': instance.firstName,
-  'sLastName': instance.lastName,
+  'Data': instance.data,
+};
+
+UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
+  userId: (json['iUserId'] as num?)?.toInt(),
+  name: json['sName'] as String?,
+  contactNo: json['sContactNo'] as String?,
+  designationName: json['sDesgName'] as String?,
+  designationCode: (json['iDesgCode'] as num?)?.toInt(),
+  departmentCode: (json['iDeptCode'] as num?)?.toInt(),
+  userTypeCode: (json['iUserTypeCode'] as num?)?.toInt(),
+  token: json['sToken'] as String?,
+  lastLoginAt: json['dLastLoginAt'] as String?,
+  agencyCode: (json['iAgencyCode'] as num?)?.toInt(),
+);
+
+Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
+  'iUserId': instance.userId,
+  'sName': instance.name,
   'sContactNo': instance.contactNo,
-  'dDOJ': instance.dateOfJoining,
-  'dDOB': instance.dateOfBirth,
-  'sEmergencyContactPerson': instance.emergencyContactPerson,
-  'sEmergencyContactNo': instance.emergencyContactNo,
-  'sEmergencyContactRelation': instance.emergencyContactRelation,
-  'sBloodGroup': instance.bloodGroup,
-  'sCategory': instance.category,
-  'sDsgCode': instance.designationCode,
-  'sDsgName': instance.designationName,
-  'sDeptCode': instance.departmentCode,
-  'sDeptName': instance.departmentName,
-  'sLocCode': instance.locationCode,
-  'sLocName': instance.locationName,
-  'sLocation': instance.locationAddress,
-  'sBankName': instance.bankName,
-  'sBankAcNo': instance.bankAccountNumber,
-  'sISFCode': instance.ifscCode,
-  'Entitlement': instance.entitlement,
-  'Availed': instance.availed,
-  'Balance': instance.balance,
+  'sDesgName': instance.designationName,
+  'iDesgCode': instance.designationCode,
+  'iDeptCode': instance.departmentCode,
+  'iUserTypeCode': instance.userTypeCode,
   'sToken': instance.token,
-  'sEmpImage': instance.employeeImage,
-  'sCompEmailId': instance.companyEmailId,
-  'sMngrName': instance.managerName,
-  'sMngrDesgName': instance.managerDesignationName,
-  'sMngrContactNo': instance.managerContactNo,
-  'iIsEligibleShLv': instance.isEligibleShortLeave,
-  'iPaymentUpload': instance.paymentUpload,
-  'iPaymentAction': instance.paymentAction,
+  'dLastLoginAt': instance.lastLoginAt,
+  'iAgencyCode': instance.agencyCode,
 };
 
 ChangePasswordResponse _$ChangePasswordResponseFromJson(

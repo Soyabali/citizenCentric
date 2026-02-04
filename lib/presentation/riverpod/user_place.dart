@@ -5,7 +5,6 @@ import 'package:path/path.dart' as path;
 import 'package:riverpod/riverpod.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
-
 import '../../domain/model/model.dart';
 
 Future<Database> _getDatabase() async {

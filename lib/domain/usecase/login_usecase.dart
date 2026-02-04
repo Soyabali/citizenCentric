@@ -17,19 +17,21 @@ class LoginUseCase implements BaseUseCase<LoginUseCaseInput, Authentication> {
   LoginUseCase(this._repository);// this is a constructor that take a parameter _repository.
 
   // Authentication this is a loginModel class
+
   @override
   Future<Either<Failure, Authentication>> execute(
       LoginUseCaseInput input) async {
     // here we call a login function that is put into the Repository class
     // in a login function ,LoginRequest is a class that have a field of login api body
-    return await _repository.login(LoginRequest(input.sContactNo, input.sPassword));
+    return await _repository.login(LoginRequest(input.sContactNo, input.sPassword,input.sAppVersion));
   }
 }
 
 class LoginUseCaseInput {
   String sContactNo;
   String sPassword;
+  String sAppVersion;
 
-  LoginUseCaseInput(this.sContactNo, this.sPassword);
+  LoginUseCaseInput(this.sContactNo, this.sPassword,this.sAppVersion);
 }
 

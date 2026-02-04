@@ -6,6 +6,10 @@ class ImageAssets {
   static const String onboardingLogo2 = "$IMAGE_PATH/onboarding_logo2.svg";
   static const String onboardingLogo3 = "$IMAGE_PATH/onboarding_logo3.svg";
   static const String onboardingLogo4 = "$IMAGE_PATH/onboarding_logo4.svg";
+  static const String park1 = "$IMAGE_PATH/park1.png";
+  static const String park2 = "$IMAGE_PATH/park2.png";
+  static const String park3 = "$IMAGE_PATH/park3.png";
+  static const String park4 = "$IMAGE_PATH/park4.png";
   static const String hollowCircleIc = "$IMAGE_PATH/hollow_cirlce_ic.svg";
   static const String leftArrowIc = "$IMAGE_PATH/left_arrow_ic.svg";
   static const String rightarrowIc = "$IMAGE_PATH/right_arrow_ic.svg";
@@ -17,7 +21,21 @@ class ImageAssets {
   static const String contactUsIc = "$IMAGE_PATH/contact_us_ic.svg";
   static const String inviteFriendsIc = "$IMAGE_PATH/invite_friends_ic.svg";
   static const String logoutIc = "$IMAGE_PATH/logout_ic.svg";
+  static const String backgroundImage = "$IMAGE_PATH/bg.png";
+  //  favicon.png
+  static const String noidaParkImage = "$IMAGE_PATH/Noidapark.png";
+  static const String noidaauthoritylogo = "$IMAGE_PATH/noidaauthoritylogo.png";
+  static const String favicon = "$IMAGE_PATH/favicon.png";
+  static const String homepageheader = "$IMAGE_PATH/homepageheader.jpeg";
+  static const String ic_served_points = "$IMAGE_PATH/ic_served_points.png";
+  static const String ic_create_points = "$IMAGE_PATH/ic_create_points.png";
+  static const String parklocation = "$IMAGE_PATH/parklocation.jpeg";
+  static const String parkgeo = "$IMAGE_PATH/parkgeo.jpeg";
+  // three_line.png
+  static const String three_line = "$IMAGE_PATH/three_line.png";
 }
+
+
 class JsonAssets {
   static const String loading = "$JSON_PATH/loading.json";
   static const String error = "$JSON_PATH/error.json";

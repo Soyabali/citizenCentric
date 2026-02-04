@@ -7,6 +7,7 @@ abstract class LoginObject with _$LoginObject {
  factory LoginObject({
   required String userMobileNumber,
   required String password,
+  required String appVersion,
  }) = _LoginObject;
 }
 // changePasswordObject

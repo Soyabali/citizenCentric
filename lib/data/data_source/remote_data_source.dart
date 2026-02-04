@@ -4,7 +4,8 @@ import '../request/request.dart';
 import '../responses/response.dart';
 
 abstract class RemoteDataSource {
-  Future<List<AuthenticationResponse>> login(LoginRequest loginRequest);
+  Future<AuthenticationResponse> login(LoginRequest loginRequest);
+  //Future<List<AuthenticationResponse>> login(LoginRequest loginRequest);
   Future<List<ChangePasswordResponse>> changePassword(ChangePassWordRequest loginRequest);
   Future<List<StafListResponse>> stafflist(StaffListRequest staffListRequest);
 
@@ -21,14 +22,23 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   // -------------login -----------
 
   @override
-  Future<List<AuthenticationResponse>>  login(LoginRequest loginRequest) async {
-   // AuthenticationResponse , this is api response auto generate file
-    // LoginRequest , is a Api body field mention.
-
+  @override
+  Future<AuthenticationResponse> login(LoginRequest loginRequest) async {
     return await _appServiceClient.login(
-    loginRequest.sContactNo,
-    loginRequest.sPassword);
+      loginRequest.sContactNo,
+      loginRequest.sPassword,
+      loginRequest.sAppVersion,
+    );
   }
+  // Future<List<AuthenticationResponse>>  login(LoginRequest loginRequest) async {
+  //  // AuthenticationResponse , this is api response auto generate file
+  //   // LoginRequest , is a Api body field mention.
+  //
+  //   return await _appServiceClient.login(
+  //   loginRequest.sContactNo,
+  //   loginRequest.sPassword,
+  //   );
+  // }
   // ------------changePassword--------
 
   Future<List<ChangePasswordResponse>> changePassword(ChangePassWordRequest changePasswordRequest) async {

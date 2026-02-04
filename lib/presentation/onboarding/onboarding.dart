@@ -3,14 +3,15 @@ import 'package:citizencentric/presentation/onboarding/onboarding_viewmodel.dart
 import 'package:citizencentric/presentation/resources/color_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../app/app_prefs.dart';
 import '../../app/di.dart';
 import '../../domain/model/model.dart';
+import '../commponent/platform_text.dart';
 import '../resources/assets_manager.dart';
 import '../resources/routes_manager.dart';
 import '../resources/strings_manager.dart';
+import '../resources/text_type.dart';
 import '../resources/values_manager.dart';
 
 
@@ -56,12 +57,24 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       return Scaffold(
         backgroundColor: ColorManager.white,
         appBar: AppBar(
-          backgroundColor: ColorManager.white,
-          elevation: AppSize.s0,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: ColorManager.white,
-            statusBarBrightness: Brightness.dark,
-            statusBarIconBrightness: Brightness.dark,
+          backgroundColor: ColorManager.primary,
+          elevation: 0,
+          centerTitle: true,
+          // 🔹 GENERIC LEADING BACK ICON
+          title: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: PlatformText(
+              AppStrings.noidapark.tr(),
+              type: AppTextType.title,
+              color: Colors.white,
+            ),
+          ),
+
+
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              color: ColorManager.primary,
+            ),
           ),
         ),
         body: PageView.builder(
@@ -73,7 +86,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             itemBuilder: (context, index) {
               return OnBoardingPage(sliderViewObject.sliderObject);
             }),
-        bottomSheet: Container(
+           bottomSheet: Container(
           color: ColorManager.white,
           height: AppSize.s100,
           child: Column(
@@ -173,6 +186,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 }
 
 class OnBoardingPage extends StatelessWidget {
+
   SliderObject _sliderObject;
 
   OnBoardingPage(this._sliderObject, {Key? key}) : super(key: key);
@@ -182,27 +196,38 @@ class OnBoardingPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: AppSize.s40),
-        Padding(
-          padding: const EdgeInsets.all(AppPadding.p8),
-          child: Text(
-            _sliderObject.title,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(AppPadding.p8),
-          child: Text(
-            _sliderObject.subTitle,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-        ),
-        SizedBox(
-          height: AppSize.s60,
-        ),
-        SvgPicture.asset(_sliderObject.image)
+        // SizedBox(height: AppSize.s40),
+        // Padding(
+        //   padding: const EdgeInsets.all(AppPadding.p8),
+        //   child: Text(
+        //     _sliderObject.title,
+        //     textAlign: TextAlign.center,
+        //     style: Theme.of(context).textTheme.labelLarge,
+        //   ),
+        // ),
+        // Padding(
+        //   padding: const EdgeInsets.all(AppPadding.p8),
+        //   child: Text(
+        //     _sliderObject.subTitle,
+        //     textAlign: TextAlign.center,
+        //     style: Theme.of(context).textTheme.labelMedium,
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: AppSize.s60,
+       // ),
+        // SvgPicture.asset(_sliderObject.image)
+        // SvgPicture.asset(
+        //   _sliderObject.image, // e.g. assets/svg/park_blue.svg
+        //   width: 40,
+        //   height: 40,
+        //   fit: BoxFit.contain,
+        // )
+        Image.asset(
+        _sliderObject.image,
+        height: MediaQuery.of(context).size.height,
+          fit: BoxFit.cover,
+        )
         // image widget
       ],
     );

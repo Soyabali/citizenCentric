@@ -12,7 +12,7 @@ part of 'app_api.dart';
 
 class _AppServiceClient implements AppServiceClient {
   _AppServiceClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://49.50.76.136/hrmsapis/api/';
+    baseUrl ??= 'https://upegov.in/NoidaParksApis/Api/';
   }
 
   final Dio _dio;
@@ -22,35 +22,35 @@ class _AppServiceClient implements AppServiceClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<AuthenticationResponse>> login(
-      String sContactNo,
-      String sPassword,
-      ) async {
+  Future<AuthenticationResponse> login(
+    String sContactNo,
+    String sPassword,
+    String sAppVersion,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'sContactNo': sContactNo, 'sPassword': sPassword};
-    final _options = _setStreamType<List<AuthenticationResponse>>(
+    final _data = {
+      'sContactNo': sContactNo,
+      'sPassword': sPassword,
+      'sAppVersion': sAppVersion,
+    };
+    final _options = _setStreamType<AuthenticationResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        'hrmsLogin/hrmsLogin',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'AppLogin/AppLogin',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<AuthenticationResponse> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late AuthenticationResponse _value;
     try {
-      _value = _result.data!
-          .map(
-            (dynamic i) =>
-            AuthenticationResponse.fromJson(i as Map<String, dynamic>),
-      )
-          .toList();
+      _value = AuthenticationResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
+      errorLogger?.logError(e, s, _options, _result);
       rethrow;
     }
     return _value;
@@ -58,10 +58,10 @@ class _AppServiceClient implements AppServiceClient {
 
   @override
   Future<List<ChangePasswordResponse>> changePassword(
-      String sContactNo,
-      String sPassword,
-      String sNewPassword,
-      ) async {
+    String sContactNo,
+    String sPassword,
+    String sNewPassword,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -73,11 +73,11 @@ class _AppServiceClient implements AppServiceClient {
     final _options = _setStreamType<List<ChangePasswordResponse>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        'hrmsReplacePassword/hrmsReplacePassword',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'hrmsReplacePassword/hrmsReplacePassword',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<List<dynamic>>(_options);
@@ -86,11 +86,11 @@ class _AppServiceClient implements AppServiceClient {
       _value = _result.data!
           .map(
             (dynamic i) =>
-            ChangePasswordResponse.fromJson(i as Map<String, dynamic>),
-      )
+                ChangePasswordResponse.fromJson(i as Map<String, dynamic>),
+          )
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
+      errorLogger?.logError(e, s, _options, _result);
       rethrow;
     }
     return _value;
@@ -101,15 +101,16 @@ class _AppServiceClient implements AppServiceClient {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = request;
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
     final _options = _setStreamType<List<StafListResponse>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        'hrmsStaffList/hrmsStaffList',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'hrmsStaffList/hrmsStaffList',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<List<dynamic>>(_options);
@@ -118,10 +119,10 @@ class _AppServiceClient implements AppServiceClient {
       _value = _result.data!
           .map(
             (dynamic i) => StafListResponse.fromJson(i as Map<String, dynamic>),
-      )
+          )
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
+      errorLogger?.logError(e, s, _options, _result);
       rethrow;
     }
     return _value;

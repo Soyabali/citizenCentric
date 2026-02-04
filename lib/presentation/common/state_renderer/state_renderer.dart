@@ -47,13 +47,14 @@ class StateRenderer extends StatelessWidget {
   }
 
   Widget _getStateWidget(BuildContext context) {
+    
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
         return _getPopUpDialog(
             context, [_getAnimatedImage(JsonAssets.loading)]);
       case StateRendererType.POPUP_ERROR_STATE:
         return _getPopUpDialog(context, [
-          _getAnimatedImage(JsonAssets.error),
+        //  _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
           _getRetryButton(AppStrings.ok.tr(), context)
         ]);
@@ -66,10 +67,13 @@ class StateRenderer extends StatelessWidget {
         ]);
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn(
-            [_getAnimatedImage(JsonAssets.loading), _getMessage(message)]);
+            [
+              _getAnimatedImage(JsonAssets.loading),
+              _getMessage(message)
+            ]);
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
         return _getItemsInColumn([
-          _getAnimatedImage(JsonAssets.error),
+         // _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
           _getRetryButton(AppStrings.retry_again.tr(), context)
         ]);
@@ -114,7 +118,7 @@ class StateRenderer extends StatelessWidget {
       children: children,
     );
   }
-
+   //  ------nest time you should Open
   Widget _getAnimatedImage(String animationName) {
     return SizedBox(
       height: AppSize.s100,
@@ -122,6 +126,14 @@ class StateRenderer extends StatelessWidget {
       child: Lottie.asset(animationName),
     );
   }
+  // Widget _getAnimatedImage(String animationName) {
+  //   return SizedBox(
+  //     height: AppSize.s100,
+  //     width: AppSize.s100,
+  //     //child: Lottie.asset(animationName),
+  //     child: Image.asset(ImageAssets.noidaauthoritylogo),
+  //   );
+  // }
 
   Widget _getMessage(String message) {
     return Center(
@@ -130,7 +142,7 @@ class StateRenderer extends StatelessWidget {
         child: Text(
           message,
           style:
-          getMediumStyle(color: ColorManager.black, fontSize: FontSize.s16),
+          getSubtitleStyle(color: ColorManager.black)
         ),
       ),
     );
@@ -146,7 +158,7 @@ class StateRenderer extends StatelessWidget {
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop();
             },
-            child: Text(buttonTitle),
+            child: Text(buttonTitle,style: TextStyle(color: Colors.white),),
           ),
         ),
       ),

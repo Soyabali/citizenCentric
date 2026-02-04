@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginObject {
 
- String get userMobileNumber; String get password;
+ String get userMobileNumber; String get password; String get appVersion;
 /// Create a copy of LoginObject
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $LoginObjectCopyWith<LoginObject> get copyWith => _$LoginObjectCopyWithImpl<Logi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginObject&&(identical(other.userMobileNumber, userMobileNumber) || other.userMobileNumber == userMobileNumber)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginObject&&(identical(other.userMobileNumber, userMobileNumber) || other.userMobileNumber == userMobileNumber)&&(identical(other.password, password) || other.password == password)&&(identical(other.appVersion, appVersion) || other.appVersion == appVersion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userMobileNumber,password);
+int get hashCode => Object.hash(runtimeType,userMobileNumber,password,appVersion);
 
 @override
 String toString() {
-  return 'LoginObject(userMobileNumber: $userMobileNumber, password: $password)';
+  return 'LoginObject(userMobileNumber: $userMobileNumber, password: $password, appVersion: $appVersion)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $LoginObjectCopyWith<$Res>  {
   factory $LoginObjectCopyWith(LoginObject value, $Res Function(LoginObject) _then) = _$LoginObjectCopyWithImpl;
 @useResult
 $Res call({
- String userMobileNumber, String password
+ String userMobileNumber, String password, String appVersion
 });
 
 
@@ -62,10 +62,11 @@ class _$LoginObjectCopyWithImpl<$Res>
 
 /// Create a copy of LoginObject
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userMobileNumber = null,Object? password = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userMobileNumber = null,Object? password = null,Object? appVersion = null,}) {
   return _then(_self.copyWith(
 userMobileNumber: null == userMobileNumber ? _self.userMobileNumber : userMobileNumber // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,appVersion: null == appVersion ? _self.appVersion : appVersion // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userMobileNumber,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userMobileNumber,  String password,  String appVersion)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoginObject() when $default != null:
-return $default(_that.userMobileNumber,_that.password);case _:
+return $default(_that.userMobileNumber,_that.password,_that.appVersion);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.userMobileNumber,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userMobileNumber,  String password)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userMobileNumber,  String password,  String appVersion)  $default,) {final _that = this;
 switch (_that) {
 case _LoginObject():
-return $default(_that.userMobileNumber,_that.password);case _:
+return $default(_that.userMobileNumber,_that.password,_that.appVersion);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.userMobileNumber,_that.password);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userMobileNumber,  String password)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userMobileNumber,  String password,  String appVersion)?  $default,) {final _that = this;
 switch (_that) {
 case _LoginObject() when $default != null:
-return $default(_that.userMobileNumber,_that.password);case _:
+return $default(_that.userMobileNumber,_that.password,_that.appVersion);case _:
   return null;
 
 }
@@ -207,11 +208,12 @@ return $default(_that.userMobileNumber,_that.password);case _:
 
 
 class _LoginObject implements LoginObject {
-   _LoginObject({required this.userMobileNumber, required this.password});
+   _LoginObject({required this.userMobileNumber, required this.password, required this.appVersion});
   
 
 @override final  String userMobileNumber;
 @override final  String password;
+@override final  String appVersion;
 
 /// Create a copy of LoginObject
 /// with the given fields replaced by the non-null parameter values.
@@ -223,16 +225,16 @@ _$LoginObjectCopyWith<_LoginObject> get copyWith => __$LoginObjectCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginObject&&(identical(other.userMobileNumber, userMobileNumber) || other.userMobileNumber == userMobileNumber)&&(identical(other.password, password) || other.password == password));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginObject&&(identical(other.userMobileNumber, userMobileNumber) || other.userMobileNumber == userMobileNumber)&&(identical(other.password, password) || other.password == password)&&(identical(other.appVersion, appVersion) || other.appVersion == appVersion));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userMobileNumber,password);
+int get hashCode => Object.hash(runtimeType,userMobileNumber,password,appVersion);
 
 @override
 String toString() {
-  return 'LoginObject(userMobileNumber: $userMobileNumber, password: $password)';
+  return 'LoginObject(userMobileNumber: $userMobileNumber, password: $password, appVersion: $appVersion)';
 }
 
 
@@ -243,7 +245,7 @@ abstract mixin class _$LoginObjectCopyWith<$Res> implements $LoginObjectCopyWith
   factory _$LoginObjectCopyWith(_LoginObject value, $Res Function(_LoginObject) _then) = __$LoginObjectCopyWithImpl;
 @override @useResult
 $Res call({
- String userMobileNumber, String password
+ String userMobileNumber, String password, String appVersion
 });
 
 
@@ -260,10 +262,11 @@ class __$LoginObjectCopyWithImpl<$Res>
 
 /// Create a copy of LoginObject
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userMobileNumber = null,Object? password = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userMobileNumber = null,Object? password = null,Object? appVersion = null,}) {
   return _then(_LoginObject(
 userMobileNumber: null == userMobileNumber ? _self.userMobileNumber : userMobileNumber // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,appVersion: null == appVersion ? _self.appVersion : appVersion // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

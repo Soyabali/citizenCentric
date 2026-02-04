@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../presentation/resources/language_manager.dart';
@@ -7,6 +8,8 @@ const String PREFS_KEY_ONBOARDING_SCREEN = "PREFS_KEY_ONBOARDING_SCREEN";
 const String PREFS_KEY_IS_USER_LOGGED_IN = "PREFS_KEY_IS_USER_LOGGED_IN";
 const String PREFS_KEY_IS_USER_CHANGE_PASSWORD_IN = "PREFS_KEY_IS_USER_CHANGE_PASSWORD_IN";
 const String PREFS_KEY_TOKEN = "PREFS_KEY_TOKEN";
+const String PREFS_KEY_LOGIN_DATA = "PREFS_KEY_LOGIN_DATA";
+
 
 class AppPreferences {
 
@@ -59,6 +62,47 @@ class AppPreferences {
   Future<String> getUserToken() async {
     return _sharedPreferences.getString(PREFS_KEY_TOKEN) ?? "TOKEN NOT SAVED";
   }
+  // to store loginData
+
+  Future<void> setLoginUserData({
+    required int userId,
+    required String name,
+    required String contactNo,
+    required String designationName,
+    required int designationCode,
+    required int departmentCode,
+    required int userTypeCode,
+    required String lastLoginAt,
+    required int agencyCode,
+  }) async {
+    final Map<String, dynamic> loginData = {
+      "userId": userId,
+      "name": name,
+      "contactNo": contactNo,
+      "designationName": designationName,
+      "designationCode": designationCode,
+      "departmentCode": departmentCode,
+      "userTypeCode": userTypeCode,
+      "lastLoginAt": lastLoginAt,
+      "agencyCode": agencyCode,
+    };
+
+    await _sharedPreferences.setString(
+      PREFS_KEY_LOGIN_DATA,
+      jsonEncode(loginData),
+    );
+  }
+  // to read login data
+
+  Future<Map<String, dynamic>?> getLoginUserData() async {
+    final jsonString =
+    _sharedPreferences.getString(PREFS_KEY_LOGIN_DATA);
+
+    if (jsonString == null) return null;
+
+    return jsonDecode(jsonString) as Map<String, dynamic>;
+  }
+
 
 
   Future<bool> isOnBoardingScreenViewed() async {return _sharedPreferences.getBool(PREFS_KEY_ONBOARDING_SCREEN) ?? false;

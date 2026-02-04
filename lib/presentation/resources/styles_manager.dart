@@ -1,51 +1,119 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'font_manager.dart';
 
-TextStyle _getTextStyle(
-    double fontSize, String fontFamily, FontWeight fontWeight, Color color) {
+
+// base TextStyle
+
+TextStyle _baseTextStyle({
+  required double fontSize,
+  required FontWeight fontWeight,
+  required Color color,
+}) {
   return TextStyle(
-      fontSize: fontSize,
-      fontFamily: fontFamily,
-      color: color,
-      fontWeight: fontWeight);
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    fontFamily: FontConstants.fontFamily,
+    color: color,
+    letterSpacing: defaultTargetPlatform == TargetPlatform.iOS ? 0.2 : 0.0,
+    height: 1.4, // better readability (Android + iOS)
+  );
 }
 
-// regular style
+/// =========================
+/// 🔹 SEMANTIC TEXT STYLES
+/// =========================
 
-TextStyle getRegularStyle({
-  double fontSize = FontSize.s12,
-  required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.regular, color);
-}
-// light text style
-
-TextStyle getLightStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.light, color);
-}
-// bold text style
-
-TextStyle getBoldStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.bold, color);
+// Headlines (Screen titles)
+TextStyle getHeadlineStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s20,
+    fontWeight: FontWeightManager.bold,
+    color: color,
+  );
 }
 
-// semi bold text style
+// Titles (Card / Section title)
 
-TextStyle getSemiBoldStyle({double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily, FontWeightManager.semiBold, color);
+TextStyle getTitleStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s18,
+    fontWeight: FontWeightManager.semiBold,
+    color: color,
+  );
+}
+// Subtitle
+TextStyle getSubtitleStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s16,
+    fontWeight: FontWeightManager.medium,
+    color: color,
+  );
 }
 
-// medium text style
+// Body text (most used)
+TextStyle getBodyStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s14,
+    fontWeight: FontWeightManager.regular,
+    color: color,
+  );
+}
 
-TextStyle getMediumStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(
-      fontSize, FontConstants.fontFamily,
-      FontWeightManager.medium, color);
+// Caption / helper text
+TextStyle getCaptionStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s12,
+    fontWeight: FontWeightManager.light,
+    color: color,
+  );
+}
+
+// Button text
+TextStyle getButtonStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s14,
+    fontWeight: FontWeightManager.semiBold,
+    color: color,
+  );
+}
+/// =========================
+/// 🔹 TEXTFIELD SEMANTIC STYLES (NEW ✅)
+/// =========================
+
+// Input text
+TextStyle getInputTextStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s14,
+    fontWeight: FontWeightManager.regular,
+    color: color,
+  );
+}
+
+// Label text
+TextStyle getLabelStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s13,
+    fontWeight: FontWeightManager.medium,
+    color: color,
+  );
+}
+
+// Hint text
+TextStyle getHintStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s13,
+    fontWeight: FontWeightManager.regular,
+    color: color.withOpacity(0.7),
+  );
+}
+
+// Error text
+TextStyle getErrorStyle({required Color color}) {
+  return _baseTextStyle(
+    fontSize: FontSize.s12,
+    fontWeight: FontWeightManager.regular,
+    color: color,
+  );
 }

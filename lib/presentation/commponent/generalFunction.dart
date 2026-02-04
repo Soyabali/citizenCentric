@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../resources/app_text_style.dart';
+import '../main/home/home_page.dart';
 import '../resources/assets_manager.dart';
 import '../resources/values_manager.dart';
-import 'changePassword.dart';
-import 'gnidaofficers/gnoidadashboard.dart';
-import 'gnidaofficers/supervisorDashboard/supervisiorDashboard.dart';
-import 'holdComplaints.dart';
-import 'homeScreen.dart';
-import 'homepagesecod.dart';
-import 'loginScreen_2.dart';
-import 'mypoint.dart';
-import 'notification.dart';
+
+
+void displayToast(String msg){
+  Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 8,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
+
+
 
 class GeneralFunction {
   void logout(BuildContext context)async {
@@ -36,11 +41,6 @@ class GeneralFunction {
 
   goNext(BuildContext context) {
 
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => LoginScreen_2()),
-          (Route<dynamic> route) => false, // This ensures all previous routes are removed
-    );
   }
   // mobile back hale code
   //-----------logoutDialogBox ---------.
@@ -67,10 +67,10 @@ class GeneralFunction {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(height: 0), // Space for the image
-                Text(
-                    'Logout',
-                    style: AppTextStyle.font16OpenSansRegularBlackTextStyle
-                ),
+                // Text(
+                //     'Logout',
+                //     style: AppTextStyle.font16OpenSansRegularBlackTextStyle
+                // ),
                 SizedBox(height: 10),
                 Text(
                   "Do you want to Logout ?",
@@ -257,22 +257,22 @@ class GeneralFunction {
                       //     builder: (context) => const HomePage(),
                       //   ),
                       // );
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => GnoidaOfficersHome()),
-                      );
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => GnoidaOfficersHome()),
+                      // );
                     }else if(iUserTypeCode=="1"){
                       print('-----Yadav ---home-------');
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => SupervisiorDashBoard()),
-                      );
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => SupervisiorDashBoard()),
+                      // );
 
                     }else{
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen_2()),
-                      );
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => HomeScreen_2()),
+                      // );
                       // Navigator.pushReplacement(
                       //   context,
                       //   MaterialPageRoute(builder: (context) => SupervisiorDashBoard()),
@@ -303,12 +303,12 @@ class GeneralFunction {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyPointPage(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const MyPointPage(),
+                      //   ),
+                      // );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -334,12 +334,12 @@ class GeneralFunction {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HoldComplaint(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const HoldComplaint(),
+                      //   ),
+                      // );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -365,12 +365,12 @@ class GeneralFunction {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ChangePassWordHome(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const ChangePassWordHome(),
+                      //   ),
+                      // );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -396,12 +396,12 @@ class GeneralFunction {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NotificationPageHome(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const NotificationPageHome(),
+                      //   ),
+                      // );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -480,9 +480,9 @@ class GeneralFunction {
                     ),),
                     const SizedBox(width: 0),
                     Padding(
-                      padding: EdgeInsets.only(right: AppSize.s10),
+                      padding: EdgeInsets.only(right: AppSize.s12),
                       child: Container(
-                        margin: EdgeInsets.all(AppSize.s10),
+                        margin: EdgeInsets.all(AppSize.s12),
                         child: Image.asset(
                           ImageAssets.favicon,
                           //width: AppSize.s50,
@@ -502,27 +502,6 @@ class GeneralFunction {
     );
   }
 
-  void displayToastlogout(){
-    showToast(
-      "Someone else has been login with your number.",
-      duration: const Duration(seconds: 1),
-      position: ToastPosition.center,
-      backgroundColor: Colors.red,
-      textStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 16.0,
-      ),
-    );
-    // Fluttertoast.showToast(
-    //     msg: "Someone else has been login with your number.",
-    //     toastLength: Toast.LENGTH_SHORT,
-    //     gravity: ToastGravity.CENTER,
-    //     timeInSecForIosWeb: 1,
-    //     backgroundColor: Colors.red,
-    //     textColor: Colors.white,
-    //     fontSize: 16.0
-    // );
-  }
 
    Future<void> launchGoogleMaps(double laititude,double longitude) async {
      double destinationLatitude= laititude;

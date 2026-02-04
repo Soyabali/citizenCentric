@@ -88,36 +88,36 @@ class _MyAppState extends State<GoogleMapScreen> {
 
               //  -----Add a Marker on a Location ---code.
 
-              // Container(
-              //   height: MediaQuery.of(context).size.height,
-              //   child: GoogleMap(
-              //     mapType: MapType.satellite,// mapType
-              //    onMapCreated: _onMapCreated,
-              //     initialCameraPosition: CameraPosition(
-              //         target: LatLng(28.6562,77.2410),
-              //     zoom: 12,
-              //     ),
-              //     markers: markers,
-              //   ),
-              // )
+              Container(
+                height: MediaQuery.of(context).size.height,
+                child: GoogleMap(
+                  mapType: MapType.normal,// mapType
+                 onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(28.6562,77.2410),
+                  zoom: 12,
+                  ),
+                  markers: markers,
+                ),
+              )
 
               //  ---------end Marker code----
 
               //  to draw PolyLine and PolyGone on a Google map code.
-              Container(
-                height: MediaQuery.of(context).size.height,
-                child: GoogleMap(
-                  // map type
-                  mapType: MapType.normal,
-                  myLocationEnabled: true,
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(37.7749,-122.4194),
-                    zoom: 13,
-                  ),
-                  polylines: polylines,
-                  polygons: polygons,
-                ),
-              )
+              // Container(
+              //   height: MediaQuery.of(context).size.height,
+              //   child: GoogleMap(
+              //     // map type
+              //     mapType: MapType.normal,
+              //     myLocationEnabled: true,
+              //     initialCameraPosition: CameraPosition(
+              //       target: LatLng(37.7749,-122.4194),
+              //       zoom: 13,
+              //     ),
+              //     polylines: polylines,
+              //     polygons: polygons,
+              //   ),
+              // )
             ],
           )
       ),

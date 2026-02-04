@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'app_colors.dart';
+import 'app_color.dart';
+
 
 class AppTextStyle {
 
@@ -421,7 +422,7 @@ class AppTextStyle {
   static TextStyle font14OpenSansBoldRedTextStyle = GoogleFonts.openSans(
       color: AppColors.red, fontSize: 14, fontWeight: FontWeight.w700);
   static TextStyle font14OpenSansRegularGreyTextStyle = GoogleFonts.openSans(
-      color: AppColors.grey, fontSize: 14, fontWeight: FontWeight.w400);
+      color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w400);
   static TextStyle font12OpenSansboldWhite60TextStyle = GoogleFonts.openSans(
       color: AppColors.white.withOpacity(0.60),
       fontSize: 12,
@@ -431,7 +432,7 @@ class AppTextStyle {
   static TextStyle font12OpenSansRegularBlackTextStyle = GoogleFonts.openSans(
       color: AppColors.black, fontSize: 12, fontWeight: FontWeight.w400);
   static TextStyle font12OpenSansRegularGreyTextStyle = GoogleFonts.openSans(
-      color: AppColors.grey, fontSize: 12, fontWeight: FontWeight.w400);
+      color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w400);
   static TextStyle font12OpenSansBoldBlueTextStyle = GoogleFonts.openSans(
       color: AppColors.blue, fontSize: 12, fontWeight: FontWeight.w700);
   static TextStyle font12OpenSansBoldOrangeTextStyle = GoogleFonts.openSans(

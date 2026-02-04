@@ -1,31 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
-import 'package:noidaone/Controllers/notificationRepo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../data/repo/notificationRepo.dart';
+import '../commponent/appbarcommon.dart';
+import '../commponent/generalFunction.dart';
 import '../resources/app_text_style.dart';
-import 'generalFunction.dart';
 
-
-class NotificationPage extends StatelessWidget {
-
-  const NotificationPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(
-            color: Colors.white, // Change the color of the drawer icon here
-          ),
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
-      home: NotificationPageHome(),
-    );
-  }
-}
 
 class NotificationPageHome extends StatefulWidget {
   const NotificationPageHome({super.key});
@@ -42,7 +23,7 @@ class _MyHomePageState extends State<NotificationPageHome> {
 
   getnotificationResponse() async {
     notificationList = await NotificationRepo().notification(context);
-    print('------44----$notificationList');
+    print('------26----$notificationList');
     setState(() {
     });
   }
@@ -68,94 +49,87 @@ class _MyHomePageState extends State<NotificationPageHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          // Status bar color
-          statusBarColor: Color(0xFF8b2355),
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-        ),
-        backgroundColor:  const Color(0xFFD31F76),
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child:const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.arrow_back_ios),
-            )),
-        title:const Text(
-          'Notification',
-          style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold),
-        ),
-        elevation: 1,
-        iconTheme: const IconThemeData(
-          color: Colors.white, // 👈 sets drawer icon color to white
+      appBar: AppCommonAppBar(
+      title: "Notification" , //title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
+      showBack: true,
+      onBackPressed: () {
+        print("Back pressed");
+        Navigator.pop(context);
+      },
+    ),
+      body: (notificationList == null || notificationList!.isEmpty)
+        ? const Center(
+      child: Text(
+        "No Notification",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
         ),
       ),
-        // drawer
-        drawer: generalFunction.drawerFunction(context,'$sName','$sContactNo'),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: ListView.separated(
-            itemCount: notificationList != null ? notificationList!.length : 0,
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(); // Customize this as needed
-            },
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Icon(
-                      Icons.notification_important,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            notificationList?[index]['sTitle'].toString() ?? '',
-                          style: AppTextStyle.font14OpenSansRegularBlackTextStyle
+    )
+        : Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      child: ListView.separated(
+        itemCount: notificationList!.length,
+        separatorBuilder: (context, index) => const Divider(),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Icon(
+                  Icons.notification_important,
+                  size: 30,
+                  color: Colors.black,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        notificationList![index]['sTitle']?.toString() ?? '',
+                        style: AppTextStyle
+                            .font14OpenSansRegularBlackTextStyle,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        notificationList![index]['sNotification']
+                            ?.toString() ??
+                            '',
+                        style: AppTextStyle
+                            .font12OpenSansRegularBlack45TextStyle,
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.calendar_month,
+                            size: 18,
+                            color: Colors.black,
                           ),
-                          SizedBox(height: 2),
+                          const SizedBox(width: 5),
                           Text(
-                            notificationList?[index]['sNotification'].toString() ?? '',
-                            style: AppTextStyle.font12OpenSansRegularBlack45TextStyle,
-                            textAlign: TextAlign.start,
-                          ),
-                          SizedBox(height: 2),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.calendar_month,
-                                size: 18,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                notificationList?[index]['dRecivedAt'].toString() ?? '',
-                                style: AppTextStyle.font12OpenSansRegularBlack45TextStyle
-                              ),
-                            ],
+                            notificationList![index]['dRecivedAt']
+                                ?.toString() ??
+                                '',
+                            style: AppTextStyle
+                                .font12OpenSansRegularBlack45TextStyle,
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              );
-            },
-          ),
-        ),
+              ],
+            ),
+          );
+        },
+      ),
+    ),
+
     );
 
   }

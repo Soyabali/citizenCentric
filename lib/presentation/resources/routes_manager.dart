@@ -9,9 +9,11 @@ import '../change_password/change_password.dart';
 import '../firebase/firebasehome.dart';
 import '../forgot_password/forgot_password.dart';
 import '../formdatastore/formScreen.dart';
+import '../homepage/homepage.dart';
 import '../login/login.dart';
 import '../main/main_view.dart';
 import '../onboarding/onboarding.dart';
+import '../parkGeotagging/markGeotaggingform.dart';
 import '../register/register.dart';
 import '../splash/splash.dart';
 import '../store_details/store_details.dart';
@@ -30,6 +32,8 @@ class Routes {
   static const String formDataStore = "/formDataStore";
   static const String mlscreen = "/mlscreen";
   static const String googlemapHome = "/googleMap";
+  static const String homePage = "/homePage";// markGeotaggingForm
+  static const String markGeotaggingForm = "/markGeotaggingForm";
 }
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
@@ -59,12 +63,15 @@ class RouteGenerator {
         initFirebaseModule();
         return MaterialPageRoute(builder: (_) => FirebaseHome());
       case Routes.formDataStore:
-       // return MaterialPageRoute(builder: (_) => FormDataStore());
         return MaterialPageRoute(builder: (_) => FormScreen());
       case Routes.mlscreen:
         return MaterialPageRoute(builder: (_) => MLHomeScreen());
       case Routes.googlemapHome:
         return MaterialPageRoute(builder: (_) => GoogleMapScreen());
+      case Routes.homePage:
+        return MaterialPageRoute(builder: (_) => Homepage());
+
+
         default:
         return unDefinedRoute();
     }

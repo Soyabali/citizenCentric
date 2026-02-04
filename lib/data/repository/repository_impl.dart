@@ -21,28 +21,63 @@ class RepositoryImpl extends Repository {
 
 
   @override
-  Future<Either<Failure, Authentication>> login(LoginRequest loginRequest) async {
+  // Future<Either<Failure, Authentication>> login(LoginRequest loginRequest) async {
+  //
+  //   if (await _networkInfo.isConnected) {
+  //
+  //     try {
+  //       final responses = await _remoteDataSource.login(loginRequest); // List<AuthenticationResponse>
+  //
+  //       for (var item in responses) {
+  //         if (item.result == "1") {
+  //           print("----item.result --55--:  ${item.result}");
+  //           print("-Token  56: ${item.token}");
+  //           return Right(item.toDomain()); // Return first success case
+  //         }
+  //       }
+  //       // If no item was successful:
+  //       return Left(
+  //         // is another part of a {{Either}} concept. Left if api response failed then go under Left
+  //         Failure(
+  //           int.tryParse(responses.first.result ?? '') ?? ApiInternalStatus.FAILURE,
+  //           responses.first.msg ?? ResponseMessage.DEFAULT,
+  //         ),
+  //       );
+  //     } catch (error) {
+  //       return Left(ErrorHandler.handle(error).failure);
+  //     }
+  //   } else {
+  //     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  //   }
+  // }
+
+  @override
+  Future<Either<Failure, Authentication>> login(
+      LoginRequest loginRequest) async {
 
     if (await _networkInfo.isConnected) {
-
       try {
-        final responses = await _remoteDataSource.login(loginRequest); // List<AuthenticationResponse>
+        final response =
+        await _remoteDataSource.login(loginRequest);
+        // response is AuthenticationResponse
 
-        for (var item in responses) {
-          if (item.result == "1") {
-            print("----item.result --55--:  ${item.result}");
-            print("-Token  56: ${item.token}");
-            return Right(item.toDomain()); // Return first success case
-          }
+        if (response.result == "1" &&
+            response.data != null &&
+            response.data!.isNotEmpty) {
+
+          final user = response.data!.first;
+          print("---69--token----${user.token}");
+
+          return Right(user.toDomain());
+        } else {
+          return Left(
+            Failure(
+              int.tryParse(response.result ?? '') ??
+                  ApiInternalStatus.FAILURE,
+              response.msg ?? ResponseMessage.DEFAULT,
+            ),
+          );
         }
-        // If no item was successful:
-        return Left(
-          // is another part of a {{Either}} concept. Left if api response failed then go under Left
-          Failure(
-            int.tryParse(responses.first.result ?? '') ?? ApiInternalStatus.FAILURE,
-            responses.first.msg ?? ResponseMessage.DEFAULT,
-          ),
-        );
       } catch (error) {
         return Left(ErrorHandler.handle(error).failure);
       }
@@ -50,6 +85,7 @@ class RepositoryImpl extends Repository {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
+
 
   // -----ChangePassword repository---
   Future<Either<Failure, ChangePasswordModel>> changePassword(

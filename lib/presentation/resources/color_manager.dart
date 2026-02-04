@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 class ColorManager {
-  static Color primary = HexColor.fromHex("#ED9728");
+   static Color primary = HexColor.fromHex("#4b9c91"); //to given
+   //static Color primary = HexColor.fromHex("#2E7D32");
+  //static Color primary = HexColor.fromHex("#ED9728");
   static Color darkGrey = HexColor.fromHex("#525252");
   static Color grey = HexColor.fromHex("#737477");
   static Color lightGrey = HexColor.fromHex("#9E9E9E");
@@ -12,7 +14,7 @@ class ColorManager {
   static Color grey2 = HexColor.fromHex("#797979");
   static Color white = HexColor.fromHex("#FFFFFF");
   static Color error = HexColor.fromHex("#e61f34");
-  static Color black= HexColor.fromHex("#000000"); // red color
+  static Color black = HexColor.fromHex("#000000"); // red color
   static Color darkBackground = HexColor.fromHex("#121212");
 }
 

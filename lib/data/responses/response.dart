@@ -1,130 +1,136 @@
 import 'package:json_annotation/json_annotation.dart';
+import '../../domain/model/model.dart';
 part 'response.g.dart'; // Required for json_serializable
 
-
-// this a login Api response
-// this is a response file i will write this file according to api response
-// in this file i am used JsonSerializable and with a command i generate another generated file
-//  response.g.dart file
+//   ------BaseResponse---------.
 
 @JsonSerializable()
-class AuthenticationResponse {
+
+class BaseResponse {
   @JsonKey(name: "Result")
   String? result;
+
   @JsonKey(name: "Msg")
   String? msg;
-  @JsonKey(name: "sEmpCode")
-  String? empCode;
-  @JsonKey(name: "sCompEmpCode")
-  String? compEmpCode;
-  @JsonKey(name: "sFirstName")
-  String? firstName;
-  @JsonKey(name: "sLastName")
-  String? lastName;
+
+  BaseResponse({this.result, this.msg});
+
+  factory BaseResponse.fromJson(Map<String, dynamic> json) =>
+      _$BaseResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BaseResponseToJson(this);
+}
+
+
+//----------UserDataResponse-------------.
+
+@JsonSerializable()
+class UserDataResponse {
+  @JsonKey(name: "iUserId")
+  int? userId;
+
+  @JsonKey(name: "sName")
+  String? name;
+
   @JsonKey(name: "sContactNo")
   String? contactNo;
-  @JsonKey(name: "dDOJ")
-  String? dateOfJoining;
-  @JsonKey(name: "dDOB")
-  String? dateOfBirth;
-  @JsonKey(name: "sEmergencyContactPerson")
-  String? emergencyContactPerson;
-  @JsonKey(name: "sEmergencyContactNo")
-  String? emergencyContactNo;
-  @JsonKey(name: "sEmergencyContactRelation")
-  String? emergencyContactRelation;
-  @JsonKey(name: "sBloodGroup")
-  String? bloodGroup;
-  @JsonKey(name: "sCategory")
-  String? category;
-  @JsonKey(name: "sDsgCode")
-  String? designationCode;
-  @JsonKey(name: "sDsgName")
+
+  @JsonKey(name: "sDesgName")
   String? designationName;
-  @JsonKey(name: "sDeptCode")
-  String? departmentCode;
-  @JsonKey(name: "sDeptName")
-  String? departmentName;
-  @JsonKey(name: "sLocCode")
-  String? locationCode;
-  @JsonKey(name: "sLocName")
-  String? locationName;
-  @JsonKey(name: "sLocation")
-  String? locationAddress;
-  @JsonKey(name: "sBankName")
-  String? bankName;
-  @JsonKey(name: "sBankAcNo")
-  String? bankAccountNumber;
-  @JsonKey(name: "sISFCode")
-  String? ifscCode;
-  @JsonKey(name: "Entitlement")
-  String? entitlement;
-  @JsonKey(name: "Availed")
-  String? availed;
-  @JsonKey(name: "Balance")
-  String? balance;
+
+  @JsonKey(name: "iDesgCode")
+  int? designationCode;
+
+  @JsonKey(name: "iDeptCode")
+  int? departmentCode;
+
+  @JsonKey(name: "iUserTypeCode")
+  int? userTypeCode;
+
   @JsonKey(name: "sToken")
   String? token;
-  @JsonKey(name: "sEmpImage")
-  String? employeeImage;
-  @JsonKey(name: "sCompEmailId")
-  String? companyEmailId;
-  @JsonKey(name: "sMngrName")
-  String? managerName;
-  @JsonKey(name: "sMngrDesgName")
-  String? managerDesignationName;
-  @JsonKey(name: "sMngrContactNo")
-  String? managerContactNo;
-  @JsonKey(name: "iIsEligibleShLv")
-  String? isEligibleShortLeave;
-  @JsonKey(name: "iPaymentUpload")
-  String? paymentUpload;
-  @JsonKey(name: "iPaymentAction")
-  String? paymentAction;
+
+  @JsonKey(name: "dLastLoginAt")
+  String? lastLoginAt;
+
+  @JsonKey(name: "iAgencyCode")
+  int? agencyCode;
+
+  UserDataResponse();
+
+  factory UserDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserDataResponseFromJson(json);
+}
+
+
+@JsonSerializable()
+class AuthenticationResponse extends BaseResponse {
+  @JsonKey(name: "Data")
+  List<UserDataResponse>? data;
 
   AuthenticationResponse({
-    this.result,
-    this.msg,
-    this.empCode,
-    this.compEmpCode,
-    this.firstName,
-    this.lastName,
-    this.contactNo,
-    this.dateOfJoining,
-    this.dateOfBirth,
-    this.emergencyContactPerson,
-    this.emergencyContactNo,
-    this.emergencyContactRelation,
-    this.bloodGroup,
-    this.category,
-    this.designationCode,
-    this.designationName,
-    this.departmentCode,
-    this.departmentName,
-    this.locationCode,
-    this.locationName,
-    this.locationAddress,
-    this.bankName,
-    this.bankAccountNumber,
-    this.ifscCode,
-    this.entitlement,
-    this.availed,
-    this.balance,
-    this.token,
-    this.employeeImage,
-    this.companyEmailId,
-    this.managerName,
-    this.managerDesignationName,
-    this.managerContactNo,
-    this.isEligibleShortLeave,
-    this.paymentUpload,
-    this.paymentAction,
-  });
+    String? result,
+    String? msg,
+    this.data,
+  }) : super(result: result, msg: msg);
 
   factory AuthenticationResponse.fromJson(Map<String, dynamic> json) =>
       _$AuthenticationResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$AuthenticationResponseToJson(this);
 }
+
+// userData----.
+
+@JsonSerializable()
+class UserData {
+  @JsonKey(name: "iUserId")
+  int? userId;
+
+  @JsonKey(name: "sName")
+  String? name;
+
+  @JsonKey(name: "sContactNo")
+  String? contactNo;
+
+  @JsonKey(name: "sDesgName")
+  String? designationName;
+
+  @JsonKey(name: "iDesgCode")
+  int? designationCode;
+
+  @JsonKey(name: "iDeptCode")
+  int? departmentCode;
+
+  @JsonKey(name: "iUserTypeCode")
+  int? userTypeCode;
+
+  @JsonKey(name: "sToken")
+  String? token;
+
+  @JsonKey(name: "dLastLoginAt")
+  String? lastLoginAt;
+
+  @JsonKey(name: "iAgencyCode")
+  int? agencyCode;
+
+  UserData({
+    this.userId,
+    this.name,
+    this.contactNo,
+    this.designationName,
+    this.designationCode,
+    this.departmentCode,
+    this.userTypeCode,
+    this.token,
+    this.lastLoginAt,
+    this.agencyCode,
+  });
+
+  factory UserData.fromJson(Map<String, dynamic> json) =>
+      _$UserDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserDataToJson(this);
+}
+
  //  ---ChangePasswordResponse----.
 
 @JsonSerializable()

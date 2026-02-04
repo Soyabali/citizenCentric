@@ -28,6 +28,7 @@
   "username_error": "Username is wrong",
   "invalid_email": "Invalid Email",
   "password": "Password is wrong",
+  "password_error": "Password is wrong",
   "forgetPassword": "Forget password",
   "change_password": "Change password",
   "register": "Register",
@@ -63,5 +64,19 @@
   "invite_your_friends": "Invite Your Friends",
   "logout": "Logout",
   "reset_password": "Reset Password",
-  "conform_password": "Conform Password"
+  "conform_password": "Conform Password",
+  "company_name": "Synergy Telematics Pvt Ltd",
+  "powerd_by": "Powered By",
+  "mobile_no_error": "Invalid Mobile Number",
+  "noida_park": "Noida Park",
+  "dashboard": "Dashboard",
+  "postInspection": "Post Inspection",
+  "parkGeotagging": "Park Geotagging",
+  "inspectionList": "Inspection List",
+  "nearparklocation": "Nearby parks based on your current location",
+  "selectDivision": "Select Division",
+  "selectSector": "Select Sector",
+  "selectSubCategory": "Select Sub Category",
+  "enterKeywords": "Enter Keywords",
+  "changeTheme": "Change Theme"
 }

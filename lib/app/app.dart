@@ -2,6 +2,7 @@ import 'package:citizencentric/app/app_prefs.dart';
 import 'package:citizencentric/presentation/resources/theme_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../presentation/resources/routes_manager.dart';
 import '../presentation/riverpod/main_view_controller..dart';
@@ -23,6 +24,7 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
 
   AppPreferences _appPreferences = instance<AppPreferences>();
+  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
   @override
   void didChangeDependencies() {
@@ -54,6 +56,9 @@ class _MyAppState extends ConsumerState<MyApp> {
       locale: context.locale,
       // Application Theme
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [routeObserver],
+      // 🔴 THIS LINE FIXES YOUR ERROR
+      builder: EasyLoading.init(),
       // rooute
       onGenerateRoute: RouteGenerator.getRoute,
       // inittialRoute

@@ -1,33 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
-import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Controllers/changepasswordrepo.dart';
+import '../../data/repo/changepasswordrepo.dart';
+import '../commponent/appbarcommon.dart';
+import '../commponent/generalFunction.dart';
 import '../resources/app_text_style.dart';
-import '../resources/values_manager.dart';
-import 'generalFunction.dart';
-import 'loginScreen_2.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+import '../resources/color_manager.dart';
+import '../resources/routes_manager.dart';
 
-class ChangePassWord extends StatelessWidget {
-  const ChangePassWord({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(
-            color: Colors.white, // Change the color of the drawer icon here
-          ),
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
-      home: ChangePassWordHome(),
-    );
-  }
-}
 
 class ChangePassWordHome extends StatefulWidget {
   const ChangePassWordHome({super.key});
@@ -120,45 +103,15 @@ class _MyHomePageState extends State<ChangePassWordHome> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
-        appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            // Status bar color
-            statusBarColor: Color(0xFF8b2355),
-            statusBarIconBrightness: Brightness.dark,
-            statusBarBrightness: Brightness.light,
-          ),
-          backgroundColor:  const Color(0xFFD31F76),
-          leading: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-                // Navigator.pop(context);
-                //
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => SupervisiorDashBoard()));
-                //Navigator.pop(context);
-              },
-              child:const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.arrow_back_ios),
-              )),
-          title:const Text(
-            'Change PassWord',
-            style: TextStyle(
-                fontFamily: 'Montserrat',
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold),
-          ),
-          elevation: 1,
-          iconTheme: const IconThemeData(
-            color: Colors.white, // 👈 sets drawer icon color to white
-          ),
+        backgroundColor: ColorManager.white,
+        appBar: AppCommonAppBar(
+          title: "Change Password" , //title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
+          showBack: true,
+          onBackPressed: () {
+            print("Back pressed");
+            Navigator.pop(context);
+          },
         ),
-
-        // drawer
-        drawer: generalFunction.drawerFunction(context,'$sName','$sContactNo'),
-
         body: ListView(
           children: <Widget>[
             Padding(
@@ -264,8 +217,8 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                                   borderSide: BorderSide(color:Color(0xFF255899))
                                               ),
                                               contentPadding: EdgeInsets.symmetric(
-                                                vertical: AppPadding.p10,
-                                                horizontal: AppPadding.p10, // Add horizontal padding
+                                                vertical: 10,
+                                                horizontal: 10, // Add horizontal padding
                                               ),
                                               prefixIcon:
                                               Icon(Icons.lock,size: 20, color: Color(0xFF255899)),
@@ -307,8 +260,8 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                                   borderSide: BorderSide(color:Color(0xFF255899))
                                               ),
                                               contentPadding: EdgeInsets.symmetric(
-                                                vertical: AppPadding.p10,
-                                                horizontal: AppPadding.p10, // Add horizontal padding
+                                                vertical: 10,
+                                                horizontal: 10, // Add horizontal padding
                                               ),
                                               prefixIcon:
                                               Icon(Icons.lock,size: 20, color: Color(0xFF255899)),
@@ -350,8 +303,8 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                                   borderSide: BorderSide(color:Color(0xFF255899))
                                               ),
                                               contentPadding: EdgeInsets.symmetric(
-                                                vertical: AppPadding.p10,
-                                                horizontal: AppPadding.p10, // Add horizontal padding
+                                                vertical: 10,
+                                                horizontal: 10, // Add horizontal padding
                                               ),
                                               prefixIcon:
                                               Icon(Icons.lock,size: 20, color: Color(0xFF255899)),
@@ -387,16 +340,6 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                               var newpassword = _newPasswordController.text;
                                               var confirmpassword = _confirmPasswordController.text;
 
-                                              print('----495--$oldpassword');
-                                              print('----496--$newpassword');
-                                              print('----497--$confirmpassword');
-                                              // if(newpassword!=confirmpassword){
-                                              //   displayToast("");
-                                              //   displayToast("");
-                                              //   displayToast("Password does not match.");
-                                              // }else{
-                                              //
-                                              // }
 
                                               if(_formKey.currentState!.validate() && oldpassword != null && newpassword != null && confirmpassword!=null){
 
@@ -405,6 +348,9 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                                   displayToast("Password does not match");
                                                 }
                                                 else{
+                                                  print("---OldPassword : $oldpassword");
+                                                  print("---newpassword : $newpassword");
+
                                                   changePasswordRepo = await ChangePasswordRepo().changePassword(context, oldpassword!, newpassword!);
                                                     print('----479-----$changePasswordRepo');
                                                   result = "${changePasswordRepo['Result']}";
@@ -424,16 +370,13 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                               }
                                              // print('-----499---Not-Call Api-');
                                               if(result=="1"){
-                                                var sToken = "${changePasswordRepo['Data'][0]['sToken']}";
-                                                print('---565--token---$sToken');
-                                                // store token
-                                                SharedPreferences prefs = await SharedPreferences.getInstance();
-                                                prefs.setString('sToken',sToken);
 
                                                 displayToast(msg);
-                                                Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(builder: (context) => LoginScreen_2()));
+
+                                               // Navigator.pushReplacementNamed(context, Routes.loginRoute);
+
+                                                Navigator.pushReplacementNamed(context, Routes.loginRoute);
+
 
                                               }else{
                                                 print('----573---To display error msg---');
@@ -441,22 +384,22 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                               }
                                               },
                                             child: Container(
-                                              width: double.infinity, // Make container fill the width of its parent
+                                              width: double.infinity,
                                               height: 45,
-                                              padding: EdgeInsets.all(5.0),
+                                              padding: const EdgeInsets.symmetric(horizontal: 16),
                                               decoration: BoxDecoration(
-                                                color: Color(0xFF255899), // Background color using HEX value
-                                                borderRadius: BorderRadius.circular(
-                                                    10.0), // Rounded corners
+                                                color: ColorManager.primary,
+                                                borderRadius: BorderRadius.circular(45), // 👈 Stadium style
                                               ),
                                               child: const Center(
                                                 child: Text(
                                                   'Submit',
                                                   style: TextStyle(
-                                                      fontFamily: 'Montserrat',
-                                                      color: Colors.white,
-                                                      fontSize: 16.0,
-                                                      fontWeight: FontWeight.bold),
+                                                    fontFamily: 'Montserrat',
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -480,17 +423,14 @@ class _MyHomePageState extends State<ChangePassWordHome> {
     );
   }
   // dialog
-  void displayToast(String msg){
-    showToast(
-      msg,
-      duration: const Duration(seconds: 1),
-      position: ToastPosition.center,
+  void displayToast(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER, // ✅ FIX
       backgroundColor: Colors.red,
-      textStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 16.0,
-      ),
+      textColor: Colors.white,
+      fontSize: 16.0,
     );
-
   }
 }

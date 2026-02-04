@@ -20,7 +20,8 @@ class AppStrings {
   static const String login = "login_button";
   static const String usernameError = "username_error";
   static const String passwordError = "password_error";
-  static const String password = "password";
+  static const String password = "password_hint";
+  static const String password_hint = "password_error";
   static const String forgetPassword = "forgetPassword";
   static const String changePassword = "change_password";
   static const String registerText = "register_text";
@@ -36,7 +37,8 @@ class AppStrings {
   static const String settings = "settings";
   static const String services = "services";
   static const String stores = "stores";
-  static const String changeLanguage = "change_language";
+  static const String changeLanguage = "changeTheme";
+  static const String changeTheme = "changeTheme";
   static const String contactUs = "contact_us";
   static const String firebase = "FireBase";
   static const String formDataStorage = "Form Data Storage";
@@ -59,5 +61,21 @@ class AppStrings {
   static const String defaultError = "default_error";
   static const String cacheError = "cache_error";
   static const String noInternetError = "no_internet_error";
+  // Synergy Telematics Pvt Ltd
+  static const String companyName = "company_name";
+  static const String powerd_by = "powerd_by";
+  static const String mobile_no_error = "mobile_no_error";
+  static const String noidapark = "noida_park";
+  // Dashboard Post Inspection  Park Geotagging Inspection List
+  static const String dashboard = "dashboard";
+  static const String postInspection = "postInspection";
+  static const String parkGeotagging = "parkGeotagging";
+  static const String inspectionList = "inspectionList";
+  // Nearby parks based on your current location   Select Division
+  static const String nearparklocation = "nearparklocation";
+  static const String selectDivision = "selectDivision";// Select Sector"
+  static const String selectSector = "selectSector";// Select Division  Enter Keywords
+  static const String selectSubCategory = "selectSubCategory";
+  static const String enterKeywords = "enterKeywords";
 
 }

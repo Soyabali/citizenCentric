@@ -10,13 +10,15 @@ part 'app_api.g.dart';
 @RestApi(baseUrl: Constant.baseUrl)
 abstract class AppServiceClient {
   factory AppServiceClient(Dio dio, {String baseUrl}) = _AppServiceClient;
+
   //  ------Login Ali--------
-  @POST("hrmsLogin/hrmsLogin")  // <List<AuthenticationResponse>>  this is the most
-  // important part we should see api response after that we should return data as a api givern
-  // here LoginResponse api return data in a list ex [{}], so we return the LIST
-  Future<List<AuthenticationResponse>> login(
-      @Field("sContactNo") String sContactNo,// this is the field of api
-      @Field("sPassword") String sPassword);
+
+  @POST("AppLogin/AppLogin")
+  Future<AuthenticationResponse> login(
+      @Field("sContactNo") String sContactNo,
+      @Field("sPassword") String sPassword,
+      @Field("sAppVersion") String sAppVersion,
+      );
 
   //  --------Api ChangePassword-------
 

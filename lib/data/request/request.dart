@@ -5,7 +5,8 @@
 class LoginRequest {
   String sContactNo;
   String sPassword;
-  LoginRequest(this.sContactNo, this.sPassword);
+  String sAppVersion;
+  LoginRequest(this.sContactNo, this.sPassword,this.sAppVersion);
 }
 //  ----changePasswordRequest
 
