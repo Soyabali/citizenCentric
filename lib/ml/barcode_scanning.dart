@@ -9,7 +9,7 @@ import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart
 class BarcodeScanning extends StatefulWidget {
   //final List<CameraDescription> cameras;
 
-  const BarcodeScanning({Key? key}) : super(key: key);
+  const BarcodeScanning({super.key});
 
   @override
   State<BarcodeScanning> createState() => _CameraScreenState();
@@ -122,10 +122,8 @@ class _CameraScreenState extends State<BarcodeScanning> {
           break;
         case BarcodeType.url:
           BarcodeUrl? barcodeUrl = barcode.value as BarcodeUrl;
-          if(barcodeUrl != null) {
-            result = "Url: ${barcodeUrl.url!}";
-          }
-          break;
+          result = "Url: ${barcodeUrl.url!}";
+                  break;
         case BarcodeType.unknown:
         // TODO: Handle this case.
         case BarcodeType.contactInfo:
@@ -169,7 +167,7 @@ class _CameraScreenState extends State<BarcodeScanning> {
     if (Platform.isIOS) {
       rotation = InputImageRotationValue.fromRawValue(sensorOrientation);
     } else if (Platform.isAndroid) {
-      var rotationCompensation = _orientations[controller!.value.deviceOrientation];
+      var rotationCompensation = _orientations[controller.value.deviceOrientation];
       if (rotationCompensation == null) return null;
       if (camera.lensDirection == CameraLensDirection.front) {
         // front-facing

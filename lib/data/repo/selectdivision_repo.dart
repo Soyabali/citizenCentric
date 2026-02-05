@@ -14,12 +14,11 @@ class SelectDivisionRepo {
 
   Future<List?> bindSubCategory(BuildContext context) async {
 
-    AppPreferences _appPreferences = instance<AppPreferences>();
+    AppPreferences appPreferences = instance<AppPreferences>();
+    final token = await appPreferences.getUserToken();
 
-    final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
     // get a login data
-    final userData = await _appPreferences.getLoginUserData();
+    final userData = await appPreferences.getLoginUserData();
 
     try {
       //var baseURL = BaseRepo().baseurl;
@@ -29,10 +28,10 @@ class SelectDivisionRepo {
       showLoader();
 
       var headers = {
-        'token': '$token',
+        'token': token,
         'Content-Type': 'application/json'
       };
-      var request = http.Request('POST', Uri.parse('$bindComplaintSubCategoryApi'));
+      var request = http.Request('POST', Uri.parse(bindComplaintSubCategoryApi));
       // body
       request.body = json.encode(
           {
@@ -48,7 +47,6 @@ class SelectDivisionRepo {
         var data = await response.stream.bytesToString();
         Map<String, dynamic> parsedJson = jsonDecode(data);
         List<dynamic>? subCategory = parsedJson['Data'];
-        print("---57--$subCategory");
 
         return subCategory;
 
@@ -66,7 +64,7 @@ class SelectDivisionRepo {
     } catch (e) {
       hideLoader();
       debugPrint("Exception: $e");
-      throw e;
+      rethrow;
     }
   }
 }

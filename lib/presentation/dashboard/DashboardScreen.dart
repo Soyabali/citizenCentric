@@ -30,7 +30,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<dynamic> sectorList = [];
   var dropDownSubCategory;
   var dropDownSector;
-  var _dropDownWard, _selectedSubCategoryId;
+  var _selectedSubCategoryId;
   var selectedDropDownSectorCode;
   TextEditingController _searchController = TextEditingController();
   int totalParks = 0;

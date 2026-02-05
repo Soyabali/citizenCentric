@@ -13,7 +13,6 @@ import '../homepage/homepage.dart';
 import '../login/login.dart';
 import '../main/main_view.dart';
 import '../onboarding/onboarding.dart';
-import '../parkGeotagging/markGeotaggingform.dart';
 import '../register/register.dart';
 import '../splash/splash.dart';
 import '../store_details/store_details.dart';

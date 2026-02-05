@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
 import '../../app/app_prefs.dart';
 import '../../app/constant.dart';
 import '../../app/di.dart';
@@ -49,12 +48,8 @@ class PostInspectionRepo {
       if (response.statusCode == 200) {
         final data = await response.stream.bytesToString();
         final parsedJson = jsonDecode(data);
-        print("-----49------data----$parsedJson");
         hideLoader();
-
-
         final List<dynamic>? dataList = parsedJson['Data'];
-
         if (dataList == null) return [];
 
         /// 🔥 Convert JSON → Model

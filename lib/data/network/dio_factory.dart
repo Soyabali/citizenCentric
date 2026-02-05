@@ -13,7 +13,7 @@ const String AUTHORIZATION = "token";
 const String DEFAULT_LANGUAGE = "language";
 
 class DioFactory {
-  AppPreferences _appPreferences;
+  final AppPreferences _appPreferences;
   DioFactory(this._appPreferences);
 
   Future<Dio> getDio() async {
@@ -36,7 +36,6 @@ class DioFactory {
         headers: headers);
 
     if (kReleaseMode) {
-      print("release mode no logs");
     } else {
       dio.interceptors.add(PrettyDioLogger(
           requestHeader: true, requestBody: true, responseHeader: true));

@@ -45,9 +45,6 @@ class ParkListWithAgencyRepo {
         hideLoader();
         final data = await response.stream.bytesToString();
         final parsedJson = jsonDecode(data);
-        print("-----50------data----$parsedJson");
-
-
         final List<dynamic>? dataList = parsedJson['Data'];
 
         if (dataList == null) return [];

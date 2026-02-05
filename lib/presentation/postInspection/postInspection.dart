@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../data/repo/postInspection_Repo.dart';
 import '../../domain/model/allParkLocationModel.dart';
 import '../commponent/appbarcommon.dart';
-import '../commponent/fullscreenimage.dart';
 import '../fullScreenImage/FullScreenImageDialog.dart';
 import '../inspectionList/lunch_Google_Map.dart';
 import '../resources/strings_manager.dart';
@@ -34,7 +33,7 @@ class _DashboardScreenState extends State<PostInspection> {
   List<dynamic> sectorList = [];
   var dropDownSubCategory;
   var dropDownSector;
-  var _dropDownWard, _selectedSubCategoryId;
+  var _selectedSubCategoryId;
   var selectedDropDownSectorCode;
 
   List<AllParkLocationModel> pendingInternalComplaintList = [];
@@ -60,31 +59,6 @@ class _DashboardScreenState extends State<PostInspection> {
     Color(0xFFEBB072),
     Color(0xFF8BC2D0),
   ];
-
-
-  Widget _actionItem(String title, {int maxLines = 1}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: PlatformText(
-              title,
-              type: AppTextType.caption,
-              maxLines: maxLines,      // 👈 allow wrapping
-            ),
-          ),
-          const SizedBox(width: 4),
-          const Icon(
-            Icons.arrow_forward_ios,
-            size: 14,
-            color: Colors.black54,
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _iosActionItem({
     double? width,
@@ -196,14 +170,14 @@ class _DashboardScreenState extends State<PostInspection> {
 
                       // ✅ TEXT CAN GROW NOW
                       title: PlatformText(
-                        item.sParkName ?? '',
+                        item.sParkName,
                         type: AppTextType.subtitle,
                         maxLines: null,     // unlimited lines
                         softWrap: true,     // wrap text
                       ),
 
                       subtitle: PlatformText(
-                        "Worker - ${item.iNoOfWorkers ?? ""}",
+                        "Worker - ${item.iNoOfWorkers}",
                         type: AppTextType.caption,
                         maxLines: null,
                         softWrap: true,
@@ -222,7 +196,7 @@ class _DashboardScreenState extends State<PostInspection> {
                             ),
                           ),
                           child: Text(
-                            'Area : ${item.fArea ?? ""}',
+                            'Area : ${item.fArea}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
@@ -334,7 +308,7 @@ class _DashboardScreenState extends State<PostInspection> {
                           Padding(
                             padding: const EdgeInsets.only(left: 24),
                             child: PlatformText(
-                              item.sSupervisor ?? "", // "Satish" ,//  AppStrings.powerd_by.tr(),
+                              item.sSupervisor, // "Satish" ,//  AppStrings.powerd_by.tr(),
                               type: AppTextType.caption,
                             ),
                           ),
@@ -354,7 +328,7 @@ class _DashboardScreenState extends State<PostInspection> {
                           Padding(
                             padding: const EdgeInsets.only(left: 24),
                             child: PlatformText(
-                              item.sDuptyDirector ?? "",//"R.Singh", //  AppStrings.powerd_by.tr(),
+                              item.sDuptyDirector,//"R.Singh", //  AppStrings.powerd_by.tr(),
                               type: AppTextType.caption,
                             ),
                           ),
@@ -393,7 +367,7 @@ class _DashboardScreenState extends State<PostInspection> {
                                           type: AppTextType.subtitle,
                                         ),
                                         PlatformText(
-                                          item.sAssetDirector ?? "", //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
+                                          item.sAssetDirector, //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
                                           type: AppTextType.caption,
                                         ),
                                       ],
@@ -413,7 +387,7 @@ class _DashboardScreenState extends State<PostInspection> {
                                   onTap: () {
                                     final images = item.sParkPhoto;
 
-                                    if (images != null && images.isNotEmpty) {
+                                    if (images.isNotEmpty) {
                                       showGeneralDialog(
                                         context: context,
                                         barrierDismissible: true,
@@ -537,7 +511,7 @@ class _DashboardScreenState extends State<PostInspection> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sDirector ?? "" ,//"Director", //  AppStrings.powerd_by.tr(),
+                        item.sDirector,//"Director", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.caption,
                       ),
                     ),
@@ -558,7 +532,7 @@ class _DashboardScreenState extends State<PostInspection> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sAgencyName?? "" ,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
+                        item.sAgencyName,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.caption,
                         color: ColorManager.primary,
                       ),
@@ -579,22 +553,18 @@ class _DashboardScreenState extends State<PostInspection> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        (item.sGoogleLocation != null && item.sGoogleLocation!.trim().isNotEmpty)
-                            ? item.sGoogleLocation!
+                        (
+                            item.sGoogleLocation.trim().isNotEmpty)
+                            ? item.sGoogleLocation
                             : "No Location",
                         type: AppTextType.caption,
                       ),
-                      // child: PlatformText(
-                      //   item.sGoogleLocation ?? "" ,//"Director", //  AppStrings.powerd_by.tr(),
-                      //   type: AppTextType.caption,
-                      // ),
                     ),
                   ],
                 ),
               ),
-
               SizedBox(height: 5),
-        Card(
+              Card(
           elevation: 0,
           margin: EdgeInsets.zero, // ✅ remove outer padding
           color: Colors.white,
@@ -631,7 +601,7 @@ class _DashboardScreenState extends State<PostInspection> {
                   width: 130,
                   title: "Post Inspection",
                   onTap: () {
-                    var iParkID = item.iParkId ?? "";
+                    var iParkID = item.iParkId;
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
@@ -649,7 +619,7 @@ class _DashboardScreenState extends State<PostInspection> {
                     title: "Agency Wise Details",
                     maxLines: 2,
                     onTap: () {
-                      var iAgencyCode = item.iAgencyCode?.toString() ?? "";
+                      var iAgencyCode = item.iAgencyCode.toString();
 
                       Navigator.push(
                         context,
@@ -665,89 +635,6 @@ class _DashboardScreenState extends State<PostInspection> {
             ),
           ),
         ),
-
-
-        // Card(
-              //   elevation: 0, // 👈 iOS prefers flat surfaces
-              //   color: Colors.white,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(14),
-              //     side: BorderSide(
-              //       color: Colors.grey.shade200, // 👈 soft border
-              //     ),
-              //   ),
-              //   child: Container(
-              //     height: 52,
-              //     width: MediaQuery.of(context).size.width,
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(5),
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: Colors.black.withOpacity(0.06), // 👈 soft shadow
-              //           blurRadius: 10,
-              //           offset: const Offset(0, 4),
-              //         ),
-              //       ],
-              //     ),
-              //     child: Row(
-              //       children: [
-              //
-              //         /// Navigation
-              //         _iosActionItem(
-              //           width: 110,
-              //           title: "Navigation",
-              //           onTap: () {
-              //             final double lat = item.fLatitude;
-              //             final double long = item.fLongitude;
-              //
-              //             if (lat != 0.0 && long != 0.0) {
-              //               launchGoogleMaps(lat, long);
-              //             }
-              //           },
-              //         ),
-              //
-              //         _divider(),
-              //
-              //         /// Post Inspection
-              //         _iosActionItem(
-              //           width: 130,
-              //           title: "Post Inspection",
-              //           onTap: () {
-              //             print("Post Inspection");
-              //             // Open bottom sheet here
-              //             var iParkID = item.iParkId ?? "";
-              //             showModalBottomSheet(
-              //               context: context,
-              //               isScrollControlled: true,
-              //               backgroundColor: Colors.transparent,
-              //               builder: (_) => ReportBottomSheet(iParkID:iParkID),
-              //             );
-              //           },
-              //         ),
-              //         _divider(),
-              //
-              //         /// Agency Wise Details
-              //         Expanded(
-              //           child: _iosActionItem(
-              //             title: "Agency Wise Details",
-              //             maxLines: 2,
-              //             onTap: () {
-              //               var iAgencyCode = "${item.iAgencyCode}";
-              //               print("----550--$iAgencyCode");
-              //
-              //               Navigator.push(
-              //                 context,
-              //                 MaterialPageRoute(
-              //                   builder: (_) => AgencyWiseDetails(iAgencyCode:iAgencyCode),
-              //                 ),
-              //               );
-              //             },
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
 
             ],
           ),
@@ -1143,8 +1030,7 @@ class _DashboardScreenState extends State<PostInspection> {
               Expanded(
                 child: isLoading
                     ? CommonShimmerList()
-                    : (pendingInternalComplaintList == null ||
-                    pendingInternalComplaintList!.isEmpty)
+                    : (pendingInternalComplaintList.isEmpty)
                     ? NoDataScreenPage()
                     : Padding(
                   padding: const EdgeInsets.only(left: 8.0,top: 8.0,bottom: 8.0,right: 4.0),

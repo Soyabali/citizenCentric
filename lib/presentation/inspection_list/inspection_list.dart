@@ -28,7 +28,7 @@ class _DashboardScreenState extends State<ParkInspectionList> {
   List<dynamic> sectorList = [];
   var dropDownSubCategory;
   var dropDownSector;
-  var _dropDownWard, _selectedSubCategoryId;
+  var _selectedSubCategoryId;
   var selectedDropDownSectorCode;
 
   List<ParkListModel> pendingInternalComplaintList = [];
@@ -141,7 +141,7 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                             ),
                           ),
                           child: Text(
-                            'Area : ${item.fArea ?? ""}',
+                            'Area : ${item.fArea}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
@@ -199,7 +199,7 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sDuptyDirector ?? "",//"R.Singh", //  AppStrings.powerd_by.tr(),
+                        item.sDuptyDirector,//"R.Singh", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.caption,
                       ),
                     ),
@@ -254,11 +254,7 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                       flex: 1, // 10%
                       child: GestureDetector(
                         onTap: () {
-                          print('---forward----click---');
-                          // navigate to markGeotaggingFrom
-                          //Navigator.pushNamed(context, '/markGeotaggingForm');
-                          var parkName =  item.sParkName;
-                          var parkId =  item.iParkId;
+
                           },
                         child:ColoredBox(
                           color: Colors.white, // color: bgColor,
@@ -294,7 +290,7 @@ class _DashboardScreenState extends State<ParkInspectionList> {
               Padding(
                 padding: const EdgeInsets.only(left: 24),
                 child: PlatformText(
-                  item.sDirector ?? "" ,//"Director", //  AppStrings.powerd_by.tr(),
+                  item.sDirector,  //"Director", //  AppStrings.powerd_by.tr(),
                   type: AppTextType.caption,
                 ),
               ),
@@ -309,7 +305,6 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                     type: AppTextType.subtitle,
                     color: ColorManager.primary,
                   ),
-                  //Text('Agency Name', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
                 ],
               ),
               Padding(
@@ -341,14 +336,12 @@ class _DashboardScreenState extends State<ParkInspectionList> {
       selectedSubCategoryId,
       selectedDropDownSectorCode,
     );
-
     // 🔒 IGNORE OLD RESPONSE
     if (requestId != _listRequestId) return;
 
     if (result != null) {
       pendingInternalComplaintList = result;
       _filteredData = List.from(result);
-      print("---376---ListData----: $pendingInternalComplaintList");
     } else {
       pendingInternalComplaintList = [];
       _filteredData = [];
@@ -712,17 +705,15 @@ class _DashboardScreenState extends State<ParkInspectionList> {
               Expanded(
                 child: isLoading
                     ? CommonShimmerList()
-                    : (pendingInternalComplaintList == null ||
-                    pendingInternalComplaintList!.isEmpty)
+                    : (pendingInternalComplaintList.isNotEmpty ||
+                      pendingInternalComplaintList.isEmpty)
                     ? NoDataScreenPage()
                     : Padding(
                   padding: const EdgeInsets.only(left: 8.0,top: 8.0,bottom: 8.0,right: 4.0),
                   child: ListView.builder(
                     itemCount: _filteredData.length,
                     itemBuilder: (context, index) {
-                      // final item = _filteredData[index];
                       final ParkListModel item = _filteredData[index];
-
                       return buildCardItem(context, item,index);
                     },
                   ),

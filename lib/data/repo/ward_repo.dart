@@ -18,9 +18,6 @@ class BindCityzenWardRepo
   {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? sToken = prefs.getString('sToken');
-
-    print('---19-  TOKEN---$sToken');
-
     try
     {
       showLoader();
@@ -32,10 +29,6 @@ class BindCityzenWardRepo
         'token': '$sToken'
       };
       var request = http.Request('GET', Uri.parse('$bindCityzenWardApi'));
-
-      // request.body = json.encode({
-      //   "iCategoryCode": "1",
-      // });
 
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
@@ -50,7 +43,6 @@ class BindCityzenWardRepo
         var data = await response.stream.bytesToString();
         Map<String, dynamic> parsedJson = jsonDecode(data);
         bindcityWardList = parsedJson['Data'];
-        print("Dist list Marklocation Api ----71------>:$bindcityWardList");
         return bindcityWardList;
       } else
       {

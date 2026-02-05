@@ -14,9 +14,9 @@ class PostInspectionRepo {
 
   Future<List?> postInspection(BuildContext context, String iTranNo, iparkID, selectedSubCategoryId, String descriotion, double? lat, double? long, locationAddress, uplodedImage, iInspBy) async {
 
-    AppPreferences _appPreferences = instance<AppPreferences>();
+    AppPreferences appPreferences = instance<AppPreferences>();
 
-    final token = await _appPreferences.getUserToken();
+    final token = await appPreferences.getUserToken();
 
     try {
       //var baseURL = BaseRepo().baseurl;
@@ -26,10 +26,10 @@ class PostInspectionRepo {
       showLoader();
 
       var headers = {
-        'token': '$token',
+        'token': token,
         'Content-Type': 'application/json'
       };
-      var request = http.Request('POST', Uri.parse('$updateParkLocationApi'));
+      var request = http.Request('POST', Uri.parse(updateParkLocationApi));
       // body
       request.body = json.encode(
           {
@@ -54,21 +54,8 @@ class PostInspectionRepo {
         hideLoader();
         var data = await response.stream.bytesToString();
         Map<String, dynamic> parsedJson = jsonDecode(data);
-        print("-----65---$parsedJson");
-
-        // List<dynamic>? subCategory = parsedJson['Data'];
-
-        // print("---66--$subCategory");
-
         return [parsedJson];
 
-        // if (dataList != null) {
-        //   List<Map<String, dynamic>> notificationList = dataList.cast<Map<String, dynamic>>();
-        //   print("xxxxx------46----: $notificationList");
-        //   return notificationList;
-        // } else{
-        //   return null;
-        // }
       } else {
          hideLoader();
         return null;
@@ -76,7 +63,7 @@ class PostInspectionRepo {
     } catch (e) {
        hideLoader();
       debugPrint("Exception: $e");
-      throw e;
+      rethrow;
     }
   }
 }

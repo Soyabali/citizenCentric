@@ -14,9 +14,9 @@ class UpdateParkLocationRepo {
 
   Future<List?> updatePark(BuildContext context, parkId, double? lat, double? long, locationAddress, uplodedImage, String useriD, String parkName) async {
 
-    AppPreferences _appPreferences = instance<AppPreferences>();
+    AppPreferences appPreferences = instance<AppPreferences>();
 
-    final token = await _appPreferences.getUserToken();
+    final token = await appPreferences.getUserToken();
 
     try {
       //var baseURL = BaseRepo().baseurl;
@@ -26,7 +26,7 @@ class UpdateParkLocationRepo {
       showLoader();
 
       var headers = {
-        'token': '$token',
+        'token': token,
         'Content-Type': 'application/json'
       };
       var request = http.Request('POST', Uri.parse('$updateParkLocationApi'));
@@ -52,21 +52,9 @@ class UpdateParkLocationRepo {
         hideLoader();
         var data = await response.stream.bytesToString();
         Map<String, dynamic> parsedJson = jsonDecode(data);
-        print("-----65---$parsedJson");
-
-       // List<dynamic>? subCategory = parsedJson['Data'];
-
-       // print("---66--$subCategory");
 
         return [parsedJson];
 
-        // if (dataList != null) {
-        //   List<Map<String, dynamic>> notificationList = dataList.cast<Map<String, dynamic>>();
-        //   print("xxxxx------46----: $notificationList");
-        //   return notificationList;
-        // } else{
-        //   return null;
-        // }
       } else {
         hideLoader();
         return null;
@@ -74,7 +62,7 @@ class UpdateParkLocationRepo {
     } catch (e) {
       hideLoader();
       debugPrint("Exception: $e");
-      throw e;
+      rethrow;
     }
   }
 }

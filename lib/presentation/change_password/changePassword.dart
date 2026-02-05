@@ -333,30 +333,28 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                           // login
                                           InkWell(
                                             onTap: ()async {
+
                                               print('--------------');
                                               var oldpassword = _oldPasswordController.text;
                                               var newpassword = _newPasswordController.text;
                                               var confirmpassword = _confirmPasswordController.text;
 
+                                              if(_formKey.currentState!.validate() &&
+                                                  oldpassword.isNotEmpty &&
+                                                  newpassword.isNotEmpty &&
+                                                  confirmpassword.isNotEmpty ){
 
-                                              if(_formKey.currentState!.validate() && oldpassword != null && newpassword != null && confirmpassword!=null){
-
-                                                print('-----497--Call Api-');
                                                 if(newpassword!=confirmpassword){
                                                   displayToast("Password does not match");
                                                 }
                                                 else{
-                                                  print("---OldPassword : $oldpassword");
-                                                  print("---newpassword : $newpassword");
-
-                                                  changePasswordRepo = await ChangePasswordRepo().changePassword(context, oldpassword!, newpassword!);
+                                                  changePasswordRepo = await ChangePasswordRepo().changePassword(context, oldpassword, newpassword);
                                                     print('----479-----$changePasswordRepo');
                                                   result = "${changePasswordRepo['Result']}";
                                                   msg = "${changePasswordRepo['Msg']}";
                                                   print('----482-----$msg');
 
                                                 }
-
                                               }else {
                                                 if(_oldPasswordController.text.isEmpty){
                                                   oldPasswordfocus.requestFocus();
@@ -368,16 +366,9 @@ class _MyHomePageState extends State<ChangePassWordHome> {
                                               }
                                              // print('-----499---Not-Call Api-');
                                               if(result=="1"){
-
                                                 displayToast(msg);
-
-                                               // Navigator.pushReplacementNamed(context, Routes.loginRoute);
-
                                                 Navigator.pushReplacementNamed(context, Routes.loginRoute);
-
-
                                               }else{
-                                                print('----573---To display error msg---');
                                                 displayToast(msg);
                                               }
                                               },

@@ -29,8 +29,6 @@ class _ParkSonMapState extends State<ParkSonMap> {
   GoogleMapController? _mapController;
   ParksonmapModel? _selectedPark;
   Set<Marker> _markers = {};
-  Offset? _popupOffset;
-
 
   // --------------------------------------------------
   // 🎯 CUSTOM POPUP (SAFE – NO OVERFLOW)
@@ -258,7 +256,6 @@ class _ParkSonMapState extends State<ParkSonMap> {
       setState(() {
         _markers = tempMarkers;
         _selectedPark = null;
-        _popupOffset = null;
       });
     }
   }

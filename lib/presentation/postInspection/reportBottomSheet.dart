@@ -54,7 +54,7 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
 
   var dropDownSubCategory;
   var dropDownSector;
-  var _dropDownWard, _selectedSubCategoryId;
+  var _selectedSubCategoryId;
   var selectedDropDownSectorCode;
 
   bindSubCategory() async {
@@ -91,7 +91,7 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
         print('Image File path Id Proof-------135----->$image');
         // multipartProdecudre();
         /// todo here you open a api and pass a image to api
-        uploadImage(token!, image!);
+        uploadImage(token, image!);
       } else {
         print('no image selected');
       }
@@ -585,20 +585,10 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
               var iInspBy = userData?['userId'];
 
               var descriotion =  _searchController.text.trim();
-              print("---57----sDescription--$descriotion");
-              print("-----553---iReportTypeCode--$_selectedSubCategoryId");
-              print("---sPhoto---$uplodedImage");
-              print("-----666---$lat");
-              print("-----667---$long");
-              print("-----668---$locationAddress");
-              print("---ParkID--${widget.iParkID}");
               final iTranNo = generateDDHHmmssSS();
-              print("ItrainNo: --$iTranNo");
-              print("----UserID----$iInspBy");
-             // print("----ParkID---${widget.iParkID}");
-             // print("----parkId--${widget.iParkID}");
+
               var iparkID = widget.iParkID;
-              var iReportTypeCode = _selectedSubCategoryId;
+
               // to apply va validation
               if(_selectedSubCategoryId==null){
                 displayToast("Please select Report Type");
@@ -623,28 +613,21 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
                 );
                 print("---result:= $result");
                 var res = result![0]['Result'];
-                var msg = result![0]['Msg'];
-                print("-----722---$res");
-                print("-----723---$msg");
+                var msg = result[0]['Msg'];
                 if(res=="1"){
                   displayToast(msg);
-                  print('---give a display msg- And go home page-');
                   print(msg);
 
-                  // if (Navigator.canPop(context)) {
-                  //   Navigator.pop(context);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => Homepage()),
                   );
 
-
-                  }else{
+                }else{
                     print(msg);
                   }
                 }
-
-              }
+               }
                )],
             ),
           ),
@@ -653,27 +636,4 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
     );
   }
 
-  /// 🔹 Label Widget
-  Widget _label(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: PlatformText(
-        "Report Type " ,  // AppStrings.selectDivision.tr(), //"Select Division" ,//  AppStrings.powerd_by.tr(),
-        type: AppTextType.title,
-      ),
-    );
-  }
-
-  /// 🔹 Common Input Decoration
-  InputDecoration _inputDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      filled: true,
-      fillColor: Colors.grey.shade100,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-    );
-  }
 }

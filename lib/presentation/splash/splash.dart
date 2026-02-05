@@ -10,6 +10,8 @@ import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
 
 class SplashView extends StatefulWidget {
+  const SplashView({super.key});
+
 
   @override
   _SplashViewState createState() => _SplashViewState();
@@ -19,7 +21,7 @@ class _SplashViewState extends State<SplashView> {
 
   Timer? _timer;
 
-  AppPreferences _appPreferences = instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   _startDelay() {
     _timer = Timer(Duration(seconds: 2), _goNext);
@@ -55,7 +57,6 @@ class _SplashViewState extends State<SplashView> {
     /// TODO HERE YOU SHOULD CHANGE APP VERSION FLUTTER VERSION MIN 3 DIGIT SUCH AS 1.0.0
     /// HERE YOU PASS variable _appVersion
     var loginMap = await VerifyAppVersionRepo().verifyAppVersion(context,'1');
-    var msg = "${loginMap['Msg']}";
     var iVersion = "${loginMap['iVersion']}";
 
     if(iVersion=="1"){
@@ -79,9 +80,6 @@ class _SplashViewState extends State<SplashView> {
       });
       // displayToast(msg);
     }
-
-      //displayToast(msg);
-      //print('----F---');
     }
 
     // launch gogle play store

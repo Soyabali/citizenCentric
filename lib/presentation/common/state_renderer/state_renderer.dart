@@ -23,20 +23,19 @@ enum StateRendererType {
 
 class StateRenderer extends StatelessWidget {
 
-  StateRendererType stateRendererType;
-  String message;
-  String title;
-  Function? retryActionFunction;
+  final StateRendererType stateRendererType;
+  final String message;
+  final String title;
+  final Function? retryActionFunction;
 
   StateRenderer(
-      {Key? key,
+      {super.key,
         required this.stateRendererType,
         String? message,
         String? title,
         required this.retryActionFunction})
       : message = message ?? AppStrings.loading.tr(),
-        title = title ?? EMPTY,
-        super(key: key);
+        title = title ?? EMPTY;
 
 
   @override
@@ -81,9 +80,7 @@ class StateRenderer extends StatelessWidget {
         return _getItemsInColumn(
             [_getAnimatedImage(JsonAssets.empty),
               _getMessage(message)]);
-      default:
-        return Container();
-    }
+      }
   }
 
   Widget _getPopUpDialog(BuildContext context, List<Widget> children) {

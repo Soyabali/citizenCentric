@@ -110,7 +110,7 @@ class _GnoidaOfficersHomeState extends State<Homepage> {
     final userData = await _appPreferences.getLoginUserData();
     setState(() {
       userName = userData!['name'];
-      userContactNo = userData!['contactNo'];
+      userContactNo = userData['contactNo'];
     });
   }
 

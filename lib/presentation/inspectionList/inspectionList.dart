@@ -1,4 +1,4 @@
-import 'package:citizencentric/presentation/commponent/fullscreenimage.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../data/repo/inspectionStatusRepo.dart';
@@ -29,7 +29,6 @@ class _DashboardScreenState extends State<InspectionList> {
   List<dynamic> sectorList = [];
   var dropDownSubCategory;
   var dropDownSector;
-  var _dropDownWard, _selectedSubCategoryId;
   var selectedDropDownSectorCode;
 
   List<InspectionStatusModel> pendingInternalComplaintList = [];
@@ -55,46 +54,7 @@ class _DashboardScreenState extends State<InspectionList> {
     Color(0xFFEBB072),
     Color(0xFF8BC2D0),
   ];
-  Widget _iosActionItem({
-    double? width,
-    required String title,
-    required VoidCallback onTap,
-    int maxLines = 1,
-  }) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(14),
-      onTap: onTap,
-      splashColor: Colors.grey.withOpacity(0.15), // 👈 iOS-like
-      highlightColor: Colors.transparent,
-      child: SizedBox(
-        width: width,
-        height: double.infinity,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              title,
-              maxLines: maxLines,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: Colors.black87,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-  Widget _divider() {
-    return Container(
-      height: 26,
-      width: 1,
-      color: Colors.grey.shade300,
-    );
-  }
+
   // build CardItem
   Widget buildCardItem(BuildContext context, InspectionStatusModel item, int index) {
     // bg color
@@ -177,7 +137,7 @@ class _DashboardScreenState extends State<InspectionList> {
                             ),
                             SizedBox(height: 4),
                             PlatformText(
-                              item.sReportType ?? '', //"Report Type", // item.sParkName ?? '',
+                              item.sReportType, //"Report Type", // item.sParkName ?? '',
                               type: AppTextType.subtitle,
                             ),
                           ],
@@ -186,19 +146,10 @@ class _DashboardScreenState extends State<InspectionList> {
                       // 🖼 Asset Image (right side)
                       GestureDetector(
                         onTap: (){
-                          //   item.sDevisionName ?? ""
                           final double lat = item.fLatitude;
                           final double long = item.fLongitude;
-                          print("---lat----$lat");
-                          print("---long----$long");
-                          // navigate to googleMap
-                          if (lat != null && long != null) {
-                            launchGoogleMaps(lat, long);
-                          } else {
-                            //displayToast("Please check the location.");
-
-                          }
-                        },
+                          launchGoogleMaps(lat, long);
+                          },
 
                         child: Container(
                           margin: const EdgeInsets.only(right: 10),
@@ -265,7 +216,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sSectorName ?? "",//"R.Singh", //  AppStrings.powerd_by.tr(),
+                        item.sSectorName,//"R.Singh", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.subtitle,
                       ),
                     ),
@@ -343,7 +294,7 @@ class _DashboardScreenState extends State<InspectionList> {
                                         type: AppTextType.body,
                                       ),
                                       PlatformText(
-                                        item.sInspBy?? "" , //"Annand Mohan Singh",  //"AssetDirector", // item.sAssetDirector ?? "", //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
+                                        item.sInspBy, //"Annand Mohan Singh",  //"AssetDirector", // item.sAssetDirector ?? "", //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
                                         type: AppTextType.subtitle,
                                       ),
                                     ],
@@ -364,7 +315,7 @@ class _DashboardScreenState extends State<InspectionList> {
                             child: Container(
                               height: 40,
                               decoration: BoxDecoration(
-                                color: item.sStatus?.toLowerCase() == "pending"
+                                color: item.sStatus.toLowerCase() == "pending"
                                     ? Colors.red
                                     : bgColor,
                                 borderRadius: BorderRadius.circular(20),
@@ -434,8 +385,10 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        (item.sDescription != null && item.sDescription!.isNotEmpty)
-                            ? item.sDescription!
+                        (
+                            item.sDescription.isNotEmpty &&
+                            item.sDescription.isNotEmpty)
+                            ? item.sDescription
                             : "No Description",
                         type: AppTextType.subtitle,
                       ),
@@ -542,7 +495,7 @@ class _DashboardScreenState extends State<InspectionList> {
                                     onTap: () {
                                       var images = "${item.sPhoto}";
 
-                                      if (images != null && images.isNotEmpty) {
+                                      if (images.isNotEmpty) {
                                         showGeneralDialog(
                                           context: context,
                                           barrierDismissible: true,
@@ -726,8 +679,7 @@ class _DashboardScreenState extends State<InspectionList> {
               Expanded(
                 child: isLoading
                     ? CommonShimmerList()
-                    : (pendingInternalComplaintList == null ||
-                    pendingInternalComplaintList!.isEmpty)
+                    : (pendingInternalComplaintList.isEmpty)
                     ? NoDataScreenPage()
                     : Padding(
                   padding: const EdgeInsets.only(left: 8.0,top: 8.0,bottom: 8.0,right: 4.0),

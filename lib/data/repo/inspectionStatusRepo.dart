@@ -14,9 +14,9 @@ class InspectionStartRepo {
   GeneralFunction generalFunction = GeneralFunction();
 
   Future<List<InspectionStatusModel>?> inspectionStartRepo(BuildContext context) async {
-    AppPreferences _appPreferences = instance<AppPreferences>();
-    final token = await _appPreferences.getUserToken();
-    final userData = await _appPreferences.getLoginUserData();
+    AppPreferences appPreferences = instance<AppPreferences>();
+    final token = await appPreferences.getUserToken();
+    final userData = await appPreferences.getLoginUserData();
 
     try {
       var apiUrl = "${Constant.baseUrl}InspectionStatus/InspectionStatus";
@@ -46,10 +46,7 @@ class InspectionStartRepo {
         hideLoader();
         final data = await response.stream.bytesToString();
         final parsedJson = jsonDecode(data);
-        print("-----45----$parsedJson");
         final List<dynamic>? dataList = parsedJson['Data'];
-        print("-----47----$parsedJson");
-
         if (dataList == null) return [];
         hideLoader();
 

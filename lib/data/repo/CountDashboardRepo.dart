@@ -14,12 +14,11 @@ class CountDashBoardRepo {
 
   Future<List?> countDashBoard(BuildContext context) async {
 
-    AppPreferences _appPreferences = instance<AppPreferences>();
+    AppPreferences appPreferences = instance<AppPreferences>();
 
-    final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
+    final token = await appPreferences.getUserToken();
     // get a login data
-    final userData = await _appPreferences.getLoginUserData();
+    final userData = await appPreferences.getLoginUserData();
 
     try {
       //var baseURL = BaseRepo().baseurl;
@@ -29,10 +28,10 @@ class CountDashBoardRepo {
       showLoader();
 
       var headers = {
-        'token': '$token',
+        'token': token,
         'Content-Type': 'application/json'
       };
-      var request = http.Request('POST', Uri.parse('$countDashBoardApi'));
+      var request = http.Request('POST', Uri.parse(countDashBoardApi));
       // body
       request.body = json.encode(
           {
@@ -66,7 +65,7 @@ class CountDashBoardRepo {
     } catch (e) {
       // hideLoader();
       debugPrint("Exception: $e");
-      throw e;
+      rethrow;
     }
   }
 }

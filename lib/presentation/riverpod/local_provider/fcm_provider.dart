@@ -8,5 +8,4 @@ final fcmProvider = Provider((ref) {
 Future<void> _setupPushNotifications() async {
   final fcm = FirebaseMessaging.instance;
   final token = await fcm.getToken();
-  print("FCM Token: $token");
 }

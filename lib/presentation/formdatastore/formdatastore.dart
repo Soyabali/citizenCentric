@@ -1,13 +1,10 @@
 
 // Step 1: Import flutter_riverpod and your provider file
 
-import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';// <--- UPDATE THIS PATH
 import 'dart:io'; // Needed for the 'File' type
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import '../../app/camra.dart';
 import '../../app/di.dart';
 import '../../data/network/network_info.dart';
@@ -34,23 +31,13 @@ class _FormDataStoreState extends ConsumerState<FormDataStore> {
   //late NetworkInfo _networkInfo;
   // You will also need an image file to save. Let's add a placeholder.
   File? _selectedImage;
-
   final box = HiveService.myBox;// hive database access
-  late StreamSubscription<InternetStatus> _listener;
 
   @override
   void initState() {
 
     super.initState();
     // Listen to internet changes
-    _listener = InternetConnection().onStatusChange.listen((status) {
-      if (status == InternetStatus.connected) {
-        print("Internet Connected → Auto Syncing...");
-        _handlePush();   // 🔥 Auto Push / Sync Hive Data
-      } else {
-        print("Internet Disconnected");
-      }
-    });
   }
 
   @override

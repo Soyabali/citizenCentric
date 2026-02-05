@@ -12,9 +12,9 @@ import '../network/error_handler.dart';
 
 class RepositoryImpl extends Repository {
 
-  RemoteDataSource _remoteDataSource;
-  LocalDataSource _localDataSource;
-  NetworkInfo _networkInfo;
+  final RemoteDataSource _remoteDataSource;
+  final LocalDataSource _localDataSource;
+  final NetworkInfo _networkInfo;
 
   RepositoryImpl(this._remoteDataSource, this._localDataSource,
       this._networkInfo);
@@ -64,11 +64,9 @@ class RepositoryImpl extends Repository {
         if (response.result == "1" &&
             response.data != null &&
             response.data!.isNotEmpty) {
-
           final user = response.data!.first;
-          print("---69--token----${user.token}");
-
           return Right(user.toDomain());
+
         } else {
           return Left(
             Failure(
@@ -131,8 +129,6 @@ class RepositoryImpl extends Repository {
       // get from cache
       final response = await _localDataSource.getHomeFromCache();
       final list = response.map((e) => e.toDomain()).toList();
-      print("-----------cache Data sucess-------xxxxxxxxxxx-- --");
-      print('-------list--cache data---$list');
       return Right(list);
     } catch (cacheError) {
       // we have cache error so we should call api
@@ -141,10 +137,6 @@ class RepositoryImpl extends Repository {
           final responses = await _remoteDataSource.stafflist(request);
 
           if (responses.isNotEmpty) {
-            print("-----------Success-----xxxx --");
-            // return Right(responses.first.toDomain());
-            // to store response into the localdata base
-
             _localDataSource.saveHomeToCache(responses);
             final list = responses.map((e) => e.toDomain()).toList();
             return Right(list);

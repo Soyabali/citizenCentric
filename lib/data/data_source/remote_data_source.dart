@@ -15,7 +15,7 @@ abstract class RemoteDataSource {
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
 
-  AppServiceClient _appServiceClient;// This is a file where i mention api endPoint
+  final AppServiceClient _appServiceClient;// This is a file where i mention api endPoint
   // and if api is a post type here i declare the body of the api
   RemoteDataSourceImplementer(this._appServiceClient);
 
@@ -41,6 +41,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   // }
   // ------------changePassword--------
 
+  @override
   Future<List<ChangePasswordResponse>> changePassword(ChangePassWordRequest changePasswordRequest) async {
     // AuthenticationResponse , this is api response auto generate file
     // LoginRequest , is a Api body field mention.
@@ -54,6 +55,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
 
   //  -----STAFFLIST-------
 
+  @override
   Future<List<StafListResponse>> stafflist(StaffListRequest staffListRequest) async {
     // here you pass a entire object into the _appServiceClent not a particular fields
     return await _appServiceClient.staffList(staffListRequest);

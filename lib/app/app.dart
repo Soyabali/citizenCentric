@@ -23,7 +23,7 @@ class MyApp extends ConsumerStatefulWidget {
 
 class _MyAppState extends ConsumerState<MyApp> {
 
-  AppPreferences _appPreferences = instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
   @override
@@ -38,7 +38,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     final fcm = FirebaseMessaging.instance;
     // here you pick a token and send a notification befafe of token
     final token = await fcm.getToken();
-    print("=--22---------- $token");// you could send this token (via Http or the Firebase SDK)TO A BACKED
+
   }
 
   @override

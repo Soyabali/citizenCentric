@@ -9,7 +9,7 @@ import '../../domain/model/park_model.dart';
 
 
 class NearByParkListRepo {
-  AppPreferences _appPreferences = instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   /// ✅ Strongly typed list
   List<ParkModel> nearByParkList = [];
@@ -19,16 +19,11 @@ class NearByParkListRepo {
       double latitude,
       double longitude,
       ) async {
-
-   // SharedPreferences prefs = await SharedPreferences.getInstance();
-    //String? sToken = prefs.getString('sToken');
     final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
-
     try {
       showLoader();
 
-      final baseURL = Constant.base_Url;
+      final baseURL = Constant.baseUrl;
       final endPoint = "Nearbyparks/Nearbyparks";
       final nearByParkApi = "$baseURL$endPoint";
 
@@ -62,10 +57,6 @@ class NearByParkListRepo {
         nearByParkList = dataList
             .map((e) => ParkModel.fromJson(e))
             .toList();
-
-        debugPrint(
-            "Nearby Park List count: ${nearByParkList.length}");
-
         return nearByParkList;
       } else {
         return [];

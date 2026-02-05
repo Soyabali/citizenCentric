@@ -14,16 +14,9 @@ class NotificationRepo {
 
   Future<List<Map<String, dynamic>>?> notification(BuildContext context) async {
 
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String? sToken = prefs.getString('sToken');
-    // String? iUserId = prefs.getString('iUserId');
-
-    AppPreferences _appPreferences = instance<AppPreferences>();
-    final token = await _appPreferences.getUserToken();
-    final userData = await _appPreferences.getLoginUserData();
-
-
-
+    AppPreferences appPreferences = instance<AppPreferences>();
+    final token = await appPreferences.getUserToken();
+    final userData = await appPreferences.getLoginUserData();
     try {
       var baseURL = Constant.baseUrl;
       var endPoint = "GetNotificationList/GetNotificationList";
@@ -31,10 +24,10 @@ class NotificationRepo {
       showLoader();
 
       var headers = {
-        'token': '$token',
+        'token': token,
         'Content-Type': 'application/json'
       };
-      var request = http.Request('POST', Uri.parse('$notificationApi'));
+      var request = http.Request('POST', Uri.parse(notificationApi));
       request.body = json.encode({
         "iUserId": "${userData?['userId']}",
         "iPage": "1",
@@ -53,7 +46,6 @@ class NotificationRepo {
 
         if (dataList != null) {
           List<Map<String, dynamic>> notificationList = dataList.cast<Map<String, dynamic>>();
-          print("xxxxx------46----: $notificationList");
           return notificationList;
         } else{
           return null;
@@ -65,7 +57,7 @@ class NotificationRepo {
     } catch (e) {
       hideLoader();
       debugPrint("Exception: $e");
-      throw e;
+      rethrow;
     }
   }
 }

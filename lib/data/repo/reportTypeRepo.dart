@@ -14,12 +14,8 @@ class ReportTypeRepo {
 
   Future<List?> reportType(BuildContext context) async {
 
-    AppPreferences _appPreferences = instance<AppPreferences>();
-
-    final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
-    // get a login data
-
+    AppPreferences appPreferences = instance<AppPreferences>();
+    final token = await appPreferences.getUserToken();
     try {
       //var baseURL = BaseRepo().baseurl;
       var baseURL = Constant.baseUrl;
@@ -28,10 +24,10 @@ class ReportTypeRepo {
       showLoader();
 
       var headers = {
-        'token': '$token',
+        'token': token,
         'Content-Type': 'application/json'
       };
-      var request = http.Request('GET', Uri.parse('$bindReportTypeApi'));
+      var request = http.Request('GET', Uri.parse(bindReportTypeApi));
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
       if(response.statusCode ==401){
@@ -42,8 +38,6 @@ class ReportTypeRepo {
         var data = await response.stream.bytesToString();
         Map<String, dynamic> parsedJson = jsonDecode(data);
         List<dynamic>? subCategory = parsedJson['Data'];
-        print("---57--$subCategory");
-
         return subCategory;
 
         // if (dataList != null) {
@@ -60,7 +54,7 @@ class ReportTypeRepo {
     } catch (e) {
        hideLoader();
       debugPrint("Exception: $e");
-      throw e;
+      rethrow;
     }
   }
 }

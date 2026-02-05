@@ -29,9 +29,7 @@ class AppCurrentLocationMap extends StatefulWidget {
 class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
 
   GoogleMapController? _mapController;
-  BitmapDescriptor? _currentLocationIcon;
-  LatLng? _centerLatLng; // 👈 picked location
-  bool _isMoving = false;
+// 👈 picked location
   LatLng _lastCameraPosition = const LatLng(0, 0);
 
 
@@ -76,13 +74,12 @@ class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
   void initState() {
     super.initState();
     _loadCurrentLocationMarker();
-    _centerLatLng = LatLng(widget.latitude, widget.longitude);
   }
   //    'assets/images/park_marker2.png',
   /// ✅ Load asset marker safely
   Future<void> _loadCurrentLocationMarker() async {
     try {
-      final icon = await BitmapDescriptor.fromAssetImage(
+      final _ = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(
           devicePixelRatio: 1.0, // ✅ CRITICAL FIX for iOS
         ),
@@ -92,7 +89,6 @@ class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
       if (!mounted) return;
 
       setState(() {
-        _currentLocationIcon = icon;
       });
     } catch (e) {
       debugPrint('❌ Marker load error: $e');

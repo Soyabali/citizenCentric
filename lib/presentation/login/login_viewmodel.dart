@@ -19,12 +19,6 @@ class LoginViewModel extends BaseViewModel implements LoginViewModelInputs,Login
   AppPreferences _appPreferences = instance<AppPreferences>();
 
   //var loginObject = LoginObject("","");
-
-  bool _showedErrorOnce = false;
-  bool _isLoginAction = false;
-  bool _isDialogShowing = false;
-  bool _isTyping = false;
-
   var loginObject = LoginObject(
         userMobileNumber: "",
         password: "",
@@ -144,25 +138,21 @@ LoginViewModel(this._loginUseCase);
 
   @override
   setMobileNumber(String mobileNumber) {// to take mobile no ui screen
-    _isTyping = true;
     inputMobileNumber.add(mobileNumber);// here get a mobile no to put int sink (inputMobileNumber)
     loginObject = loginObject.copyWith(userMobileNumber: mobileNumber);// to give mobile from ui and give  loginObject that take
     _validate();
     // Reset typing flag after a short delay
     Future.delayed(Duration(milliseconds: 500), () {
-      _isTyping = false;
     });
     //loginObject = loginObject.copyWith(mobileNumber: mobileNumber);
   }
   @override
   setPassword(String password) {// to take password from a ui file
-    _isTyping = true;
     inputPassword.add(password);// here pass password to sink (inputPassword)
     loginObject = loginObject.copyWith(password: password);// to pass get data from a ui to loginObject
     _validate();
     // Reset typing flag after a short delay
     Future.delayed(Duration(milliseconds: 500), () {
-      _isTyping = false;
     });
   }
   // output part

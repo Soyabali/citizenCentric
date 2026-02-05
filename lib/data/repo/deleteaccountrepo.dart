@@ -14,29 +14,22 @@ class DeleteAccountRepo {
 
   Future deleteAccount(BuildContext context, String phone) async {
     // get a token and userID
-    AppPreferences _appPreferences = instance<AppPreferences>();
-    final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
+    AppPreferences appPreferences = instance<AppPreferences>();
+    final token = await appPreferences.getUserToken();
     // get a login data
-    final userData = await _appPreferences.getLoginUserData();
-    print("----24----${userData?['userId']}");
-
+    final userData = await appPreferences.getLoginUserData();
     try {
-      print('----phone-----18--$phone');
-
       var baseURL =  Constant.baseUrl;
       var endPoint = "DeleteUser/DeleteUser";
-      var delete_account_Api = "$baseURL$endPoint";
-      print('------------17---delete_account_Api---$delete_account_Api');
-
+      var deleteAccountApi = "$baseURL$endPoint";
       showLoader();
 
       var headers = {
-        'token': '$token',
+        'token': token,
         'Content-Type': 'application/json'
       };
       var request = http.Request(
-          'POST', Uri.parse('$delete_account_Api'));
+          'POST', Uri.parse(deleteAccountApi));
       request.body = json.encode(
           {
             "iUserId": "${userData?['userId']}",
@@ -49,21 +42,15 @@ class DeleteAccountRepo {
       print('----------50---Delete Account----$map');
 
       if (response.statusCode == 200) {
-        // create an instance of auth class
-        print('----54-${response.statusCode}');
         hideLoader();
-        print('----------22-----$map');
         return map;
       } else {
-        print('----------59---delet accont RESPONSE----$map');
         hideLoader();
-        print(response.reasonPhrase);
         return map;
       }
     } catch (e) {
       hideLoader();
-      debugPrint("exception: $e");
-      throw e;
+      rethrow;
     }
   }
 

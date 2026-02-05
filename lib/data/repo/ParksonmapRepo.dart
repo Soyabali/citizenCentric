@@ -9,7 +9,7 @@ import '../../domain/model/parksonmapModel.dart';
 
 
 class ParkSonMapRepo {
-  AppPreferences _appPreferences = instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   /// ✅ Strongly typed list
   List<ParksonmapModel> parksonMapParkList = [];
@@ -19,12 +19,12 @@ class ParkSonMapRepo {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     //String? sToken = prefs.getString('sToken');
     final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
+
 
     try {
       showLoader();
 
-      final baseURL = Constant.base_Url;
+      final baseURL = Constant.baseUrl;
       final endPoint = "Parksonmap/Parksonmap";
       final parksonParkApi = "$baseURL$endPoint";
 

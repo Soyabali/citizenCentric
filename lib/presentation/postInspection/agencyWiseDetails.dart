@@ -6,7 +6,6 @@ import '../../app/locationservice.dart';
 import '../../data/repo/parklistwithagencyrepo.dart';
 import '../../domain/model/parklistwithagencymodel.dart';
 import '../commponent/appbarcommon.dart';
-import '../commponent/fullscreenimage.dart';
 import '../fullScreenImage/FullScreenImageDialog.dart';
 import '../inspectionList/lunch_Google_Map.dart';
 import '../resources/strings_manager.dart';
@@ -33,7 +32,6 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
   List<dynamic> sectorList = [];
   var dropDownSubCategory;
   var dropDownSector;
-  var _dropDownWard, _selectedSubCategoryId;
   var selectedDropDownSectorCode;
 
   List<ParkListWithAgencyModel> pendingInternalComplaintList = [];
@@ -91,32 +89,6 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
       debugPrint('❌ Location Error: $e');
     }
   }
-
-  // ui widget
-  Widget _actionItem(String title, {int maxLines = 1}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: PlatformText(
-              title,
-              type: AppTextType.caption,
-              maxLines: maxLines,      // 👈 allow wrapping
-            ),
-          ),
-          const SizedBox(width: 4),
-          const Icon(
-            Icons.arrow_forward_ios,
-            size: 14,
-            color: Colors.black54,
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _iosActionItem({
     double? width,
     required String title,
@@ -223,14 +195,14 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                 ),
 
                 title: PlatformText(
-                  item.sParkName ?? '',
+                  item.sParkName,
                   type: AppTextType.subtitle,
                   maxLines: 2, // 👈 optional safety
                   overflow: TextOverflow.ellipsis,
                 ),
 
                 subtitle: PlatformText(
-                  "Worker - ${item.iNoOfWorkers ?? ""}",
+                  "Worker - ${item.iNoOfWorkers}",
                   type: AppTextType.caption,
                 ),
 
@@ -247,7 +219,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                       ),
                     ),
                     child: Text(
-                      'Area : ${item.fArea ?? ""}',
+                      'Area : ${item.fArea}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
@@ -295,7 +267,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                           Padding(
                             padding: const EdgeInsets.only(left: 24),
                             child: PlatformText(
-                              item.sSupervisor ?? "", // "Satish" ,//  AppStrings.powerd_by.tr(),
+                              item.sSupervisor, // "Satish" ,//  AppStrings.powerd_by.tr(),
                               type: AppTextType.caption,
                             ),
                           ),
@@ -315,7 +287,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                           Padding(
                             padding: const EdgeInsets.only(left: 24),
                             child: PlatformText(
-                              item.sDuptyDirector ?? "",//"R.Singh", //  AppStrings.powerd_by.tr(),
+                              item.sDuptyDirector,//"R.Singh", //  AppStrings.powerd_by.tr(),
                               type: AppTextType.caption,
                             ),
                           ),
@@ -354,7 +326,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                                           type: AppTextType.subtitle,
                                         ),
                                         PlatformText(
-                                          item.sAssetDirector ?? "", //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
+                                          item.sAssetDirector, //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
                                           type: AppTextType.caption,
                                         ),
                                       ],
@@ -374,7 +346,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                                   onTap: () {
                                     final images = item.sParkPhoto;
 
-                                    if (images != null && images.isNotEmpty) {
+                                    if (images.isNotEmpty) {
                                       showGeneralDialog(
                                         context: context,
                                         barrierDismissible: true,
@@ -480,7 +452,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sDirector ?? "" ,//"Director", //  AppStrings.powerd_by.tr(),
+                        item.sDirector,//"Director", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.caption,
                       ),
                     ),
@@ -501,7 +473,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sAgencyName?? "" ,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
+                        item.sAgencyName,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.caption,
                         color: ColorManager.primary,
                       ),
@@ -522,8 +494,8 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        (item.sGoogleLocation?.trim().isNotEmpty ?? false)
-                            ? item.sGoogleLocation!
+                        (item.sGoogleLocation.trim().isNotEmpty)
+                            ? item.sGoogleLocation
                             : 'Not Specified',
                         type: AppTextType.caption,
                       ),
@@ -584,7 +556,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                         child: _iosActionItem(
                           title: "Post Inspection",
                           onTap: () {
-                            var iParkID = item.iParkId ?? "";
+                            var iParkID = item.iParkId;
                             showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
@@ -700,7 +672,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                // color: const Color(0xFF6FB7AE),
                 child: Center(
                     child: Text(
-                      'Total no of parks : ${pendingInternalComplaintList?.length ?? 0}',
+                      'Total no of parks : ${pendingInternalComplaintList.length}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -756,17 +728,14 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
               Expanded(
                 child: isLoading
                     ? CommonShimmerList()
-                    : (pendingInternalComplaintList == null ||
-                    pendingInternalComplaintList!.isEmpty)
+                    : (pendingInternalComplaintList.isEmpty)
                     ? NoDataScreenPage()
                     : Padding(
                   padding: const EdgeInsets.only(left: 8.0,top: 8.0,bottom: 8.0,right: 4.0),
                   child: ListView.builder(
                     itemCount: _filteredData.length,
                     itemBuilder: (context, index) {
-                      // final item = _filteredData[index];
                       final ParkListWithAgencyModel item = _filteredData[index];
-
                       return buildCardItem(context, item,index);
                     },
                   ),

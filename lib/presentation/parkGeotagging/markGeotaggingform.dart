@@ -167,7 +167,6 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
     setState(() {
       parkList = parks;
     });
-
     print("102-----parkList : ${parkList}");
   }
 
@@ -189,7 +188,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
         print('Image File path Id Proof-------135----->$image');
         // multipartProdecudre();
         /// todo here you open a api and pass a image to api
-        uploadImage(token!, image!);
+        uploadImage(token, image!);
       } else {
         print('no image selected');
       }
@@ -526,9 +525,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                                   );
                               print("---result:= $result");
                               var res = result![0]['Result'];
-                              var msg = result![0]['Msg'];
-                              print("-----473---$res");
-                              print("-----474---$msg");
+                              var msg = result[0]['Msg'];
 
                               // to apply again condition
                               if (res == "1") {
@@ -538,7 +535,6 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                                 );
                                 print(msg);
                                 if (Navigator.canPop(context)) {
-                                  // Navigator.pop(context);
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -547,7 +543,6 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                                   );
                                 }
                               } else {
-                                print('--same page ---$res');
                               }
                             } else {
                               displayToast("Please select a image");
@@ -696,7 +691,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                           ),
 
                           Text(
-                            tempText!,
+                            tempText,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -704,7 +699,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                             ),
                           ),
                           Text(
-                            description!,
+                            description,
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 12,

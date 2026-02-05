@@ -13,7 +13,7 @@ const String PREFS_KEY_LOGIN_DATA = "PREFS_KEY_LOGIN_DATA";
 
 class AppPreferences {
 
-  SharedPreferences _sharedPreferences;
+ final SharedPreferences _sharedPreferences;
   AppPreferences(this._sharedPreferences);
 
   Future<String> getAppLanguage() async {

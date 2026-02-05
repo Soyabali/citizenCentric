@@ -28,7 +28,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
   List<dynamic> sectorList = [];
   var dropDownSubCategory;
   var dropDownSector;
-  var _dropDownWard, _selectedSubCategoryId;
+  var _selectedSubCategoryId;
   var selectedDropDownSectorCode;
 
   List<ParkListModel> pendingInternalComplaintList = [];
@@ -137,14 +137,14 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                 ),
 
                 title: PlatformText(
-                  item.sParkName ?? '',
+                  item.sParkName,
                   type: AppTextType.subtitle,
                   maxLines: null, // ✅ unlimited lines
                   softWrap: true,
                 ),
 
                 subtitle: PlatformText(
-                  "Worker - ${item.iNoOfWorkers ?? ""}",
+                  "Worker - ${item.iNoOfWorkers}",
                   type: AppTextType.caption,
                 ),
 
@@ -160,7 +160,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                     ),
                   ),
                   child: Text(
-                    'Area : ${item.fArea ?? ""}',
+                    'Area : ${item.fArea}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -271,8 +271,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                          Padding(
                            padding: const EdgeInsets.only(left: 24),
                            child: PlatformText(
-                             item.sSupervisor ??
-                                 "", // "Satish" ,//  AppStrings.powerd_by.tr(),
+                             item.sSupervisor, // "Satish" ,//  AppStrings.powerd_by.tr(),
                              type: AppTextType.caption,
                            ),
                          ),
@@ -292,8 +291,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                          Padding(
                            padding: const EdgeInsets.only(left: 24),
                            child: PlatformText(
-                             item.sDuptyDirector ??
-                                 "", //"R.Singh", //  AppStrings.powerd_by.tr(),
+                             item.sDuptyDirector, //"R.Singh", //  AppStrings.powerd_by.tr(),
                              type: AppTextType.caption,
                            ),
                          ),
@@ -332,8 +330,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                                          type: AppTextType.subtitle,
                                        ),
                                        PlatformText(
-                                         item.sAssetDirector ??
-                                             "", //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
+                                         item.sAssetDirector, //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
                                          type: AppTextType.caption,
                                        ),
                                      ],
@@ -352,11 +349,9 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                                print('---forward----click---');
                                // navigate to markGeotaggingFrom
                                //Navigator.pushNamed(context, '/markGeotaggingForm');
-                               var parkName = item.sParkName ?? '';
-                               var parkId = item.iParkId ?? '';
+                               var parkName = item.sParkName;
+                               var parkId = item.iParkId;
 
-                               print("--parkname : $parkName");
-                               print("---parkId--: $parkId");
                                Navigator.push(
                                  context,
                                  MaterialPageRoute<void>(
@@ -402,8 +397,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                    Padding(
                      padding: const EdgeInsets.only(left: 24),
                      child: PlatformText(
-                       item.sDirector ??
-                           "", //"Director", //  AppStrings.powerd_by.tr(),
+                       item.sDirector, //"Director", //  AppStrings.powerd_by.tr(),
                        type: AppTextType.caption,
                      ),
                    ),
@@ -424,8 +418,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                    Padding(
                      padding: const EdgeInsets.only(left: 24),
                      child: PlatformText(
-                       item.sAgencyName ??
-                           "", //"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
+                       item.sAgencyName, //"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
                        type: AppTextType.caption,
                        color: ColorManager.primary,
                      ),
@@ -838,8 +831,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
               Expanded(
                 child: isLoading
                     ? CommonShimmerList()
-                    : (pendingInternalComplaintList == null ||
-                          pendingInternalComplaintList!.isEmpty)
+                    : (pendingInternalComplaintList.isEmpty)
                     ? NoDataScreenPage()
                     : Padding(
                         padding: const EdgeInsets.only(

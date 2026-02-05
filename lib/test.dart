@@ -10,7 +10,6 @@ class Test extends StatelessWidget {
   }
   // getAppState
   void getAppState(){
-    print(MyApp.instance.appState);//0
   }
 
   @override

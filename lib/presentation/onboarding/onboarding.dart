@@ -187,7 +187,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
 class OnBoardingPage extends StatelessWidget {
 
-  SliderObject _sliderObject;
+ final SliderObject _sliderObject;
 
   OnBoardingPage(this._sliderObject, {Key? key}) : super(key: key);
 
