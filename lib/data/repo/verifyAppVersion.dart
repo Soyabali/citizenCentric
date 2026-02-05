@@ -1,23 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../app/constant.dart';
 import '../../app/loader_helper.dart';
 import '../../presentation/commponent/generalFunction.dart';
 
-
-
 class VerifyAppVersionRepo {
-
-  // this is a loginApi call functin
 
   GeneralFunction generalFunction = GeneralFunction();
   Future verifyAppVersion(BuildContext context, String sVersion) async {
 
     try {
       print('----version-----17--$sVersion');
-    ;
 
       var baseURL = Constant.baseUrl;
       var endPoint = "VerifyAppVersion/VerifyAppVersion";

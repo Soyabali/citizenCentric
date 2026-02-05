@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("com.google.gms.google-services")
+    //id("com.google.gms.google-services")
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
@@ -14,11 +14,11 @@ dependencies {
 }
 
 android {
-    namespace = "com.citizen.citizencentric"
+    namespace = "com.synergy.noidapark"
     compileSdk = 36  // ✔ safe level that all ML-Kit libs support
 
     defaultConfig {
-        applicationId = "com.citizen.citizencentric"
+        applicationId = "com.synergy.noidapark"
         minSdk = 24
         targetSdk = 34
         versionCode = flutter.versionCode

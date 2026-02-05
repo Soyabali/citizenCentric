@@ -5,6 +5,7 @@ import '../../data/repo/postInspection_Repo.dart';
 import '../../domain/model/allParkLocationModel.dart';
 import '../commponent/appbarcommon.dart';
 import '../commponent/fullscreenimage.dart';
+import '../fullScreenImage/FullScreenImageDialog.dart';
 import '../inspectionList/lunch_Google_Map.dart';
 import '../resources/strings_manager.dart';
 import 'package:citizencentric/presentation/resources/color_manager.dart';
@@ -409,25 +410,53 @@ class _DashboardScreenState extends State<PostInspection> {
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 5.0),
                                 child: GestureDetector(
-                                  onTap: (){
-                                    print('---forward----click---');
-                                    var images = "${item.sParkPhoto}";
-                                    print("----445---$images");
+                                  onTap: () {
+                                    final images = item.sParkPhoto;
 
-                                    if(images!=null)
-                                    {
-                                      if (images != null && images.isNotEmpty) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => FullScreenPage(
-                                              sBeforePhoto: images,
-                                            ),
-                                          ),
-                                        );
-                                      }
+                                    if (images != null && images.isNotEmpty) {
+                                      showGeneralDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        barrierLabel: "Close image preview", // ✅ REQUIRED
+                                        barrierColor: Colors.black,
+                                        transitionDuration: const Duration(milliseconds: 200),
+                                        pageBuilder: (_, __, ___) {
+                                          return FullScreenImageDialog(
+                                            imageUrl: images,
+                                          );
+                                        },
+                                      );
                                     }
                                   },
+                                  // onTap: (){
+                                  //   print('---forward----click---');
+                                  //   var images = "${item.sParkPhoto}";
+                                  //   print("----445---$images");
+                                  //
+                                  //   if(images!=null)
+                                  //   {
+                                  //     if (images != null && images.isNotEmpty) {
+                                  //
+                                  //       Navigator.of(context).push(
+                                  //         PageRouteBuilder(
+                                  //           pageBuilder: (_, __, ___) => FullScreenPage(
+                                  //             sBeforePhoto: images,
+                                  //           ),
+                                  //           transitionDuration: Duration.zero,
+                                  //           reverseTransitionDuration: Duration.zero,
+                                  //         ),
+                                  //       );
+                                  //       // Navigator.push(
+                                  //       //   context,
+                                  //       //   MaterialPageRoute(
+                                  //       //     builder: (context) => FullScreenPage(
+                                  //       //       sBeforePhoto: images,
+                                  //       //     ),
+                                  //       //   ),
+                                  //       // );
+                                  //     }
+                                  //   }
+                                  // },
                                   child: Container(
                                     height: 50,
                                     width: 50,

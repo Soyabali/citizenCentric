@@ -26,7 +26,7 @@ class PostInspectionRepo {
           .baseUrl}AllParkLocation/AllParkLocation";
 
       var headers = {
-        'token': token ?? '',
+        'token': token,
         'Content-Type': 'application/json',
       };
 

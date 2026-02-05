@@ -7,6 +7,7 @@ import '../commponent/CircleWithSpacing.dart';
 import '../commponent/CommonShimmer.dart';
 import '../commponent/appbarcommon.dart';
 import '../commponent/platform_text.dart';
+import '../fullScreenImage/FullScreenImageDialog.dart';
 import '../nodatascreen/nodatascreen.dart';
 import '../resources/color_manager.dart';
 import '../resources/strings_manager.dart';
@@ -171,7 +172,7 @@ class _DashboardScreenState extends State<InspectionList> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children:[
                             PlatformText(
-                              item.sParkName ?? '', // "Short Worker Found", // item.sParkName ?? '',
+                              item.sParkName, // "Short Worker Found", // item.sParkName ?? '',
                               type: AppTextType.body,
                             ),
                             SizedBox(height: 4),
@@ -244,7 +245,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sDevisionName ?? "", // "Satish" ,//  AppStrings.powerd_by.tr(),
+                        item.sDevisionName, // "Satish" ,//  AppStrings.powerd_by.tr(),
                         type: AppTextType.subtitle,
                       ),
                     ),
@@ -284,7 +285,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sParkName ?? "",  //"R.Singh", //  AppStrings.powerd_by.tr(),
+                        item.sParkName,  //"R.Singh", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.subtitle,
                       ),
                     ),
@@ -305,7 +306,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sAgencyName?? "" ,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
+                        item.sAgencyName,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.subtitle,
                         color: ColorManager.primary,
                       ),
@@ -382,7 +383,7 @@ class _DashboardScreenState extends State<InspectionList> {
                                 //
                                 //   ),
                                   child: Text(
-                                    item.sStatus ?? "",
+                                    item.sStatus,
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 10,
@@ -455,7 +456,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sGoogleLocation?? "" , //"Noida authority parking, B-96A, D Block, Sector 6, Noida, Uttar Pradesh 201301,India Noida Uttar Pradesh",
+                        item.sGoogleLocation, //"Noida authority parking, B-96A, D Block, Sector 6, Noida, Uttar Pradesh 201301,India Noida Uttar Pradesh",
                         type: AppTextType.subtitle,
                       ),
                     ),
@@ -538,25 +539,23 @@ class _DashboardScreenState extends State<InspectionList> {
                                 Expanded(
                                   flex: 4,
                                   child: InkWell(
-                                    onTap: (){
-                                              print('---forward----click---');
-                                              var images = "${item.sPhoto}";
-                                              print("----445---$images");
+                                    onTap: () {
+                                      var images = "${item.sPhoto}";
 
-                                              if(images!=null)
-                                              {
-                                                if (images != null && images.isNotEmpty) {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => FullScreenPage(
-                                                        sBeforePhoto: images,
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                              }
-
+                                      if (images != null && images.isNotEmpty) {
+                                        showGeneralDialog(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          barrierLabel: "Close image preview", // ✅ REQUIRED
+                                          barrierColor: Colors.black,
+                                          transitionDuration: const Duration(milliseconds: 200),
+                                          pageBuilder: (_, __, ___) {
+                                            return FullScreenImageDialog(
+                                              imageUrl: images,
+                                            );
+                                          },
+                                        );
+                                      }
                                     },
                                     child: Container(
                                       alignment: Alignment.centerRight,
@@ -589,135 +588,6 @@ class _DashboardScreenState extends State<InspectionList> {
                         ),
                       ),
                     ),
-
-                    // Card(
-                  //   margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                  //   elevation: 0, // 👈 very soft
-                  //   color: Colors.white.withOpacity(0.85), // 👈 almost white
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(12),
-                  //     side: BorderSide(
-                  //       color: Colors.grey.shade200, // 👈 subtle border
-                  //     ),
-                  //   ),
-                  //   child: Container(
-                  //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.start,
-                  //       children: <Widget>[
-                  //        // const SizedBox(width: 5),
-                  //
-                  //         /// Icon
-                  //         Image.asset(
-                  //           "assets/images/ic_request_nw.png",
-                  //           fit: BoxFit.cover,
-                  //           height: 22,
-                  //           width: 22,
-                  //         ),
-                  //
-                  //         const SizedBox(width: 8),
-                  //
-                  //         /// Inspection Time
-                  //         PlatformText(
-                  //           "Insp At : ${item.dInspAt ?? ""}",
-                  //           type: AppTextType.body,
-                  //         ),
-                  //
-                  //         const Spacer(),
-                  //
-                  //         /// View Image Action
-                  //         GestureDetector(
-                  //           onTap: () {
-                  //             var images = item.sPhoto;
-                  //           print("-----------------$images");
-                  //
-                  //             if (images != null && images.isNotEmpty) {
-                  //               Navigator.push(
-                  //                 context,
-                  //                 MaterialPageRoute(
-                  //                   builder: (_) =>
-                  //                       FullScreenPage(sBeforePhoto: images),
-                  //                 ),
-                  //               );
-                  //             }
-                  //           },
-                  //           child: Padding(
-                  //             padding: const EdgeInsets.only(right: 6),
-                  //             child: Row(
-                  //               children: const [
-                  //                 PlatformText(
-                  //                   "View Image",
-                  //                   type: AppTextType.subtitle,
-                  //                 ),
-                  //                 SizedBox(width: 4),
-                  //                 Icon(
-                  //                   Icons.arrow_forward_ios,
-                  //                   size: 16,
-                  //                   color: Colors.black54,
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-
-                  // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   children: <Widget>[
-                    //     SizedBox(width: 5),
-                    //     // CircleWithSpacing(),
-                    //    // Icon(Icons.file_copy_sharp,size: 30),
-                    //    Image.asset("assets/images/ic_request_nw.png",fit: BoxFit.cover,height: 22,width: 22),
-                    //     SizedBox(width: 5),
-                    //     PlatformText(
-                    //       "Insp At : ${item.dInspAt?? "" }", //  AppStrings.powerd_by.tr(),
-                    //       type: AppTextType.body,
-                    //     ),
-                    //     Spacer(),
-                    //     GestureDetector(
-                    //       onTap: (){
-                    //         print('---forward----click---');
-                    //         var images = "${item.sPhoto}";
-                    //         print("----445---$images");
-                    //
-                    //         if(images!=null)
-                    //         {
-                    //           if (images != null && images.isNotEmpty) {
-                    //             Navigator.push(
-                    //               context,
-                    //               MaterialPageRoute(
-                    //                 builder: (context) => FullScreenPage(
-                    //                   sBeforePhoto: images,
-                    //                 ),
-                    //               ),
-                    //             );
-                    //           }
-                    //         }
-                    //         },
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.only(right: 10),
-                    //         child: Row(
-                    //           mainAxisAlignment: MainAxisAlignment.end,
-                    //           crossAxisAlignment: CrossAxisAlignment.end,
-                    //           children: [
-                    //             PlatformText(
-                    //               "View Image", //  AppStrings.powerd_by.tr(),
-                    //               type: AppTextType.subtitle,
-                    //             ),
-                    //             Icon(Icons.arrow_forward_ios,size: 20),
-                    //
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     //Text('Deputy Director', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
-                    //   ],
-                    // ),
-
-
                   ],
                 ),
               ),

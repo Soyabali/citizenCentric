@@ -2,12 +2,10 @@ import 'dart:convert';
 
 import 'package:citizencentric/app/loader_helper.dart';
 import 'package:flutter/material.dart';
-
 import '../../app/app_prefs.dart';
 import '../../app/constant.dart';
 import '../../app/di.dart';
 import 'package:http/http.dart' as http;
-import '../../domain/model/allParkLocationModel.dart';
 import '../../domain/model/parklistwithagencymodel.dart';
 import '../../presentation/commponent/generalFunction.dart';
 
@@ -24,7 +22,7 @@ class ParkListWithAgencyRepo {
           .baseUrl}ParkListByAgency/ParkListByAgency";
 
       var headers = {
-        'token': token ?? '',
+        'token': token,
         'Content-Type': 'application/json',
       };
         showLoader();

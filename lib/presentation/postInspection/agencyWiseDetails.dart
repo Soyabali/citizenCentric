@@ -7,6 +7,7 @@ import '../../data/repo/parklistwithagencyrepo.dart';
 import '../../domain/model/parklistwithagencymodel.dart';
 import '../commponent/appbarcommon.dart';
 import '../commponent/fullscreenimage.dart';
+import '../fullScreenImage/FullScreenImageDialog.dart';
 import '../inspectionList/lunch_Google_Map.dart';
 import '../resources/strings_manager.dart';
 import 'package:citizencentric/presentation/resources/color_manager.dart';
@@ -370,17 +371,35 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 5.0),
                                 child: GestureDetector(
-                                  onTap: (){
-                                    print("------373-----");
-                                    var images =  "${item.sParkPhoto}";
-                                    print(images);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => FullScreenPage(sBeforePhoto: images),
-                                      ),
-                                    );
+                                  onTap: () {
+                                    final images = item.sParkPhoto;
+
+                                    if (images != null && images.isNotEmpty) {
+                                      showGeneralDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        barrierLabel: "Close image preview", // ✅ REQUIRED
+                                        barrierColor: Colors.black,
+                                        transitionDuration: const Duration(milliseconds: 200),
+                                        pageBuilder: (_, __, ___) {
+                                          return FullScreenImageDialog(
+                                            imageUrl: images,
+                                          );
+                                        },
+                                      );
+                                    }
                                   },
+                                  // onTap: (){
+                                  //   print("------373-----");
+                                  //   var images =  "${item.sParkPhoto}";
+                                  //   print(images);
+                                  //   Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => FullScreenPage(sBeforePhoto: images),
+                                  //     ),
+                                  //   );
+                                  // },
                                   child: Container(
                                     height: 50,
                                     width: 50,

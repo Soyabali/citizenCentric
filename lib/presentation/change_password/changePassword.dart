@@ -1,13 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/repo/changepasswordrepo.dart';
 import '../commponent/appbarcommon.dart';
 import '../commponent/generalFunction.dart';
 import '../resources/app_text_style.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
 

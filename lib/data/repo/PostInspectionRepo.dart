@@ -17,19 +17,6 @@ class PostInspectionRepo {
     AppPreferences _appPreferences = instance<AppPreferences>();
 
     final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
-    // get a login data
-    final userData = await _appPreferences.getLoginUserData();
-
-    print("------23----iTranNo--$iTranNo");
-    print("------24----iparkID--$iparkID");
-    print("------25---selectedSubCategoryId---$selectedSubCategoryId");
-    print("------26----descriotion--$descriotion");
-    print("------27----lat--$lat");
-    print("------28-----long -$long");
-    print("------29---locationAddress---$locationAddress");
-    print("------30---uplodedImage---$uplodedImage");
-    print("------30---iInspBy---$iInspBy");
 
     try {
       //var baseURL = BaseRepo().baseurl;

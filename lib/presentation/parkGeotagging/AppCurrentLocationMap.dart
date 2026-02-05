@@ -6,9 +6,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 class AppCurrentLocationMap extends StatefulWidget {
   final double latitude;
   final double longitude;
@@ -30,6 +27,7 @@ class AppCurrentLocationMap extends StatefulWidget {
 }
 
 class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
+
   GoogleMapController? _mapController;
   BitmapDescriptor? _currentLocationIcon;
   LatLng? _centerLatLng; // 👈 picked location
@@ -176,8 +174,6 @@ class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
     }
   }
 
-
-  @override
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -192,7 +188,9 @@ class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
               target: LatLng(widget.latitude, widget.longitude),
               zoom: 15,
             ),
-
+            // 🔴 Disable default location dot & button
+            myLocationEnabled: false,
+            myLocationButtonEnabled: false,
             rotateGesturesEnabled: true,
             tiltGesturesEnabled: true,
             scrollGesturesEnabled: true,
@@ -211,39 +209,22 @@ class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
 
             zoomControlsEnabled: false,
           ),
-
-          // GoogleMap(
-          //   onMapCreated: (controller) {
-          //     _mapController = controller;
-          //   },
-          //   initialCameraPosition: CameraPosition(
-          //     target: LatLng(widget.latitude, widget.longitude),
-          //     zoom: 15,
-          //   ),
-          //   onCameraMove: (position) {
-          //     _lastCameraPosition = position.target;
-          //   },
-          //   onCameraIdle: _onCameraIdle,
-          //   zoomControlsEnabled: false,
-          // ),
-
           /// 📍 STATIC CENTER MARKER
           _centerMarker(),
-
           /// 🔍 ZOOM BUTTONS
           Positioned(
             right: 12,
-            bottom: 40,
+            bottom: 15,
             child: Column(
               children: [
                 _zoomButton(icon: Icons.add, onTap: _zoomIn),
                 const SizedBox(height: 8),
                 _zoomButton(icon: Icons.remove, onTap: _zoomOut),
-                // const SizedBox(height: 8),
-                // _zoomButton(
-                //   icon: Icons.my_location,
-                //   onTap: _moveToCurrentLocation,
-                // ),
+                const SizedBox(height: 8),
+                _zoomButton(
+                  icon: Icons.my_location,
+                  onTap: _moveToCurrentLocation,
+                ),
 
               ],
             ),
@@ -254,137 +235,3 @@ class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
 
   }
 }
-
-// class AppCurrentLocationMap extends StatefulWidget {
-//   final double latitude;
-//   final double longitude;
-//   final String address;
-//
-//   const AppCurrentLocationMap({
-//     super.key,
-//     required this.latitude,
-//     required this.longitude,
-//     required this.address,
-//   });
-//
-//   @override
-//   State<AppCurrentLocationMap> createState() => _AppCurrentLocationMapState();
-// }
-//
-// class _AppCurrentLocationMapState extends State<AppCurrentLocationMap> {
-//   GoogleMapController? _mapController;
-//   BitmapDescriptor? _currentLocationIcon;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadCurrentLocationMarker();
-//   }
-//   //    'assets/images/park_marker2.png',
-//   /// ✅ Load asset marker safely
-//   Future<void> _loadCurrentLocationMarker() async {
-//     try {
-//       final icon = await BitmapDescriptor.fromAssetImage(
-//         const ImageConfiguration(
-//           devicePixelRatio: 1.0, // ✅ CRITICAL FIX for iOS
-//         ),
-//         'assets/images/location.png',
-//       );
-//
-//       if (!mounted) return;
-//
-//       setState(() {
-//         _currentLocationIcon = icon;
-//       });
-//     } catch (e) {
-//       debugPrint('❌ Marker load error: $e');
-//     }
-//   }
-//   /// 🔍 Zoom In
-//   Future<void> _zoomIn() async {
-//     final zoom = await _mapController?.getZoomLevel() ?? 16;
-//     _mapController?.animateCamera(CameraUpdate.zoomTo(zoom + 1));
-//   }
-//
-//   /// 🔍 Zoom Out
-//   Future<void> _zoomOut() async {
-//     final zoom = await _mapController?.getZoomLevel() ?? 16;
-//     _mapController?.animateCamera(CameraUpdate.zoomTo(zoom - 1));
-//   }
-//
-//   Widget _zoomButton({
-//     required IconData icon,
-//     required VoidCallback onTap,
-//   }) {
-//     return Material(
-//       elevation: 4,
-//       shape: const CircleBorder(),
-//       child: InkWell(
-//         customBorder: const CircleBorder(),
-//         onTap: onTap,
-//         child: SizedBox(
-//           width: 40,
-//           height: 40,
-//           child: Icon(icon),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     if (_currentLocationIcon == null) {
-//       return const SizedBox(
-//         height: 250,
-//         child: Center(child: CircularProgressIndicator()),
-//       );
-//     }
-//
-//     final LatLng currentLatLng =
-//     LatLng(widget.latitude, widget.longitude);
-//
-//     return SizedBox(
-//       height: 250,
-//       child: Stack(
-//         children: [
-//           GoogleMap(
-//             onMapCreated: (controller) {
-//               _mapController = controller;
-//             },
-//             initialCameraPosition: CameraPosition(
-//               target: currentLatLng,
-//               zoom: 14,
-//             ),
-//             markers: {
-//               Marker(
-//                 markerId: const MarkerId('current_location'),
-//                 position: currentLatLng,
-//                 icon: _currentLocationIcon!,
-//                 infoWindow: InfoWindow(
-//                   title: 'Your Current Location',
-//                   snippet: widget.address,
-//                 ),
-//               ),
-//             },
-//             myLocationEnabled: false,
-//             myLocationButtonEnabled: false,
-//             zoomControlsEnabled: false,
-//           ),
-//
-//           /// 🔍 Zoom buttons (Android + iOS)
-//           Positioned(
-//             right: 12,
-//             bottom: 40,
-//             child: Column(
-//               children: [
-//                 _zoomButton(icon: Icons.add, onTap: _zoomIn),
-//                 const SizedBox(height: 8),
-//                 _zoomButton(icon: Icons.remove, onTap: _zoomOut),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

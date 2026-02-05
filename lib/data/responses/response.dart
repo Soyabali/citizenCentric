@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import '../../domain/model/model.dart';
 part 'response.g.dart'; // Required for json_serializable
 
 //   ------BaseResponse---------.

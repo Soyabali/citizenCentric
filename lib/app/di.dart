@@ -13,17 +13,11 @@ import '../data/network/app_api.dart';
 import '../data/network/dio_factory.dart';
 import '../data/network/network_info.dart';
 import '../data/repository/repository_impl.dart';
-import '../domain/model/model.dart';
 import '../domain/repository/repository.dart';
 import '../domain/usecase/change_password_usecase.dart';
 import '../domain/usecase/login_usecase.dart';
 import '../presentation/change_password/change_password_ui_model.dart';
 import '../presentation/login/login_viewmodel.dart';
-
-
-import 'package:citizencentric/app/app_prefs.dart';
-import 'package:citizencentric/domain/usecase/staffList_usecase.dart';
-// ... other imports
 
 final instance = GetIt.instance;
 

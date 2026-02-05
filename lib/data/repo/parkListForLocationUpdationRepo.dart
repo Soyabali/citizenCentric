@@ -25,7 +25,7 @@ class ParkListForLocationUpdationRepo {
       var apiUrl = "${Constant.baseUrl}ParkListForLocationUpdation/ParkListForLocationUpdation";
 
       var headers = {
-        'token': token ?? '',
+        'token': token,
         'Content-Type': 'application/json',
       };
        showLoader();

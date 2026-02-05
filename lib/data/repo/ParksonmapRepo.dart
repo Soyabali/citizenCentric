@@ -34,7 +34,7 @@ class ParkSonMapRepo {
       );
 
       request.headers.addAll({
-        'token': token ?? '',
+        'token': token,
         'Content-Type': 'application/json',
       });
 

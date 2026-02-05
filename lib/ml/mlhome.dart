@@ -1,12 +1,10 @@
 
-import 'package:camera/camera.dart';
 import 'package:citizencentric/ml/pose_dector.dart';
 import 'package:citizencentric/ml/realtimeimagelabeling.dart';
 import 'package:citizencentric/ml/smartReply.dart';
 import 'package:citizencentric/ml/textrecognigation.dart';
 import 'package:citizencentric/ml/texttranslation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'barcode_scanning.dart';
 import 'face_dection.dart';
 import 'imagelabeling.dart';

@@ -15,11 +15,7 @@ class ReportTypeRepo {
   Future<List?> reportType(BuildContext context) async {
 
     AppPreferences _appPreferences = instance<AppPreferences>();
-
     final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
-    // get a login data
-    final userData = await _appPreferences.getLoginUserData();
 
     try {
       //var baseURL = BaseRepo().baseurl;
@@ -33,11 +29,7 @@ class ReportTypeRepo {
         'Content-Type': 'application/json'
       };
       var request = http.Request('Get', Uri.parse('$bindComplaintSubCategoryApi'));
-      // body
-      // request.body = json.encode(
-      //     {
-      //       "iUserId":"${userData?['userId']}",
-      //     });
+
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
       if(response.statusCode ==401){

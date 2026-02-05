@@ -68,7 +68,6 @@ class _MyHomePageState extends State<ImageLabeling> {
     //  InputImage.fromFile(_image!); and imageLabeler.processImage(inputImage);
     for (ImageLabel label in labels) {
       final String text = label.label;
-      final int index = label.index;
       final double confidence = label.confidence;
       result += "$text   ${confidence.toStringAsFixed(2)}\n";
     }

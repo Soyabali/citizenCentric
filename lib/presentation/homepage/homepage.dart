@@ -35,13 +35,6 @@ class _GnoidaOfficersHomeState extends State<Homepage> {
 
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
-  final Set<Marker> _markers = {};
   final NearByParkListRepo _repo = NearByParkListRepo();
   List<ParkModel> parkList = [];
 
@@ -93,28 +86,12 @@ class _GnoidaOfficersHomeState extends State<Homepage> {
     }
   }
 
-  // Future<void> _loadNearbyParks(double? lat,double? long) async {
-  //   print("122-----lat : ${lat}");
-  //   print("123-----long : ${long}");
-  //   final parks = await _repo.nearByPark(
-  //     context,
-  //     lat!, // latitude
-  //     long!, // longitude
-  //   );
-  //
-  //   setState(() {
-  //     parkList = parks;
-  //   });
-  //
-  //   print("108-----parkList : ${parkList}");
-  // }
   Future<void> _loadNearbyParks(double lat, double long) async {
     final parks = await _repo.nearByPark(
       context,
       lat,
       long,
     );
-
     if (!mounted) return;
 
     setState(() {
@@ -128,16 +105,9 @@ class _GnoidaOfficersHomeState extends State<Homepage> {
   }
 
   getLogindata() async {
-    print("--------xxxxxx-------xxxx-zx--xx-x-x-");
     AppPreferences _appPreferences = instance<AppPreferences>();
-    final token = await _appPreferences.getUserToken();
-    print("-----111-----token----$token");
     // get a login data
     final userData = await _appPreferences.getLoginUserData();
-    // "iUserId":"${userData?['userId']}",
-   // print("{userData?['name']}");
-    print("UserName --xxx-----xxx----: ${userData!['name']}");
-    print("contactNo --xxx-----xxx----: ${userData!['contactNo']}");
     setState(() {
       userName = userData!['name'];
       userContactNo = userData!['contactNo'];
@@ -223,9 +193,6 @@ class _GnoidaOfficersHomeState extends State<Homepage> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                // BackgroundImage(
-                //     imagePath:ImageAssets.three_line
-                // ),
                 SizedBox(width: 10),
                 Text(AppStrings.nearparklocation.tr(),
                     style: TextStyle(
@@ -239,22 +206,18 @@ class _GnoidaOfficersHomeState extends State<Homepage> {
           ),
           SizedBox(height: 10),
 
-          // AppGoogleMap(
-          //   parks: parkList, onMapCreated: (GoogleMapController p1) {  },
-          // ),
-          /// here you sould remove one warning null when i login an comes on a home page
-          /// i think reason is that currentLocation: LatLng(lat!, long!), you should resole the lat and long null value
-
          if(lat==null && long==null)
-           Center(
-             child: CircularProgressIndicator(),
+           Expanded(
+             child: Center(
+               child: CircularProgressIndicator(),
+             ),
            )
           else
-          AppGoogleMap(
+          Expanded(child:  AppGoogleMap(
             parks: parkList,
             currentLocation: LatLng(lat!, long!),
             onMapCreated: (controller) {},
-          )
+          ))
         ],
       ),
     );

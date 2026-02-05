@@ -23,7 +23,7 @@ class InspectionStartRepo {
       showLoader();
 
       var headers = {
-        'token': token ?? '',
+        'token': token,
         'Content-Type': 'application/json',
       };
 

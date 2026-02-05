@@ -8,11 +8,7 @@
              <true/>
          </dict>
     <key>NSCameraUsageDescription</key>
-    <string>This app requires access to your camera to capture photos.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>This app requires access to your microphone to record audio.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>This app requires access to your photo library to select photos.</string>
+     <string>This app requires camera access so park workers can capture and submit photos of maintenance work in Noida parks for official reporting and monitoring.</string>
     <key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -36,15 +32,14 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>This app needs location access to show nearby parks</string>
+    <string>We use the worker’s location to assign tasks and monitor work progress.</string>
     <key>LSApplicationQueriesSchemes</key>
     <array>
         <string>comgooglemaps</string>
     </array>
 
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-
-    <string>This app needs location access for park navigation</string>
+    <string>This app needs access to the worker’s location to monitor work assignments and activities, even when the app is in the background.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

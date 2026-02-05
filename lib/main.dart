@@ -11,7 +11,6 @@ import 'firebase_options.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // 1. Import Riverpod
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -43,12 +42,11 @@ void main() async {
       child: ProviderScope(
         child: Phoenix(
             child: MyApp()),
-
       ),
 
   ));
-
 }
+
 // create a easy loading function
 void configLoading() {
   EasyLoading.instance

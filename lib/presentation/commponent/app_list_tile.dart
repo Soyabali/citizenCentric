@@ -1,8 +1,5 @@
 import 'package:citizencentric/presentation/commponent/platform_text.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-import '../resources/strings_manager.dart';
 import '../resources/text_type.dart';
 import 'AppIcon.dart';
 import 'background_image.dart';

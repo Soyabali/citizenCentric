@@ -13,7 +13,6 @@ import '../resources/app_text_style.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/text_type.dart';
-import 'dart:convert';
 
 class DashboardScreen extends StatefulWidget {
 
@@ -41,7 +40,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int totalResolvedInspection = 0;
   int totalReceivedAmt = 0;
   ParksonmapModel? _selectedSearchPark;
-
   ParkSonMapRepo repo = ParkSonMapRepo();
 
   List<ParksonmapModel> parksonList = [];
@@ -566,14 +564,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           // GoogleMap
           if (lat == null && long == null)
-            Center(child: CircularProgressIndicator())
+            const Expanded(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
           else
-            ParkSonMap(
-              parks: parksonList,
-              selectedPark: _selectedSearchPark,
-              // currentLocation: LatLng(lat!, long!),
-              onMapCreated: (controller) {},
+            Expanded(
+              child: ParkSonMap(
+                parks: parksonList,
+                selectedPark: _selectedSearchPark,
+                onMapCreated: (controller) {},
+              ),
             ),
+          // if (lat == null && long == null)
+          //   Center(child: CircularProgressIndicator())
+          // else
+          //   ParkSonMap(
+          //     parks: parksonList,
+          //     selectedPark: _selectedSearchPark,
+          //     // currentLocation: LatLng(lat!, long!),
+          //     onMapCreated: (controller) {},
+          //   ),
         ],
       ),
     );

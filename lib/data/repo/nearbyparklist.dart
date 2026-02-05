@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:citizencentric/app/constant.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../app/app_prefs.dart';
 import '../../app/di.dart';
@@ -39,7 +38,7 @@ class NearByParkListRepo {
       );
 
       request.headers.addAll({
-        'token': token ?? '',
+        'token': token,
         'Content-Type': 'application/json',
       });
 

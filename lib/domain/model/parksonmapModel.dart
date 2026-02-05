@@ -109,4 +109,11 @@ ParksonmapModel(
 )
 ''';
   }
+  // to return a unique id
+  String get uid {
+    return '${parkName.trim()}_'
+        '${sectorName.trim()}_'
+        '${latitude.toStringAsFixed(6)}_'
+        '${longitude.toStringAsFixed(6)}';
+  }
 }

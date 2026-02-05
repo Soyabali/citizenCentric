@@ -12,8 +12,6 @@ const String AUTHORIZATION = "token";
 //const String AUTHORIZATION = "authorization";
 const String DEFAULT_LANGUAGE = "language";
 
-const int _timeOut = 60000; // in milliseconds
-
 class DioFactory {
   AppPreferences _appPreferences;
   DioFactory(this._appPreferences);

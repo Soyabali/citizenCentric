@@ -115,29 +115,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
           ),
         ],
       ),
-
-      // body: Stack(
-      //   children: [
-      //     // 🔹 Background Image
-      //     BackgroundImage(
-      //       imagePath: ImageAssets.backgroundImage,
-      //       fit: BoxFit.cover,
-      //     ),
-      //     // 🔹 StreamBuilder with your content
-      //     StreamBuilder(
-      //       stream: _viewModel.outputState,
-      //       builder: (context, snapshot) {
-      //         return snapshot.data?.getScreenWidget(
-      //           context,
-      //           _getContentWidget(),
-      //               () {
-      //             _viewModel.login();
-      //           },
-      //         ) ?? _getContentWidget();
-      //       },
-      //     ),
-      //   ],
-      // ),
     );
   }
 

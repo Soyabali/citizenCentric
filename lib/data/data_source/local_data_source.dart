@@ -1,6 +1,4 @@
 import 'package:citizencentric/data/network/error_handler.dart';
-
-import '../request/request.dart';
 import '../responses/response.dart';
 
 const CACHE_HOME_KEY = "CACHE_HOME_KEY";

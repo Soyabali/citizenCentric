@@ -17,17 +17,6 @@ class UpdateParkLocationRepo {
     AppPreferences _appPreferences = instance<AppPreferences>();
 
     final token = await _appPreferences.getUserToken();
-    print('Token  27 : $token');
-    // get a login data
-    final userData = await _appPreferences.getLoginUserData();
-
-    print("------23----$parkId");
-    print("------24----$lat");
-    print("------25----$long");
-    print("------26----$locationAddress");
-    print("------27----$uplodedImage");
-    print("------28----$useriD");
-    print("------29----$parkName");
 
     try {
       //var baseURL = BaseRepo().baseurl;

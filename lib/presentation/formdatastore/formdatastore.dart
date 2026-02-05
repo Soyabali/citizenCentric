@@ -12,7 +12,6 @@ import '../../app/camra.dart';
 import '../../app/di.dart';
 import '../../data/network/network_info.dart';
 import '../hive-database/hive_database.dart';
-import '../riverpod/user_place.dart';
 
 // Step 2: Change StatefulWidget to ConsumerStatefulWidget
 class FormDataStore extends ConsumerStatefulWidget {

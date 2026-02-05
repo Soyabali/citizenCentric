@@ -28,6 +28,7 @@ import 'dart:async';
 import 'AppCurrentLocationMap.dart';
 
 class ParkGeotaggingForm extends StatefulWidget {
+
   final parkName, parkId;
   const ParkGeotaggingForm({
     super.key,
@@ -40,6 +41,7 @@ class ParkGeotaggingForm extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<ParkGeotaggingForm> {
+
   bool isFormVisible = true; // Track the visibility of the form
   bool isIconRotated = false;
   bool isFormVisible2 = true; // Track the visibility of the form
@@ -271,8 +273,10 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
       // String address = "${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
 
       setState(() {
-        lat = position.latitude;
-        long = position.longitude;
+       // lat = position.latitude;
+        //long = position.longitude;
+        lat = double.parse(position.latitude.toStringAsFixed(8));
+        long = double.parse(position.longitude.toStringAsFixed(8));
         locationAddress = address;
       });
       if (lat != null && long != null) {
@@ -305,10 +309,6 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
         print('---------210----$lat');
         print('---------211----$long');
         // call a distance metrics.
-        // distanceInMeters = calculateDistanceInMeters(staticLat, staticLng, lat!, long!);
-        //
-        // print('-----216---Distance in M---$distanceInMeters');
-
         /// TODO HERE YOU SHOULD NOT CALL A ATTENDACE API YOU SHOULD CAL THIS API
         /// ON A SUBMIT BUTTON
         // attendaceapi(lat, long, locationAddress);
@@ -382,18 +382,6 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
             onBackPressed: () {
               print("Back pressed");
               Navigator.pop(context);
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ParkGeotagging(),
-              //   ),
-              // );
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ParkGeotagging(),
-              //   ),
-              // );
             },
           ),
           body: SingleChildScrollView(
@@ -598,8 +586,10 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                     address: locationAddress ?? '',
                     onLocationChanged: (newLat, newLng, newAddress) {
                       setState(() {
-                        lat = newLat;
-                        long = newLng;
+                        // lat = newLat;
+                        // long = newLng;
+                        lat = double.parse(newLat.toStringAsFixed(8));
+                        long = double.parse(newLng.toStringAsFixed(8));
                         locationAddress = newAddress;
                       });
 
@@ -613,8 +603,6 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                 }
               },
             ),
-
-
             Padding(
               padding: const EdgeInsets.only(left: 0, right: 2, top: 10),
               child: Row(
@@ -644,7 +632,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                                 maxLines: 3,
                                 softWrap: true,
                                 style: const TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black54,
                                 ),
@@ -658,7 +646,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                           child: Text(
                             "Lat: $lat  Long: $long",
                             style: const TextStyle(
-                              fontSize: 12,
+                              fontSize: 10,
                               fontWeight: FontWeight.bold,
                               color: Colors.black54,
                             ),
@@ -681,7 +669,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                               softWrap: true,
                               maxLines: null, // allows unlimited lines
                               overflow: TextOverflow.visible,
-                              style: const TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 10),
                             ),
                           ],
                         ),
@@ -700,14 +688,18 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(radius: 15, backgroundColor: Colors.red),
+                         // CircleAvatar(radius: 15, backgroundColor: Colors.red),
+                          Image.network(
+                            'https://openweathermap.org/img/wn/01d.png',
+                            width: 50,
+                            height: 50,
+                          ),
 
-                          SizedBox(height: 8),
                           Text(
                             tempText!,
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

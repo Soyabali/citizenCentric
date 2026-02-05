@@ -2,7 +2,6 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
@@ -74,36 +73,6 @@ class _CameraScreenState extends State<BarcodeScanning> {
     // ML Kit barcode formats
     final List<BarcodeFormat> formats = [BarcodeFormat.all];
     barcodeScanner = BarcodeScanner(formats: formats);
-    // final List<BarcodeFormat> formats = [BarcodeFormat.all];// here barCode scan all format there is in a ml kit
-    // barcodeScanner = BarcodeScanner(formats: formats);
-    //
-    // //TODO initialize the controller
-    // controller = CameraController(
-    //   widget.cameras[0],// here back camra
-    //   ResolutionPreset.high,
-    //   imageFormatGroup: Platform.isAndroid
-    //       ? ImageFormatGroup.nv21 // for Android
-    //       : ImageFormatGroup.bgra8888,);
-    // controller.initialize().then((_) {
-    //   if (!mounted) {
-    //     return;
-    //   }
-    //   controller.startImageStream((image) => {
-    //     if (!isBusy) {isBusy = true, img = image, doBarcodeScanning()}
-    //   });
-    //   setState(() {});
-    // }).catchError((Object e) {
-    //   if (e is CameraException) {
-    //     switch (e.code) {
-    //       case 'CameraAccessDenied':
-    //         print('User denied camera access.');
-    //         break;
-    //       default:
-    //         print('Handle other errors.');
-    //         break;
-    //     }
-    //   }
-    // });
   }
   // STEP 1 → Load camera list internally
   Future<void> _loadCameras() async {
@@ -142,9 +111,6 @@ class _CameraScreenState extends State<BarcodeScanning> {
 
     for (Barcode barcode in barcodes) {
       final BarcodeType type = barcode.type;
-      final Rect? boundingBox = barcode.boundingBox;
-      final String? displayValue = barcode.displayValue;
-      final String? rawValue = barcode.rawValue;
 
       // See API reference for complete list of supported types
       switch (type) {
@@ -197,10 +163,6 @@ class _CameraScreenState extends State<BarcodeScanning> {
     DeviceOrientation.landscapeRight: 270,
   };
   InputImage? getInputImage() {
-    // get image rotation
-    // it is used in android to convert the InputImage from Dart to Java
-    // `rotation` is not used in iOS to convert the InputImage from Dart to Obj-C
-    // in both platforms `rotation` and `camera.lensDirection` can be used to compensate `x` and `y` coordinates on a canvas
     final camera = cameras[1];
     final sensorOrientation = camera.sensorOrientation;
     InputImageRotation? rotation;
@@ -223,10 +185,6 @@ class _CameraScreenState extends State<BarcodeScanning> {
 
     // get image format
     final format = InputImageFormatValue.fromRawValue(img!.format.raw);
-    // validate format depending on platform
-    // only supported formats:
-    // * nv21 for Android
-    // * bgra8888 for iOS
     if (format == null ||
         (Platform.isAndroid && format != InputImageFormat.nv21) ||
         (Platform.isIOS && format != InputImageFormat.bgra8888)) return null;

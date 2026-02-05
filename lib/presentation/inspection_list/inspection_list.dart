@@ -14,7 +14,6 @@ import '../nodatascreen/nodatascreen.dart';
 import '../resources/app_text_style.dart';
 import '../resources/text_type.dart';
 
-
 class ParkInspectionList extends StatefulWidget {
   const ParkInspectionList({super.key});
 
@@ -120,12 +119,12 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                       ),
 
                       title: PlatformText(
-                        item.sParkName ?? '',
+                        item.sParkName,
                         type: AppTextType.subtitle,
                       ),
 
                       subtitle: PlatformText(
-                        "Worker - ${item.iNoOfWorkers ?? ""}",
+                        "Worker - ${item.iNoOfWorkers}",
                         type: AppTextType.caption,
                       ),
 
@@ -180,7 +179,7 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sSupervisor ?? "", // "Satish" ,//  AppStrings.powerd_by.tr(),
+                        item.sSupervisor, // "Satish" ,//  AppStrings.powerd_by.tr(),
                         type: AppTextType.caption,
                       ),
                     ),
@@ -239,7 +238,7 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                                     type: AppTextType.subtitle,
                                   ),
                                   PlatformText(
-                                    item.sAssetDirector ?? "", //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
+                                    item.sAssetDirector, //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
                                     type: AppTextType.caption,
                                   ),
                                 ],
@@ -258,19 +257,9 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                           print('---forward----click---');
                           // navigate to markGeotaggingFrom
                           //Navigator.pushNamed(context, '/markGeotaggingForm');
-                          var parkName =  item.sParkName ?? '';
-                          var parkId =  item.iParkId ?? '';
-
-                          print("--parkname : $parkName");
-                          print("---parkId--: $parkId");
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute<void>(
-                          //     builder: (context) => ParkGeotaggingForm(parkName:parkName,parkId:parkId),
-                          //   ),
-                          // );
-
-                        },
+                          var parkName =  item.sParkName;
+                          var parkId =  item.iParkId;
+                          },
                         child:ColoredBox(
                           color: Colors.white, // color: bgColor,
                           child: Padding(
@@ -300,7 +289,6 @@ class _DashboardScreenState extends State<ParkInspectionList> {
                     "Director", //  AppStrings.powerd_by.tr(),
                     type: AppTextType.subtitle,
                   ),
-                  //Text('Director', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
                 ],
               ),
               Padding(
@@ -327,7 +315,7 @@ class _DashboardScreenState extends State<ParkInspectionList> {
               Padding(
                 padding: const EdgeInsets.only(left: 24),
                 child: PlatformText(
-                  item.sAgencyName?? "" ,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
+                  item.sAgencyName,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
                   type: AppTextType.caption,
                   color: ColorManager.primary,
                 ),
