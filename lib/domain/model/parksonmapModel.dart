@@ -1,4 +1,5 @@
 class ParksonmapModel {
+
   final String parkName;
   final String sectorName;
   final double latitude;
@@ -89,7 +90,7 @@ class ParksonmapModel {
   @override
   String toString() {
     return '''
-ParksonmapModel(
+  ParksonmapModel(
   parkName: $parkName,
   sectorName: $sectorName,
   latitude: $latitude,

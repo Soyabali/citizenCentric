@@ -39,6 +39,7 @@ class ErrorState extends FlowState {
 }
 
 // 🔹 Content State
+
 class ContentState extends FlowState {
   ContentState();
 
@@ -67,7 +68,6 @@ class EmptyState extends FlowState {
 // 🔹 Success State
 class SuccessState extends FlowState {
   String message;
-
   SuccessState(this.message);
 
   @override

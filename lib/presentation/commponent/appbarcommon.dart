@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../resources/color_manager.dart';
 import '../resources/text_type.dart';
 
-class AppCommonAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class AppCommonAppBar extends StatelessWidget implements PreferredSizeWidget {
+
   final String title;
   final bool centerTitle;
   final List<Widget>? actions;
@@ -29,8 +29,8 @@ class AppCommonAppBar extends StatelessWidget
       backgroundColor: ColorManager.primary,
       elevation: 0,
       centerTitle: centerTitle,
-
       // 🔹 GENERIC LEADING BACK ICON
+
       leading: showBack
           ? IconButton(
         icon: const Icon(

@@ -13,6 +13,7 @@ class RealTimeImageLabeling extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<RealTimeImageLabeling> {
+
   CameraController? controller;
   CameraImage? img;
   bool isBusy = false;

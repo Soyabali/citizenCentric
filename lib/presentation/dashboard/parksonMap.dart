@@ -325,8 +325,10 @@ class _ParkSonMapState extends State<ParkSonMap> {
               zoom: 12,
             ),
             markers: _markers,
-            myLocationEnabled: false,
-            myLocationButtonEnabled: false,
+            // myLocationEnabled: false,
+            // myLocationButtonEnabled: false,
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
             zoomControlsEnabled: false,
             gestureRecognizers: {
               Factory<OneSequenceGestureRecognizer>(

@@ -2,10 +2,11 @@ import 'package:citizencentric/presentation/dashboard/parksonMap.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../app/di.dart';
 import '../../app/locationservice.dart';
-import '../../data/repo/CountDashboardRepo.dart';
 import '../../data/repo/ParksonmapRepo.dart';
 import '../../data/repo/bindAllDivisionRepo.dart';
+import '../../domain/model/model.dart';
 import '../../domain/model/parksonmapModel.dart';
 import '../commponent/appbarcommon.dart';
 import '../commponent/platform_text.dart';
@@ -13,9 +14,9 @@ import '../resources/app_text_style.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/text_type.dart';
+import 'CountDashboardViewModel.dart';
 
 class DashboardScreen extends StatefulWidget {
-
   const DashboardScreen({super.key});
 
   @override
@@ -23,6 +24,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+
+  late CountDashboardViewModel _viewModel;
 
   List<dynamic> subCategoryList = [];
   List<dynamic> countDashBoradList = [];
@@ -33,12 +36,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   var _selectedSubCategoryId;
   var selectedDropDownSectorCode;
   TextEditingController _searchController = TextEditingController();
-  int totalParks = 0;
-  int totalGeotagged = 0;
-  int totalInspection = 0;
-  int totalInspectionAmt = 0;
-  int totalResolvedInspection = 0;
-  int totalReceivedAmt = 0;
+
+  String totalParks_2 = '';
+  String totalGeotagged_2 = '';
+  String totalInspection_2 = '';
+  String totalResolvedInspection_2 = '';
+  String iTotalReceviedAmt_2 = '';
+  // iTotalInspectionAmt
+  String iTotalInspectionAmt_2 = '';
   ParksonmapModel? _selectedSearchPark;
   ParkSonMapRepo repo = ParkSonMapRepo();
 
@@ -126,19 +131,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (!mounted) return;
 
     setState(() {
-      parksonList = parks;
+       parksonList = parks;
       _filteredData = List.from(parks);
     });
     print("---136----parksonMap ---xxxxx---$parksonList");
+
     for (int i = 0; i < parksonList.length; i++) {
       debugPrint('--- Park [$i] ---');
       print("----:  141 : ${parksonList.length}");
       debugPrint(parksonList[i].toString());
     }
   }
-
-
-
   // searchFunction
   void searchPark() {
     final query = _searchController.text.trim().toLowerCase();
@@ -176,29 +179,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
       setState(() {});
       print("----29--$subCategoryList");
-    }
-  }
-
-  // Api call CountDashBoard
-  countDashboard() async {
-    final result = await CountDashBoardRepo().countDashBoard(context);
-
-    if (result != null) {
-      countDashBoradList = result;
-      setState(() {
-        final data = countDashBoradList[0];
-        totalParks = data['iTotalParks'] ?? 0;
-        totalGeotagged = data['iTotalGeotagged'] ?? 0;
-        totalInspection = data['iTotalInspection'] ?? 0;
-        totalInspectionAmt = data['iTotalInspectionAmt'] ?? 0;
-        totalResolvedInspection = data['TotalResolvedInspection'] ?? 0;
-        totalReceivedAmt = data['iTotalReceviedAmt'] ?? 0;
-      });
-      print("-----65---$totalParks");
-      print("-----66---$totalGeotagged");
-      print("-----67---$totalInspection");
-      print("-----68---$totalResolvedInspection");
-      print("-----69---$totalReceivedAmt");
     }
   }
 
@@ -268,15 +248,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
+  // streamBuilder function
+
+  Widget _buildDashboard() {
+    return StreamBuilder<CountDashboardModel>(
+      stream: _viewModel.outputDashboard,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final data = snapshot.data!;
+        totalParks_2 = data.iTotalParks.toString();
+        // totalGeotagged_2
+        totalGeotagged_2 = data.iTotalGeotagged.toString();
+        // totalInspection_2
+        totalInspection_2 = data.iTotalInspection.toString();
+        // totalResolvedInspection_2
+        totalResolvedInspection_2 = data.totalResolvedInspection.toString();
+        iTotalReceviedAmt_2 = data.iTotalReceviedAmt.toString();
+        iTotalInspectionAmt_2 = data.iTotalInspectionAmt.toString();
+        //totalReceivedAmt
+        // iTotalReceviedAmt
+        return Container();
+      },
+    );
+  }
 
   @override
   void initState() {
     // TODO: implement initState
+    _viewModel = instance<CountDashboardViewModel>();
+    _viewModel.start();
     bindSubCategory();
-    countDashboard();
     _getUserLocation();
     _searchController.addListener(searchPark);
-    //_searchController.addListener(searchPark);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _searchFocusNode.unfocus(); // 👈 closes keyboard
@@ -306,6 +311,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          _buildDashboard(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -335,7 +341,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 Spacer(),
                 Text(
-                  "(₹ $totalReceivedAmt / ₹ $totalInspectionAmt)",
+                  "(₹ $iTotalReceviedAmt_2 / ₹ $iTotalInspectionAmt_2)",
                   style: const TextStyle(
                     color: Colors.black54,
                     fontSize: 14, // 👈 Better readability
@@ -366,22 +372,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   _dashboardItem(
                     bgColor: const Color(0xFFE3F2FD),
                     title: "Registered Park",
-                    value: "$totalParks",
+                    value: "$totalParks_2",
                   ),
                   _dashboardItem(
                     bgColor: const Color(0xFFF3E5F5),
                     title: "Geotagged Park",
-                    value: "$totalGeotagged",
+                    value: "$totalGeotagged_2",
                   ),
                   _dashboardItem(
                     bgColor: const Color(0xFFFBE9E7),
                     title: "Inspection",
-                    value: "$totalInspection",
+                    value: "$totalInspection_2",
                   ),
                   _dashboardItem(
                     bgColor: const Color(0xFFBCEAEB),
                     title: "Resolved Inspection",
-                    value: "$totalResolvedInspection",
+                    value: "$totalResolvedInspection_2",
                   ),
                 ];
 
@@ -577,15 +583,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 onMapCreated: (controller) {},
               ),
             ),
-          // if (lat == null && long == null)
-          //   Center(child: CircularProgressIndicator())
-          // else
-          //   ParkSonMap(
-          //     parks: parksonList,
-          //     selectedPark: _selectedSearchPark,
-          //     // currentLocation: LatLng(lat!, long!),
-          //     onMapCreated: (controller) {},
-          //   ),
+
         ],
       ),
     );

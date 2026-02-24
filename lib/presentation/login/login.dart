@@ -3,8 +3,6 @@ import 'package:citizencentric/presentation/common/state_renderer/state_render_i
 import 'package:citizencentric/presentation/login/login_viewmodel.dart';
 import 'package:citizencentric/presentation/resources/assets_manager.dart';
 import 'package:citizencentric/presentation/resources/strings_manager.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/app_prefs.dart';
@@ -39,18 +37,18 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   void _bind() {
     _viewModel.start();
-
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream.listen((token) async {
       if (!mounted) return;
-
       // 🔹 ensure dialog is fully dismissed
       await Future.delayed(const Duration(milliseconds: 100));
-
       _appPreferences.setIsUserLoggedIn();
+      // Acctully token get a model and store in a sharedPreference this is a most
+      // important concept to store a token
+      print("-----xxxxxxx------------token-------$token");
       _appPreferences.setUserToken(token);
       resetModules();
+      // this is a concept of riverpod ref
       ref.read(mainViewProvider.notifier).changeIndex(0);
-
       if (!mounted) return;
       //Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
       Navigator.of(context).pushReplacementNamed(Routes.homePage);
@@ -88,7 +86,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   fit: BoxFit.cover,
                 ),
               ),
-
               // 🔹 Bottom 65% Color
               Expanded(
                 flex: 65,
@@ -98,7 +95,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
               ),
             ],
           ),
-
           // 🔹 Your existing content (NO CHANGE)
           StreamBuilder(
             stream: _viewModel.outputState,
@@ -110,7 +106,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   _viewModel.login();
                 },
               ) ??
-                  _getContentWidget();
+              _getContentWidget();
             },
           ),
         ],

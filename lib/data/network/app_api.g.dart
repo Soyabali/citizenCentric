@@ -50,7 +50,7 @@ class _AppServiceClient implements AppServiceClient {
     try {
       _value = AuthenticationResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     return _value;
@@ -58,23 +58,23 @@ class _AppServiceClient implements AppServiceClient {
 
   @override
   Future<List<ChangePasswordResponse>> changePassword(
-    String sContactNo,
     String sPassword,
     String sNewPassword,
+    String iUserId,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {
-      'sContactNo': sContactNo,
       'sOldPassword': sPassword,
       'sNewPassword': sNewPassword,
+      'iUserId': iUserId,
     };
     final _options = _setStreamType<List<ChangePasswordResponse>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'hrmsReplacePassword/hrmsReplacePassword',
+            'ChangePassword/ChangePassword',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -90,7 +90,7 @@ class _AppServiceClient implements AppServiceClient {
           )
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     return _value;
@@ -122,7 +122,97 @@ class _AppServiceClient implements AppServiceClient {
           )
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options, _result);
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<InspectionStatusListResponse> inspectionList(
+    InspectionListRequest request,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _options = _setStreamType<InspectionStatusListResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'InspectionStatus/InspectionStatus',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late InspectionStatusListResponse _value;
+    try {
+      _value = InspectionStatusListResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<CountDashboardListResponse> countDashboard(
+    CountDashboardRequest request,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _options = _setStreamType<CountDashboardListResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'CountDashboard/CountDashboard',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late CountDashboardListResponse _value;
+    try {
+      _value = CountDashboardListResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ParkListByAgencyItemResponseDetail> parklist(
+    ParkListByAgencyRequest request,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _options = _setStreamType<ParkListByAgencyItemResponseDetail>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'ParkListByAgency/ParkListByAgency',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ParkListByAgencyItemResponseDetail _value;
+    try {
+      _value = ParkListByAgencyItemResponseDetail.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
     }
     return _value;

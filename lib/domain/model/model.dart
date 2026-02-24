@@ -1,5 +1,6 @@
 // here we put a model every api or every response.
 // we put a slider model after that we put a login model after that as a need.
+
 import 'dart:io';
 import 'package:uuid/uuid.dart';
 
@@ -50,6 +51,7 @@ class User {
     required this.agencyCode,
   });
 }
+
 class Authentication {
   final int userId;
   final String name;
@@ -75,28 +77,6 @@ class Authentication {
     required this.agencyCode,
   });
 }
-
-// class Authentication {
-//   final String result;
-//   final String msg;
-//   final User user;
-//
-//   Authentication({
-//     required this.result,
-//     required this.msg,
-//     required this.user,
-//   });
-// }
-
-// class LoginResult {
-//   final BaseResponse base;
-//   final Authentication user;
-//
-//   LoginResult({
-//     required this.base,
-//     required this.user,
-//   });
-// }
 
 // ----------ChangePasswordModel -------------
 
@@ -145,3 +125,102 @@ class Place {
   final String title;
   final File image;
 }
+
+//------Inspection List Model---
+
+class InspectionStatusModel {
+  final int tranNo;
+  final int parkId;
+  final String parkName;
+  final String sectorName;
+  final String divisionName;
+  final String reportType;
+  final double penaltyCharges;
+  final String description;
+  final double latitude;
+  final double longitude;
+  final String googleLocation;
+  final String photoUrl;
+  final String agencyName;
+  final String inspectedBy;
+  final String inspectedAt;
+  final String status;
+
+  // constructor
+  InspectionStatusModel({
+    required this.tranNo,
+    required this.parkId,
+    required this.parkName,
+    required this.sectorName,
+    required this.divisionName,
+    required this.reportType,
+    required this.penaltyCharges,
+    required this.description,
+    required this.latitude,
+    required this.longitude,
+    required this.googleLocation,
+    required this.photoUrl,
+    required this.agencyName,
+    required this.inspectedBy,
+    required this.inspectedAt,
+    required this.status,
+  });
+}
+
+// ----CountDashBoard-----.
+
+class CountDashboardModel {
+  final int iTotalParks;
+  final int iTotalGeotagged;
+  final int iTotalInspection;
+  final int iTotalInspectionAmt;
+  final int totalResolvedInspection;
+  final int iTotalReceviedAmt;
+
+  CountDashboardModel({
+    required this.iTotalParks,
+    required this.iTotalGeotagged,
+    required this.iTotalInspection,
+    required this.iTotalInspectionAmt,
+    required this.totalResolvedInspection,
+    required this.iTotalReceviedAmt,
+  });
+}
+
+//   ------ ParkListByAgency-------.
+
+class ParkListByAgencyModel {
+
+  final int iParkId;
+  final String sParkName;
+  final int iNoOfWorkers;
+  final String sSupervisor;
+  final String sAssetDirector;
+  final String sDuptyDirector;
+  final String sDirector;
+  final String sAgencyName;
+  final int iAgencyCode;
+  final String fArea;
+  final double fLatitude;
+  final double fLongitude;
+  final String sGoogleLocation;
+  final String sParkPhoto;
+
+  ParkListByAgencyModel({
+    required this.iParkId,
+    required this.sParkName,
+    required this.iNoOfWorkers,
+    required this.sSupervisor,
+    required this.sAssetDirector,
+    required this.sDuptyDirector,
+    required this.sDirector,
+    required this.sAgencyName,
+    required this.iAgencyCode,
+    required this.fArea,
+    required this.fLatitude,
+    required this.fLongitude,
+    required this.sGoogleLocation,
+    required this.sParkPhoto,
+  });
+}
+

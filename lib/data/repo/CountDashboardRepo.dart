@@ -7,7 +7,6 @@ import '../../app/di.dart';
 import '../../app/loader_helper.dart';
 import '../../presentation/commponent/generalFunction.dart';
 
-
 class CountDashBoardRepo {
 
   GeneralFunction generalFunction = GeneralFunction();
@@ -51,13 +50,6 @@ class CountDashBoardRepo {
 
         return subCategory;
 
-        // if (dataList != null) {
-        //   List<Map<String, dynamic>> notificationList = dataList.cast<Map<String, dynamic>>();
-        //   print("xxxxx------46----: $notificationList");
-        //   return notificationList;
-        // } else{
-        //   return null;
-        // }
       } else {
          hideLoader();
         return null;

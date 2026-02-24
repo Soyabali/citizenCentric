@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppIcon extends StatelessWidget {
+
   final IconData icon;
   final Color color;
   final double size;
@@ -38,7 +39,6 @@ class AppIcon extends StatelessWidget {
         ),
       );
     }
-
     return iconWidget;
   }
 }

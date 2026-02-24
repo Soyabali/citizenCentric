@@ -20,17 +20,38 @@ abstract class AppServiceClient {
       @Field("sAppVersion") String sAppVersion,
       );
 
+
   //  --------Api ChangePassword-------
 
-  @POST("hrmsReplacePassword/hrmsReplacePassword")
+  @POST("ChangePassword/ChangePassword")
   Future<List<ChangePasswordResponse>> changePassword(
-      @Field("sContactNo") String sContactNo,// this is the field of api
       @Field("sOldPassword") String sPassword,
-      @Field("sNewPassword") String sNewPassword);
+      @Field("sNewPassword") String sNewPassword,
+      @Field("iUserId") String iUserId);
+
 
   // ------StaffList Api---------.
   @POST("hrmsStaffList/hrmsStaffList")
   Future<List<StafListResponse>> staffList(
 
      @Body() StaffListRequest request);
+
+  //  --inspection list
+
+  @POST("InspectionStatus/InspectionStatus")
+  Future<InspectionStatusListResponse> inspectionList(
+      @Body() InspectionListRequest request,
+      );
+  // CountDashBoard
+
+  @POST("CountDashboard/CountDashboard")
+  Future<CountDashboardListResponse> countDashboard(
+      @Body() CountDashboardRequest request,
+      );
+  // Agency Wise Details
+  @POST("ParkListByAgency/ParkListByAgency")
+  Future<ParkListByAgencyItemResponseDetail> parklist(
+      @Body() ParkListByAgencyRequest request,
+      );
+
 }

@@ -6,6 +6,7 @@ import '../resources/styles_manager.dart';
 import '../resources/text_type.dart';
 
 class PlatformText extends StatelessWidget {
+
   final String text;
   final AppTextType type;
   final Color? color;
@@ -57,14 +58,8 @@ class PlatformText extends StatelessWidget {
   }) {
     switch (type) {
       case AppTextType.headline:
-        return getHeadlineStyle(
-          color: isIOS ? CupertinoColors.label : Colors.black87,
-        );
+        return getHeadlineStyle(color: isIOS ? CupertinoColors.label : Colors.black87);
 
-      // case AppTextType.title:
-      //   return getTitleStyle(
-      //     color: isIOS ? CupertinoColors.label : Colors.black87,
-      //   );
       case AppTextType.title:
         return getTitleStyle(
           color: isIOS ? CupertinoColors.white : Colors.black87,
@@ -81,11 +76,8 @@ class PlatformText extends StatelessWidget {
         );
 
       case AppTextType.caption:
-        return getCaptionStyle(
-          color: isIOS ? CupertinoColors.secondaryLabel : Colors.grey,
-        );
-
-      case AppTextType.button:
+        return getCaptionStyle(color: isIOS ? CupertinoColors.secondaryLabel : Colors.grey);
+        case AppTextType.button:
         return getButtonStyle(
           color: isIOS ? CupertinoColors.white : Colors.white,
         );

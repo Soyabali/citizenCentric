@@ -10,7 +10,6 @@ import 'home/home_page.dart';
 import 'notification_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class MainView extends ConsumerWidget {
 
   const MainView({Key? key}) : super(key: key);
@@ -50,10 +49,14 @@ class MainView extends ConsumerWidget {
       ),
 
       body: pages[currentIndex],
-
+      // bottomNavigation
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(color: ColorManager.lightGrey, spreadRadius: AppSize.s1)
+        decoration: BoxDecoration(
+        boxShadow:
+        [
+          BoxShadow(
+              color: ColorManager.lightGrey,
+              spreadRadius: AppSize.s1)
         ]),
         child: BottomNavigationBar(
           selectedItemColor: ColorManager.primary,

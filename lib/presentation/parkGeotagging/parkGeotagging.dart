@@ -23,6 +23,7 @@ class ParkGeotagging extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
+
   List<dynamic> subCategoryList = [];
   List<dynamic> wardList = [];
   List<dynamic> sectorList = [];
@@ -34,6 +35,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
   List<ParkListModel> pendingInternalComplaintList = [];
   List<ParkListModel> _filteredData = [];
   TextEditingController _searchController = TextEditingController();
+
   final distDropdownFocus = GlobalKey();
   bool isLoading = true;
   int _listRequestId = 0;
@@ -740,7 +742,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
         child: Scaffold(
           backgroundColor: ColorManager.white,
           appBar: AppCommonAppBar(
-            title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
+           title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
             showBack: true,
             onBackPressed: () {
               print("Back pressed");
@@ -824,7 +826,6 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
               ),
               // here list item start
               SizedBox(height: 5),
-
               /// todo heere you bind the list
               // at dynamic list you should remove this card content and uncomment below code to show
               // dynamic data

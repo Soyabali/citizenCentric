@@ -7,11 +7,9 @@ import '../../app/di.dart';
 import '../../app/loader_helper.dart';
 import '../../presentation/commponent/generalFunction.dart';
 
-
 class SelectAllDivisionRepo {
 
   GeneralFunction generalFunction = GeneralFunction();
-
   Future<List?> bindAllDivision(BuildContext context) async {
 
     AppPreferences appPreferences = instance<AppPreferences>();
@@ -40,14 +38,15 @@ class SelectAllDivisionRepo {
           });
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
-      if(response.statusCode ==401){
+      if(response.statusCode == 401){
         generalFunction.logout(context);
       }
       if (response.statusCode == 200) {
         hideLoader();
-        var data = await response.stream.bytesToString();
+        var data = await response.stream.bytesToString();// to take a stream as a response
+        // convert list into Map<String,dynamic>
         Map<String, dynamic> parsedJson = jsonDecode(data);
-        List<dynamic>? subCategory = parsedJson['Data'];
+        List<dynamic>? subCategory = parsedJson['Data'];// pick a list data and return the list
         return subCategory;
       } else {
          hideLoader();

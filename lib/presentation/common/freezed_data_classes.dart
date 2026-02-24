@@ -14,16 +14,27 @@ abstract class LoginObject with _$LoginObject {
 @freezed
 abstract class ChangePasswordObject with _$ChangePasswordObject {
  factory ChangePasswordObject({
-  required String sContactNo,
   required String sOldPassword,
   required String sNewPassword,
+  required String iUserId,
  }) = _ChangePasswordObject;
 }
+
 // ----StaffListObject----
+
 @freezed
 abstract class StaffListObject with _$StaffListObject {
  factory StaffListObject({
   required String sEmpCode,
 
  }) = _StaffListObject;
+}
+// InspectionList
+
+@freezed
+abstract class InspectionListObject with _$InspectionListObject {
+ factory InspectionListObject({
+  required String iUserId,
+
+ }) = _InspectionListObject;
 }

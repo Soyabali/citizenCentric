@@ -7,6 +7,7 @@ class Failure {
 
   Failure(this.code, this.message);
 }
+
 class DefaultFailure extends Failure {
   DefaultFailure() : super(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
 }

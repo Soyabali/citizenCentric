@@ -15,19 +15,23 @@ class ChangPasswordUseCase implements BaseUseCase<ChangePassWordInput, ChangePas
   final Repository _repository;
   // this is a Repository class that here i manage a login or Any Other Repository.
 
-  ChangPasswordUseCase(this._repository);// this is a constructor that take a parameter _repository.
-
+  ChangPasswordUseCase(this._repository);  // this is a constructor that take a parameter _repository.
   // Authentication this is a loginModel class
+
   @override
   Future<Either<Failure, ChangePasswordModel>> execute(ChangePassWordInput input) async {
-    return await _repository.changePassword(ChangePassWordRequest(input.sOldPassword,input.sNewPassword,input.sContactNo,));
+    return await _repository.changePassword(ChangePassWordRequest(
+        input.sOldPassword,
+        input.sNewPassword,
+        input.iUserId
+    ));
   }
 }
 
 class ChangePassWordInput {
   String sOldPassword;
   String sNewPassword;
-  String sContactNo;
+  String iUserId;
 
-  ChangePassWordInput(this.sOldPassword,this.sNewPassword,this.sContactNo);
+  ChangePassWordInput(this.sOldPassword,this.sNewPassword,this.iUserId);
 }

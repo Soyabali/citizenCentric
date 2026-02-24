@@ -10,7 +10,6 @@ const String PREFS_KEY_IS_USER_CHANGE_PASSWORD_IN = "PREFS_KEY_IS_USER_CHANGE_PA
 const String PREFS_KEY_TOKEN = "PREFS_KEY_TOKEN";
 const String PREFS_KEY_LOGIN_DATA = "PREFS_KEY_LOGIN_DATA";
 
-
 class AppPreferences {
 
  final SharedPreferences _sharedPreferences;
@@ -27,7 +26,7 @@ class AppPreferences {
   }
   Future<void> setLanguageChanged() async {
    String currentLanguage = await getAppLanguage();
-   if(currentLanguage == LanguageType.ARABIC.getValue()){
+   if(currentLanguage == LanguageType.ARABIC.getValue()) {
      // save prefs with english lang
      _sharedPreferences.setString(PREFS_KEY_LANG, LanguageType.ENGLISH.getValue());
    }else{
@@ -95,17 +94,15 @@ class AppPreferences {
   // to read login data
 
   Future<Map<String, dynamic>?> getLoginUserData() async {
-    final jsonString =
-    _sharedPreferences.getString(PREFS_KEY_LOGIN_DATA);
+    final jsonString = _sharedPreferences.getString(PREFS_KEY_LOGIN_DATA);
 
     if (jsonString == null) return null;
 
     return jsonDecode(jsonString) as Map<String, dynamic>;
   }
 
-
-
-  Future<bool> isOnBoardingScreenViewed() async {return _sharedPreferences.getBool(PREFS_KEY_ONBOARDING_SCREEN) ?? false;
+  Future<bool> isOnBoardingScreenViewed() async {
+    return _sharedPreferences.getBool(PREFS_KEY_ONBOARDING_SCREEN) ?? false;
   }
 
   Future<void> setIsUserLoggedIn() async {

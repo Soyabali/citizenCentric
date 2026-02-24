@@ -8,8 +8,7 @@ import '../main/home/home_page.dart';
 import '../resources/assets_manager.dart';
 import '../resources/values_manager.dart';
 
-
-void displayToast(String msg){
+void displayToast(String msg) {
   Fluttertoast.showToast(
       msg: msg,
       toastLength: Toast.LENGTH_SHORT,
@@ -19,8 +18,6 @@ void displayToast(String msg){
       textColor: Colors.white,
       fontSize: 16.0);
 }
-
-
 
 class GeneralFunction {
   void logout(BuildContext context)async {
@@ -185,8 +182,6 @@ class GeneralFunction {
     );
   }
 
-
-
   // drawerFunction
   drawerFunction(BuildContext context, String sName, String sContactNo) {
     return Drawer(
@@ -237,6 +232,7 @@ class GeneralFunction {
               ],
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
             child: SingleChildScrollView(
@@ -501,7 +497,6 @@ class GeneralFunction {
       ),
     );
   }
-
 
    Future<void> launchGoogleMaps(double laititude,double longitude) async {
      double destinationLatitude= laititude;

@@ -38,7 +38,6 @@ class _MyAppState extends ConsumerState<MyApp> {
     final fcm = FirebaseMessaging.instance;
     // here you pick a token and send a notification befafe of token
     final token = await fcm.getToken();
-
   }
 
   @override

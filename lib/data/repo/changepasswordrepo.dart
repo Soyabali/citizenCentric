@@ -8,8 +8,6 @@ import '../../app/di.dart';
 import '../../app/loader_helper.dart';
 import '../../presentation/commponent/generalFunction.dart';
 
-
-
 class ChangePasswordRepo {
 
   // this is a loginApi call functin

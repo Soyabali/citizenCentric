@@ -34,19 +34,19 @@ void main() async {
   initChangePasswordModule(); // <--- ADD THIS LINE
   initHomeModule(); // <--- ADD THIS LINE
   initFirebaseModule();
+  initInspectionListModule();
+  initCountDashboardModule();
+  agencyWiseDetailModule();
   configLoading();// flutterEasyLoading
   //await Hive.initFlutter();
   runApp(EasyLocalization(
       supportedLocales: [ENGLISH_LOCAL,ARABIC_LOCAL],
       path: ASSETS_PATH_LOCALISATIONS,
       child: ProviderScope(
-        child: Phoenix(
-            child: MyApp()),
+        child: Phoenix(child: MyApp()),
       ),
-
   ));
 }
-
 // create a easy loading function
 void configLoading() {
   EasyLoading.instance

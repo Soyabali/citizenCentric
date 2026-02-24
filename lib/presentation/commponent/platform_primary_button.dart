@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import '../resources/platformButtonType.dart';
 import '../resources/styles_manager.dart';
 
-
 class PlatformPrimaryButton extends StatelessWidget {
 
   final String label;

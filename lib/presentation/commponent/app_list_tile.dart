@@ -5,6 +5,7 @@ import 'AppIcon.dart';
 import 'background_image.dart';
 
 class AppListTile extends StatelessWidget {
+
   final String title;
   final String? assetImage;
   final IconData? leadingIcon;
@@ -30,7 +31,9 @@ class AppListTile extends StatelessWidget {
         horizontal: 10,
         vertical: 4,
       ),
+      // this is a leanding icon
       leading: _buildLeading(),
+      // this is a title
       title:PlatformText(
         title,
         type: AppTextType.subtitle,
@@ -67,8 +70,8 @@ class AppListTile extends StatelessWidget {
           padding: const EdgeInsets.all(3),
           child: assetImage != null
               ? BackgroundImage(
-            imagePath: assetImage!,
-            fit: BoxFit.cover,
+              imagePath: assetImage!,
+              fit: BoxFit.cover,
           )   //Image.asset(assetImage!, fit: BoxFit.cover)
               :  AppIcon(
                  icon: Icons.home,

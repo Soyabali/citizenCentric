@@ -16,6 +16,7 @@ class LoginModel {
   }
 
   // Convert Map → Model (for Hive or API)
+
   factory LoginModel.fromJson(Map<String, dynamic> json) {
     return LoginModel(
       mobile: json["mobile"] ?? "",

@@ -18,8 +18,7 @@ class ParkListWithAgencyRepo {
     final token = await appPreferences.getUserToken();
 
     try {
-      var apiUrl = "${Constant
-          .baseUrl}ParkListByAgency/ParkListByAgency";
+      var apiUrl = "${Constant.baseUrl}ParkListByAgency/ParkListByAgency";
 
       var headers = {
         'token': token,

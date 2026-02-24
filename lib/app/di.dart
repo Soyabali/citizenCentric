@@ -1,6 +1,7 @@
 import 'package:citizencentric/app/app_prefs.dart';
 import 'package:citizencentric/domain/usecase/staffList_usecase.dart';
 import 'package:citizencentric/presentation/main/home/home_viewmodel.dart';
+import 'package:citizencentric/presentation/postInspection/agencyWiseDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -14,10 +15,17 @@ import '../data/network/dio_factory.dart';
 import '../data/network/network_info.dart';
 import '../data/repository/repository_impl.dart';
 import '../domain/repository/repository.dart';
+import '../domain/usecase/ParkListByAgencyUseCase.dart';
 import '../domain/usecase/change_password_usecase.dart';
+import '../domain/usecase/countdashboard_usecase.dart';
+import '../domain/usecase/inspectionListUseCase.dart';
 import '../domain/usecase/login_usecase.dart';
 import '../presentation/change_password/change_password_ui_model.dart';
+import '../presentation/dashboard/CountDashboardViewModel.dart';
+import '../presentation/inspectionList/inspectionListViewModel.dart';
 import '../presentation/login/login_viewmodel.dart';
+import '../data/data_source/local_data_source_inspectionList.dart';
+import '../presentation/postInspection/AgencyWiseDetalsViewModel.dart';
 
 final instance = GetIt.instance;
 
@@ -57,17 +65,29 @@ Future<void> initAppModule() async {
     instance.registerLazySingleton<RemoteDataSource>(
             () => RemoteDataSourceImplementer(instance()));
   }
+  if (!GetIt.I.isRegistered<LocalDataSourceInspectionList>()) {
+    instance.registerLazySingleton<LocalDataSourceInspectionList>(
+          () => LocalDataSourceImplementerInspectionList(),
+    );
+  }
+
 
   // local data source
   if (!GetIt.I.isRegistered<LocalDataSource>()) {
     instance.registerLazySingleton<LocalDataSource>(
-            () => LocalDataSourceImplementer());
+          () => LocalDataSourceImpl(),
+    );
   }
 
-  // repository
+// repository (THIS FIXES YOUR CRASH)
   if (!GetIt.I.isRegistered<Repository>()) {
     instance.registerLazySingleton<Repository>(
-            () => RepositoryImpl(instance(), instance(), instance()));
+          () => RepositoryImpl(
+        instance(),
+        instance(),
+        instance(),
+      ),
+    );
   }
 }
 
@@ -95,15 +115,67 @@ initHomeModule() {
   }
 }
 
+void initInspectionListModule() {
+  if (!instance.isRegistered<InspectionListUseCase>()) {
+    instance.registerFactory<InspectionListUseCase>(
+          () => InspectionListUseCase(instance()),
+    );
+  }
+
+  if (!instance.isRegistered<InspectionListViewModel>()) {
+    instance.registerFactory<InspectionListViewModel>(
+          () => InspectionListViewModel(instance()),
+    );
+  }
+}
+// CountDashBoard
+void initCountDashboardModule() {
+  // UseCase
+  if (!instance.isRegistered<CountDashboardUseCase>()) {
+    instance.registerFactory<CountDashboardUseCase>(
+          () => CountDashboardUseCase(instance()),
+    );
+  }
+
+  // ViewModel
+  if (!instance.isRegistered<CountDashboardViewModel>()) {
+    instance.registerFactory<CountDashboardViewModel>(
+          () => CountDashboardViewModel(instance()),
+    );
+  }
+}
+// Agency Wise Details
+
+void agencyWiseDetailModule() {
+  // UseCase
+  if (!instance.isRegistered<ParkListByAgencyUseCase>()) {
+    instance.registerFactory<ParkListByAgencyUseCase>(
+          () => ParkListByAgencyUseCase(instance()),
+    );
+  }
+  /// TODO HER I HAVE A CREATE VIEW MODEL APFTE THAT I WRITE A VIDEW MODEL
+  // ViewModel
+  if (!instance.isRegistered<AgencyWiseDetalsViewModel>()) {
+    instance.registerFactory<AgencyWiseDetalsViewModel>(
+          () => AgencyWiseDetalsViewModel(instance()),
+    );
+  }
+}
+
 // resetModules - THIS LOGIC IS NOW SAFE
+
 resetModules() {
   instance.reset(dispose: false);
   initAppModule();
   initLoginModule();
   initChangePasswordModule();
+  initInspectionListModule();
+  initCountDashboardModule();
+  agencyWiseDetailModule();
 }
 
 // firebaseAuth - THIS IS ALREADY CORRECT
+
 initFirebaseModule() {
   if (!GetIt.I.isRegistered<FirebaseAuth>()) {
     instance.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);

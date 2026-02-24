@@ -15,9 +15,8 @@ import '../login/login.dart';
 import '../notification/notification.dart';
 import '../resources/app_text_style.dart';
 import '../resources/routes_manager.dart';
+import '../riverpod/main_view_controller..dart';
 import 'generalFunction.dart';
-
-
 
 class DrawerContent extends ConsumerWidget {
   final String name;
@@ -233,7 +232,7 @@ class DrawerContent extends ConsumerWidget {
 
                 // _drawerItem(
                 //   icon: Icons.language,
-                //   title: AppStrings.changeLanguage.tr(),
+                //   title: "Change Language",
                 //   iconColor: const Color(0xFFFBC02D),
                 //   onTap: () => _changeLanguage(context),
                 // ),
@@ -247,7 +246,6 @@ class DrawerContent extends ConsumerWidget {
                 //   }
                 // ),
                 _divider(),
-
                 _drawerItem(
                   icon: Icons.logout,
                   title: AppStrings.logout.tr(),
@@ -358,8 +356,8 @@ class DrawerContent extends ConsumerWidget {
       ],
     );
   }
-
 }
+
 
 Widget _buildDialogSucces(BuildContext context) {
   return Dialog(

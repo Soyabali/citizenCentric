@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../domain/model/park_model.dart';
 import 'package:flutter/gestures.dart';
-
 
 class AppGoogleMap extends StatefulWidget {
   final List<ParkModel> parks;
@@ -128,113 +128,46 @@ class _AppGoogleMapState extends State<AppGoogleMap> {
     );
   }
 
-  // Widget _greenInfoPopup() {
-  //   if (_selectedPark == null) return const SizedBox();
-  //
-  //   return Positioned(
-  //     top: 10,
-  //     left: 20,
-  //     right: 20,
-  //     child: GestureDetector(
-  //       onTap: (){
-  //         setState(() {
-  //           _selectedPark = null; // 👈 DISMISS ON POPUP TAP
-  //         });
-  //       },
-  //       child: Material(
-  //         color: Colors.transparent,
-  //         child: Container(
-  //           padding: const EdgeInsets.all(12),
-  //           decoration: BoxDecoration(
-  //             color: Color(0xFF03DAC5), // ✅ GREEN BACKGROUND
-  //             borderRadius: BorderRadius.circular(14),
-  //             boxShadow: [
-  //               BoxShadow(
-  //                 color: Colors.black.withOpacity(0.3),
-  //                 blurRadius: 8,
-  //               ),
-  //             ],
-  //           ),
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               Text(
-  //                 'Park Name : ${_selectedPark!.sParkName}',
-  //                 maxLines: 2, // 👈 allow 1–2 lines
-  //                 overflow: TextOverflow.ellipsis, // 👈 prevent right overflow
-  //                 softWrap: true,
-  //                 textAlign: TextAlign.start,
-  //                 style: const TextStyle(
-  //                   color: Colors.white,
-  //                   fontWeight: FontWeight.w600,
-  //                   fontSize: 15,
-  //                   height: 1.3, // 👈 better line spacing
-  //                 ),
-  //               ),
-  //
-  //               // Text(
-  //               //   'Park Name : ${_selectedPark!.sParkName}',
-  //               //   style: const TextStyle(
-  //               //     color: Colors.white,
-  //               //     fontWeight: FontWeight.bold,
-  //               //     fontSize: 15,
-  //               //   ),
-  //               // ),
-  //               const SizedBox(height: 4),
-  //               Text(
-  //                 'Agency Name : ${_selectedPark!.sAgencyName}',
-  //                 maxLines: 2, // 👈 allows 1–2 lines
-  //                 overflow: TextOverflow.ellipsis, // 👈 prevents overflow
-  //                 softWrap: true,
-  //                 textAlign: TextAlign.start,
-  //                 style: const TextStyle(
-  //                   color: Colors.white,
-  //                   fontSize: 13,
-  //                   height: 1.3, // 👈 better readability
-  //                 ),
-  //               ),
-  //               // Text(
-  //               //   'Agency Name : ${_selectedPark!.sAgencyName}',
-  //               //   style: const TextStyle(color: Colors.white),
-  //               // ),
-  //               // Text(
-  //               //   'Park Distance : ${_selectedPark!.sParkDist}',
-  //               //   style: const TextStyle(color: Colors.white70),
-  //               // ),
-  //               Row(
-  //                 crossAxisAlignment: CrossAxisAlignment.center,
-  //                 children: [
-  //                   Icon(Icons.directions_walk_outlined,size: 20, color: Colors.white,),
-  //                   const SizedBox(width: 6),
-  //                   Text(
-  //                     'Park Distance : ${_selectedPark!.sParkDist}',
-  //                     maxLines: 2, // 👈 allow 1 or 2 lines
-  //                     overflow: TextOverflow.ellipsis, // 👈 prevents overflow
-  //                     softWrap: true,
-  //                     textAlign: TextAlign.start, // or TextAlign.justify if you prefer
-  //                     style: const TextStyle(
-  //                       color: Colors.white70,
-  //                       fontSize: 13,
-  //                       height: 1.3, // 👈 better line spacing
-  //                     ),
-  //                   ),
-  //                 ],
-  //               )
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  // geta currentLocation
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
+    // Check if location service is enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return;
+    }
 
+    // Check permission
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return;
+    }
+    // Get current position
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    // Move camera to current location
+    _mapController?.animateCamera(
+      CameraUpdate.newLatLng(
+        LatLng(position.latitude, position.longitude),
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     _loadMarkers();
+    _getCurrentLocation();
   }
 
   /// ✅ Load BOTH markers safely (Android + iOS)
@@ -353,8 +286,10 @@ class _AppGoogleMapState extends State<AppGoogleMap> {
               zoom: 14,
             ),
             markers: _buildMarkers(),
-            myLocationEnabled: false,
-            myLocationButtonEnabled: false,
+           // myLocationEnabled: false,
+            //myLocationButtonEnabled: false,
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
             zoomControlsEnabled: false,
             gestureRecognizers: {
               Factory<OneSequenceGestureRecognizer>(

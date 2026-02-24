@@ -11,11 +11,12 @@ class LoginRequest {
 //  ----changePasswordRequest
 
 class ChangePassWordRequest {
-  String sContactNo;
   String sOldPassword;
   String sNewPassword;
-  ChangePassWordRequest(this.sContactNo, this.sOldPassword,this.sNewPassword);
+  String iUserId;
+  ChangePassWordRequest(this.sOldPassword,this.sNewPassword,this.iUserId);
 }
+
 // ---------StaffListRequest---------
 
 class StaffListRequest {
@@ -25,5 +26,36 @@ class StaffListRequest {
 
   Map<String, dynamic> toJson() => {
     "sEmpCode": sEmpCode,
+  };
+}
+//  InspectionListRequest
+class InspectionListRequest {
+  String iUserId;
+  // constructor
+  InspectionListRequest(this.iUserId);
+
+  Map<String, dynamic> toJson() => {
+    "iUserId": iUserId,
+  };
+}
+// CountDashboardRequest
+class CountDashboardRequest {
+  String iUserId;
+  // constructor
+  CountDashboardRequest(this.iUserId);
+
+  Map<String, dynamic> toJson() => {
+    "iUserId": iUserId,
+  };
+}
+//    Agency Wise Details---.
+
+class ParkListByAgencyRequest {
+  String iAgencyCode;
+  // constructor
+  ParkListByAgencyRequest(this.iAgencyCode);
+
+  Map<String, dynamic> toJson() => {
+    "iAgencyCode": iAgencyCode,
   };
 }

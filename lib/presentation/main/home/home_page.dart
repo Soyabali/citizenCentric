@@ -51,7 +51,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Center(
       child: SingleChildScrollView(
-        child: StreamBuilder<FlowState>( // FlowState is a class Rendering state dialog
+        child: StreamBuilder<FlowState>(
+          // FlowState is a class Rendering state dialog
           stream: _viewModel.outputState,
           builder: (context, snapshot)
           {
@@ -150,7 +151,8 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-// services ui code
+  // services ui code
+
   Widget _getServicesWidget(List<StaffListModel>? services) {
     if (services != null) {
       return Padding(
@@ -209,8 +211,8 @@ class _HomePageState extends State<HomePage> {
           return _getStoresWidget(snapshot.data);
         });
   }
-
   //
+
   Widget _getStoresWidget(List<StaffListModel>? stores) {
     if (stores != null) {
       return Padding(

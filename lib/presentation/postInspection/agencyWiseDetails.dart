@@ -2,8 +2,10 @@ import 'package:citizencentric/presentation/postInspection/reportBottomSheet.dar
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../app/di.dart';
 import '../../app/locationservice.dart';
 import '../../data/repo/parklistwithagencyrepo.dart';
+import '../../domain/model/model.dart';
 import '../../domain/model/parklistwithagencymodel.dart';
 import '../commponent/appbarcommon.dart';
 import '../fullScreenImage/FullScreenImageDialog.dart';
@@ -15,7 +17,7 @@ import '../commponent/CommonShimmer.dart';
 import '../commponent/platform_text.dart';
 import '../nodatascreen/nodatascreen.dart';
 import '../resources/text_type.dart';
-
+import 'AgencyWiseDetalsViewModel.dart';
 
 class AgencyWiseDetails extends StatefulWidget {
   final iAgencyCode;
@@ -28,6 +30,8 @@ class AgencyWiseDetails extends StatefulWidget {
 class _DashboardScreenState extends State<AgencyWiseDetails> {
 
   List<dynamic> subCategoryList = [];
+
+
   List<dynamic> wardList = [];
   List<dynamic> sectorList = [];
   var dropDownSubCategory;
@@ -35,9 +39,13 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
   var selectedDropDownSectorCode;
 
   List<ParkListWithAgencyModel> pendingInternalComplaintList = [];
-  List<ParkListWithAgencyModel> _filteredData = [];
+  List<ParkListByAgencyModel> _filteredData = [];
+  List<ParkListByAgencyModel> _allData = [];
   TextEditingController _searchController = TextEditingController();
+
   final distDropdownFocus = GlobalKey();
+  // viewModel
+  late AgencyWiseDetalsViewModel _viewModel;
   bool isLoading = true;
   int _listRequestId = 0;
   //var item;
@@ -58,9 +66,6 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
     Color(0xFFEBB072),
     Color(0xFF8BC2D0),
   ];
-
-
-
 
   // get a location
   Future<void> _getUserLocation() async {
@@ -132,9 +137,8 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
   }
 
   // build CardItem
-  Widget buildCardItem(BuildContext context,  ParkListWithAgencyModel item, int index) {
+  Widget buildCardItem(BuildContext context,  ParkListByAgencyModel item, int index) {
     // bg color
-
     final Color bgColor = cardColors[index % cardColors.length];
 
     return Padding(
@@ -398,40 +402,6 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
                                   ),
                                 ),
                               )
-
-                            // child: GestureDetector(
-                            //   onTap: () {
-                            //     print('---forward----click---');
-                            //     // navigate to markGeotaggingFrom
-                            //     //Navigator.pushNamed(context, '/markGeotaggingForm');
-                            //     var parkName =  item.sParkName ?? '';
-                            //     var parkId =  item.iParkId ?? '';
-                            //
-                            //     print("--parkname : $parkName");
-                            //     print("---parkId--: $parkId");
-                            //     Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute<void>(
-                            //         builder: (context) => ParkGeotaggingForm(parkName:parkName,parkId:parkId),
-                            //       ),
-                            //     );
-                            //
-                            //   },
-                            //   child:ColoredBox(
-                            //     color: Colors.white, // color: bgColor,
-                            //     child: Padding(
-                            //       padding: const EdgeInsets.all(6),
-                            //       child: Transform.rotate(
-                            //         angle: 90 * 3.1415926535 / 180,
-                            //         child: Image.asset(
-                            //           'assets/images/forward.jpeg',
-                            //           height: 20,
-                            //           width: 20,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                           ),
                         ],
                       ),
@@ -579,8 +549,8 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
   }
 
   Future<void> pendingInternalComplaintResponse(agencyCode) async {
-    final int requestId = ++_listRequestId;
 
+    final int requestId = ++_listRequestId;
     setState(() => isLoading = true);
 
     final result = await ParkListWithAgencyRepo().parkListWithAgency(context,agencyCode);
@@ -604,8 +574,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
   // search logic
   void searchPark() {
     final query = _searchController.text.toLowerCase();
-
-    _filteredData = pendingInternalComplaintList.where((park) {
+    _filteredData = _allData.where((park) {
       return park.sParkName.toLowerCase().contains(query) ||
           park.sSupervisor.toLowerCase().contains(query) ||
           park.sAgencyName.toLowerCase().contains(query) ||
@@ -623,8 +592,10 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
     // TODO: implement initState
     agencyCode = widget.iAgencyCode;
     pendingInternalComplaintResponse(agencyCode);
-    _getUserLocation();
+   // _getUserLocation();
     _searchController.addListener(searchPark);
+    _viewModel = instance<AgencyWiseDetalsViewModel>();
+    _viewModel.start();
     super.initState();
   }
 
@@ -633,6 +604,7 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
     // TODO: implement dispose
     _searchController.removeListener(searchPark);
     _searchController.dispose();
+    _viewModel.dispose();
     super.dispose();
   }
 
@@ -725,22 +697,61 @@ class _DashboardScreenState extends State<AgencyWiseDetails> {
               /// todo heere you bind the list
               // at dynamic list you should remove this card content and uncomment below code to show
               // dynamic data
+              /// todo here you should access api from a clean archi model
               Expanded(
-                child: isLoading
-                    ? CommonShimmerList()
-                    : (pendingInternalComplaintList.isEmpty)
-                    ? NoDataScreenPage()
-                    : Padding(
-                  padding: const EdgeInsets.only(left: 8.0,top: 8.0,bottom: 8.0,right: 4.0),
-                  child: ListView.builder(
-                    itemCount: _filteredData.length,
-                    itemBuilder: (context, index) {
-                      final ParkListWithAgencyModel item = _filteredData[index];
-                      return buildCardItem(context, item,index);
-                    },
-                  ),
+                child: StreamBuilder<List<ParkListByAgencyModel>>(
+                  stream: _viewModel.outputAgencyWiseDetial,
+                  builder: (context, snapshot) {
+                    // 🔹 LOADING
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    // 🔹 ERROR / EMPTY API
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text("No inspection data found"),
+                      );
+                    }
+                    // 🔹 SUCCESS
+                    final list = snapshot.data!;
+                    // 🔹 Always keep original data updated
+                    _allData = list;
+                    // 🔹 If search box empty → show full list
+                    if (_searchController.text.isEmpty) {
+                      _filteredData = list;
+                    }
+                    final displayList = _filteredData;
+                    // 🔹 NO SEARCH RESULTS
+                    if (displayList.isEmpty) {
+                      return const Center(child: Text("No matching results"));
+                    }
+                    return ListView.builder(
+                      itemCount: displayList.length, // ✅ FIXED
+                      itemBuilder: (context, index) {
+                        final item = displayList[index]; // ✅ SAFE
+                        return buildCardItem(context, item, index);
+                      },
+                    );
+                  },
                 ),
               ),
+
+              // Expanded(
+              //   child: isLoading
+              //       ? CommonShimmerList()
+              //       : (pendingInternalComplaintList.isEmpty)
+              //       ? NoDataScreenPage()
+              //       : Padding(
+              //     padding: const EdgeInsets.only(left: 8.0,top: 8.0,bottom: 8.0,right: 4.0),
+              //     child: ListView.builder(
+              //       itemCount: _filteredData.length,
+              //       itemBuilder: (context, index) {
+              //         final ParkListWithAgencyModel item = _filteredData[index];
+              //         return buildCardItem(context, item,index);
+              //       },
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

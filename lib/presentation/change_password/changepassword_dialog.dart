@@ -4,30 +4,31 @@ import 'package:citizencentric/presentation/commponent/platform_textform_fields.
 import 'package:citizencentric/presentation/resources/color_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import '../commponent/container_decoration.dart';
+import '../commponent/decoration_image.dart';
 import '../login/login_viewmodel.dart';
 import '../resources/assets_manager.dart';
 import '../resources/platformButtonType.dart';
 import '../resources/strings_manager.dart';
 import '../resources/text_type.dart';
 import '../resources/values_manager.dart';
-import 'container_decoration.dart';
-import 'decoration_image.dart';
+import 'change_password_ui_model.dart';
 
-class LoginDialogWidget extends StatelessWidget {
+class ChangePasswordDialogWidget extends StatelessWidget {
 
   final GlobalKey<FormState> formKey;
-  final TextEditingController userMobileNumberController;
-  final TextEditingController passwordController;
-  final LoginViewModel viewModel;
-  final Widget footerSection;
+  final TextEditingController oldPassword;
+  final TextEditingController newPassword;
+  final ChangePasswordUiModel changePasswordUiModel;
+  //final Widget footerSection;
 
-  const LoginDialogWidget({
+  const ChangePasswordDialogWidget({
     super.key,
     required this.formKey,
-    required this.userMobileNumberController,
-    required this.passwordController,
-    required this.viewModel,
-    required this.footerSection,
+    required this.oldPassword,
+    required this.newPassword,
+    required this.changePasswordUiModel,
+   // required this.footerSection,
   });
 
   @override
@@ -101,18 +102,18 @@ class LoginDialogWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 28),
                     child: PlatformTextFormField(
-                      controller: userMobileNumberController,
+                      controller: oldPassword,
                       label: AppStrings.mobilenumber.tr(),
                       hint: AppStrings.mobilenumber.tr(),
                       keyboardType: TextInputType.phone,
                       maxLength: 10,       // ✅ FIXED LENGTH
                       digitsOnly: true,
                       errorText: AppStrings.mobile_no_error.tr(),
-                      validationStream: viewModel.outputIsMobileNumberValid,
+                      validationStream: changePasswordUiModel.outputIsOldPasswordValid,
                       icon: Icons.phone,
                       iconColor: ColorManager.primary,
                       labelColor: ColorManager.primary,
-                      onChanged: viewModel.setMobileNumber,
+                      onChanged: changePasswordUiModel.setOldPassword,
                     ),
                   ),
 
@@ -121,19 +122,19 @@ class LoginDialogWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 28),
                     child: PlatformTextFormField(
-                      controller: passwordController,
+                      controller: newPassword,
                       label: AppStrings.password.tr(),
                       // label: AppStrings.password,
                       hint: AppStrings.password.tr(),
                       //hint: AppStrings.password,
                       isPassword: true,
                       errorText: AppStrings.passwordError.tr(),
-                      validationStream: viewModel.outputIsPasswordValid,
+                      validationStream: changePasswordUiModel.outputIsNewPasswordValid,
                       icon: Icons.lock,
                       iconColor: ColorManager.primary,
                       labelColor: ColorManager.primary,
                       maxLength: 20,
-                      onChanged: viewModel.setPassword,
+                      onChanged: changePasswordUiModel.setNewPassword,
                     ),
                   ),
                   const SizedBox(height: AppSize.s16),
@@ -141,7 +142,7 @@ class LoginDialogWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 28),
                     child: StreamBuilder<bool>(
-                      stream: viewModel.outputIsAllInputsValid,
+                      stream: changePasswordUiModel.outputIsAllInputsValid,
                       builder: (context, snapshot) {
                         return PlatformPrimaryButton(
                           label: AppStrings.login.tr(),
@@ -149,7 +150,7 @@ class LoginDialogWidget extends StatelessWidget {
                           // buttonType
                           buttonType: PlatformButtonType.stadium,
                           onPressed: (snapshot.data ?? false)
-                              ? viewModel.login
+                              ? changePasswordUiModel.changePassword
                               : null,
                         );
                       },
@@ -157,7 +158,7 @@ class LoginDialogWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSize.s100),
                   // Footer
-                  footerSection,
+                 // footerSection,
                 ],
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-
 class ContainerDecoration {
+
   static BoxDecoration container({
     Color color = Colors.white,
     BorderRadius? borderRadius,

@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'font_manager.dart';
 
-
 // base TextStyle
 
 TextStyle _baseTextStyle({
@@ -14,7 +13,7 @@ TextStyle _baseTextStyle({
   return TextStyle(
     fontSize: fontSize,
     fontWeight: fontWeight,
-    fontFamily: FontConstants.fontFamily,
+    fontFamily: FontConstants.fontFamily,// add a fontfamily here
     color: color,
     letterSpacing: defaultTargetPlatform == TargetPlatform.iOS ? 0.2 : 0.0,
     height: 1.4, // better readability (Android + iOS)

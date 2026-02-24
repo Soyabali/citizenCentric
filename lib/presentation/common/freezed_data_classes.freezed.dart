@@ -277,7 +277,7 @@ as String,
 /// @nodoc
 mixin _$ChangePasswordObject {
 
- String get sContactNo; String get sOldPassword; String get sNewPassword;
+ String get sOldPassword; String get sNewPassword; String get iUserId;
 /// Create a copy of ChangePasswordObject
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -288,16 +288,16 @@ $ChangePasswordObjectCopyWith<ChangePasswordObject> get copyWith => _$ChangePass
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChangePasswordObject&&(identical(other.sContactNo, sContactNo) || other.sContactNo == sContactNo)&&(identical(other.sOldPassword, sOldPassword) || other.sOldPassword == sOldPassword)&&(identical(other.sNewPassword, sNewPassword) || other.sNewPassword == sNewPassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChangePasswordObject&&(identical(other.sOldPassword, sOldPassword) || other.sOldPassword == sOldPassword)&&(identical(other.sNewPassword, sNewPassword) || other.sNewPassword == sNewPassword)&&(identical(other.iUserId, iUserId) || other.iUserId == iUserId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sContactNo,sOldPassword,sNewPassword);
+int get hashCode => Object.hash(runtimeType,sOldPassword,sNewPassword,iUserId);
 
 @override
 String toString() {
-  return 'ChangePasswordObject(sContactNo: $sContactNo, sOldPassword: $sOldPassword, sNewPassword: $sNewPassword)';
+  return 'ChangePasswordObject(sOldPassword: $sOldPassword, sNewPassword: $sNewPassword, iUserId: $iUserId)';
 }
 
 
@@ -308,7 +308,7 @@ abstract mixin class $ChangePasswordObjectCopyWith<$Res>  {
   factory $ChangePasswordObjectCopyWith(ChangePasswordObject value, $Res Function(ChangePasswordObject) _then) = _$ChangePasswordObjectCopyWithImpl;
 @useResult
 $Res call({
- String sContactNo, String sOldPassword, String sNewPassword
+ String sOldPassword, String sNewPassword, String iUserId
 });
 
 
@@ -325,11 +325,11 @@ class _$ChangePasswordObjectCopyWithImpl<$Res>
 
 /// Create a copy of ChangePasswordObject
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? sContactNo = null,Object? sOldPassword = null,Object? sNewPassword = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? sOldPassword = null,Object? sNewPassword = null,Object? iUserId = null,}) {
   return _then(_self.copyWith(
-sContactNo: null == sContactNo ? _self.sContactNo : sContactNo // ignore: cast_nullable_to_non_nullable
-as String,sOldPassword: null == sOldPassword ? _self.sOldPassword : sOldPassword // ignore: cast_nullable_to_non_nullable
+sOldPassword: null == sOldPassword ? _self.sOldPassword : sOldPassword // ignore: cast_nullable_to_non_nullable
 as String,sNewPassword: null == sNewPassword ? _self.sNewPassword : sNewPassword // ignore: cast_nullable_to_non_nullable
+as String,iUserId: null == iUserId ? _self.iUserId : iUserId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -415,10 +415,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String sContactNo,  String sOldPassword,  String sNewPassword)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String sOldPassword,  String sNewPassword,  String iUserId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChangePasswordObject() when $default != null:
-return $default(_that.sContactNo,_that.sOldPassword,_that.sNewPassword);case _:
+return $default(_that.sOldPassword,_that.sNewPassword,_that.iUserId);case _:
   return orElse();
 
 }
@@ -436,10 +436,10 @@ return $default(_that.sContactNo,_that.sOldPassword,_that.sNewPassword);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String sContactNo,  String sOldPassword,  String sNewPassword)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String sOldPassword,  String sNewPassword,  String iUserId)  $default,) {final _that = this;
 switch (_that) {
 case _ChangePasswordObject():
-return $default(_that.sContactNo,_that.sOldPassword,_that.sNewPassword);case _:
+return $default(_that.sOldPassword,_that.sNewPassword,_that.iUserId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -456,10 +456,10 @@ return $default(_that.sContactNo,_that.sOldPassword,_that.sNewPassword);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String sContactNo,  String sOldPassword,  String sNewPassword)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String sOldPassword,  String sNewPassword,  String iUserId)?  $default,) {final _that = this;
 switch (_that) {
 case _ChangePasswordObject() when $default != null:
-return $default(_that.sContactNo,_that.sOldPassword,_that.sNewPassword);case _:
+return $default(_that.sOldPassword,_that.sNewPassword,_that.iUserId);case _:
   return null;
 
 }
@@ -471,12 +471,12 @@ return $default(_that.sContactNo,_that.sOldPassword,_that.sNewPassword);case _:
 
 
 class _ChangePasswordObject implements ChangePasswordObject {
-   _ChangePasswordObject({required this.sContactNo, required this.sOldPassword, required this.sNewPassword});
+   _ChangePasswordObject({required this.sOldPassword, required this.sNewPassword, required this.iUserId});
   
 
-@override final  String sContactNo;
 @override final  String sOldPassword;
 @override final  String sNewPassword;
+@override final  String iUserId;
 
 /// Create a copy of ChangePasswordObject
 /// with the given fields replaced by the non-null parameter values.
@@ -488,16 +488,16 @@ _$ChangePasswordObjectCopyWith<_ChangePasswordObject> get copyWith => __$ChangeP
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangePasswordObject&&(identical(other.sContactNo, sContactNo) || other.sContactNo == sContactNo)&&(identical(other.sOldPassword, sOldPassword) || other.sOldPassword == sOldPassword)&&(identical(other.sNewPassword, sNewPassword) || other.sNewPassword == sNewPassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChangePasswordObject&&(identical(other.sOldPassword, sOldPassword) || other.sOldPassword == sOldPassword)&&(identical(other.sNewPassword, sNewPassword) || other.sNewPassword == sNewPassword)&&(identical(other.iUserId, iUserId) || other.iUserId == iUserId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sContactNo,sOldPassword,sNewPassword);
+int get hashCode => Object.hash(runtimeType,sOldPassword,sNewPassword,iUserId);
 
 @override
 String toString() {
-  return 'ChangePasswordObject(sContactNo: $sContactNo, sOldPassword: $sOldPassword, sNewPassword: $sNewPassword)';
+  return 'ChangePasswordObject(sOldPassword: $sOldPassword, sNewPassword: $sNewPassword, iUserId: $iUserId)';
 }
 
 
@@ -508,7 +508,7 @@ abstract mixin class _$ChangePasswordObjectCopyWith<$Res> implements $ChangePass
   factory _$ChangePasswordObjectCopyWith(_ChangePasswordObject value, $Res Function(_ChangePasswordObject) _then) = __$ChangePasswordObjectCopyWithImpl;
 @override @useResult
 $Res call({
- String sContactNo, String sOldPassword, String sNewPassword
+ String sOldPassword, String sNewPassword, String iUserId
 });
 
 
@@ -525,11 +525,11 @@ class __$ChangePasswordObjectCopyWithImpl<$Res>
 
 /// Create a copy of ChangePasswordObject
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? sContactNo = null,Object? sOldPassword = null,Object? sNewPassword = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sOldPassword = null,Object? sNewPassword = null,Object? iUserId = null,}) {
   return _then(_ChangePasswordObject(
-sContactNo: null == sContactNo ? _self.sContactNo : sContactNo // ignore: cast_nullable_to_non_nullable
-as String,sOldPassword: null == sOldPassword ? _self.sOldPassword : sOldPassword // ignore: cast_nullable_to_non_nullable
+sOldPassword: null == sOldPassword ? _self.sOldPassword : sOldPassword // ignore: cast_nullable_to_non_nullable
 as String,sNewPassword: null == sNewPassword ? _self.sNewPassword : sNewPassword // ignore: cast_nullable_to_non_nullable
+as String,iUserId: null == iUserId ? _self.iUserId : iUserId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -787,6 +787,263 @@ class __$StaffListObjectCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? sEmpCode = null,}) {
   return _then(_StaffListObject(
 sEmpCode: null == sEmpCode ? _self.sEmpCode : sEmpCode // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$InspectionListObject {
+
+ String get iUserId;
+/// Create a copy of InspectionListObject
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$InspectionListObjectCopyWith<InspectionListObject> get copyWith => _$InspectionListObjectCopyWithImpl<InspectionListObject>(this as InspectionListObject, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is InspectionListObject&&(identical(other.iUserId, iUserId) || other.iUserId == iUserId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,iUserId);
+
+@override
+String toString() {
+  return 'InspectionListObject(iUserId: $iUserId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $InspectionListObjectCopyWith<$Res>  {
+  factory $InspectionListObjectCopyWith(InspectionListObject value, $Res Function(InspectionListObject) _then) = _$InspectionListObjectCopyWithImpl;
+@useResult
+$Res call({
+ String iUserId
+});
+
+
+
+
+}
+/// @nodoc
+class _$InspectionListObjectCopyWithImpl<$Res>
+    implements $InspectionListObjectCopyWith<$Res> {
+  _$InspectionListObjectCopyWithImpl(this._self, this._then);
+
+  final InspectionListObject _self;
+  final $Res Function(InspectionListObject) _then;
+
+/// Create a copy of InspectionListObject
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? iUserId = null,}) {
+  return _then(_self.copyWith(
+iUserId: null == iUserId ? _self.iUserId : iUserId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [InspectionListObject].
+extension InspectionListObjectPatterns on InspectionListObject {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _InspectionListObject value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _InspectionListObject() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _InspectionListObject value)  $default,){
+final _that = this;
+switch (_that) {
+case _InspectionListObject():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _InspectionListObject value)?  $default,){
+final _that = this;
+switch (_that) {
+case _InspectionListObject() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String iUserId)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _InspectionListObject() when $default != null:
+return $default(_that.iUserId);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String iUserId)  $default,) {final _that = this;
+switch (_that) {
+case _InspectionListObject():
+return $default(_that.iUserId);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String iUserId)?  $default,) {final _that = this;
+switch (_that) {
+case _InspectionListObject() when $default != null:
+return $default(_that.iUserId);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _InspectionListObject implements InspectionListObject {
+   _InspectionListObject({required this.iUserId});
+  
+
+@override final  String iUserId;
+
+/// Create a copy of InspectionListObject
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$InspectionListObjectCopyWith<_InspectionListObject> get copyWith => __$InspectionListObjectCopyWithImpl<_InspectionListObject>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _InspectionListObject&&(identical(other.iUserId, iUserId) || other.iUserId == iUserId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,iUserId);
+
+@override
+String toString() {
+  return 'InspectionListObject(iUserId: $iUserId)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$InspectionListObjectCopyWith<$Res> implements $InspectionListObjectCopyWith<$Res> {
+  factory _$InspectionListObjectCopyWith(_InspectionListObject value, $Res Function(_InspectionListObject) _then) = __$InspectionListObjectCopyWithImpl;
+@override @useResult
+$Res call({
+ String iUserId
+});
+
+
+
+
+}
+/// @nodoc
+class __$InspectionListObjectCopyWithImpl<$Res>
+    implements _$InspectionListObjectCopyWith<$Res> {
+  __$InspectionListObjectCopyWithImpl(this._self, this._then);
+
+  final _InspectionListObject _self;
+  final $Res Function(_InspectionListObject) _then;
+
+/// Create a copy of InspectionListObject
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? iUserId = null,}) {
+  return _then(_InspectionListObject(
+iUserId: null == iUserId ? _self.iUserId : iUserId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

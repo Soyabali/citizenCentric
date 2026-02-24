@@ -1,18 +1,16 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../../data/repo/inspectionStatusRepo.dart';
-import '../../domain/model/InspectionStatusModel.dart';
+import '../../app/di.dart';
+import '../../domain/model/model.dart';
 import '../commponent/CircleWithSpacing.dart';
-import '../commponent/CommonShimmer.dart';
 import '../commponent/appbarcommon.dart';
 import '../commponent/platform_text.dart';
 import '../fullScreenImage/FullScreenImageDialog.dart';
-import '../nodatascreen/nodatascreen.dart';
 import '../resources/color_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/text_type.dart';
 import 'glowIcon.dart';
+import 'inspectionListViewModel.dart';
 import 'lunch_Google_Map.dart';
 
 class InspectionList extends StatefulWidget {
@@ -33,13 +31,13 @@ class _DashboardScreenState extends State<InspectionList> {
 
   List<InspectionStatusModel> pendingInternalComplaintList = [];
   List<InspectionStatusModel> _filteredData = [];
+  List<InspectionStatusModel> _allData = [];
   TextEditingController _searchController = TextEditingController();
   final distDropdownFocus = GlobalKey();
   bool isLoading = true;
-  int _listRequestId = 0;
-  //var item;
   List<Map<String, dynamic>>? item;
   final FocusNode _searchFocusNode = FocusNode();
+  late InspectionListViewModel _viewModel;
 
   // list of the color
   final List<Color> cardColors = [
@@ -55,13 +53,22 @@ class _DashboardScreenState extends State<InspectionList> {
     Color(0xFF8BC2D0),
   ];
 
+  Color getCardColor(int index) {
+    if (cardColors.isEmpty) return Colors.white;
+    return cardColors[index % cardColors.length];
+  }
+
   // build CardItem
-  Widget buildCardItem(BuildContext context, InspectionStatusModel item, int index) {
+  Widget buildCardItem(
+    BuildContext context,
+    InspectionStatusModel item,
+    int index,
+  ) {
     // bg color
+    // final Color bgColor = cardColors[index % cardColors.length];
+    final Color bgColor = getCardColor(index); // SAFE
 
-    final Color bgColor = cardColors[index % cardColors.length];
-
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.only(right: 4),
       child: Card(
         elevation: 2,
@@ -96,7 +103,6 @@ class _DashboardScreenState extends State<InspectionList> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
                       // 🔴 Circle Container (60x60)
                       Container(
                         width: 40,
@@ -114,30 +120,28 @@ class _DashboardScreenState extends State<InspectionList> {
                         //     fontWeight: FontWeight.bold,
                         //   ),
                         // ),
-                        child:  PlatformText(
-                           "${index+1}", // "Short Worker Found", // item.sParkName ?? '',
+                        child: PlatformText(
+                          "${index + 1}", // "Short Worker Found", // item.sParkName ?? '',
                           type: AppTextType.subtitle,
                           color: Colors.white,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Divider(height: 1,
-                      color: ColorManager.grey,
-                      ),
+                      Divider(height: 1, color: ColorManager.grey),
                       const SizedBox(width: 10),
                       // 📝 Column with 2 TextViews (flexible)
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:[
+                          children: [
                             PlatformText(
-                              item.sParkName, // "Short Worker Found", // item.sParkName ?? '',
+                              item.parkName, // "Short Worker Found", // item.sParkName ?? '',
                               type: AppTextType.body,
                             ),
                             SizedBox(height: 4),
                             PlatformText(
-                              item.sReportType, //"Report Type", // item.sParkName ?? '',
+                              item.reportType, //"Report Type", // item.sParkName ?? '',
                               type: AppTextType.subtitle,
                             ),
                           ],
@@ -145,12 +149,11 @@ class _DashboardScreenState extends State<InspectionList> {
                       ),
                       // 🖼 Asset Image (right side)
                       GestureDetector(
-                        onTap: (){
-                          final double lat = item.fLatitude;
-                          final double long = item.fLongitude;
+                        onTap: () {
+                          final double lat = item.latitude;
+                          final double long = item.longitude;
                           launchGoogleMaps(lat, long);
-                          },
-
+                        },
                         child: Container(
                           margin: const EdgeInsets.only(right: 10),
                           child: Image.asset(
@@ -166,17 +169,10 @@ class _DashboardScreenState extends State<InspectionList> {
                 ),
               ),
               SizedBox(height: 2),
-              Divider(
-                height: 1,
-                color: Colors.grey,
-              ),
+              Divider(height: 1, color: Colors.grey),
               SizedBox(height: 5),
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 10,
-                  top: 10,
-                ),
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,7 +192,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sDevisionName, // "Satish" ,//  AppStrings.powerd_by.tr(),
+                        item.divisionName, // "Satish" ,//  AppStrings.powerd_by.tr(),
                         type: AppTextType.subtitle,
                       ),
                     ),
@@ -216,7 +212,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sSectorName,//"R.Singh", //  AppStrings.powerd_by.tr(),
+                        item.sectorName, //"R.Singh", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.subtitle,
                       ),
                     ),
@@ -236,7 +232,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sParkName,  //"R.Singh", //  AppStrings.powerd_by.tr(),
+                        item.parkName, //"R.Singh", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.subtitle,
                       ),
                     ),
@@ -257,7 +253,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sAgencyName,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
+                        item.agencyName, //"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.subtitle,
                         color: ColorManager.primary,
                       ),
@@ -271,30 +267,25 @@ class _DashboardScreenState extends State<InspectionList> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 4),
                               child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 5,
-                                    ),
+                                    padding: const EdgeInsets.only(top: 5),
                                     child: CircleWithSpacing(),
                                   ),
                                   SizedBox(width: 2),
                                   Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       PlatformText(
                                         "Inspection By", //  AppStrings.powerd_by.tr(),
                                         type: AppTextType.body,
                                       ),
                                       PlatformText(
-                                        item.sInspBy, //"Annand Mohan Singh",  //"AssetDirector", // item.sAssetDirector ?? "", //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
+                                        item.inspectedBy, //"Annand Mohan Singh",  //"AssetDirector", // item.sAssetDirector ?? "", //"Mukesh Kumar", //  AppStrings.powerd_by.tr(),
                                         type: AppTextType.subtitle,
                                       ),
                                     ],
@@ -315,7 +306,7 @@ class _DashboardScreenState extends State<InspectionList> {
                             child: Container(
                               height: 40,
                               decoration: BoxDecoration(
-                                color: item.sStatus.toLowerCase() == "pending"
+                                color: item.status.toLowerCase() == "pending"
                                     ? Colors.red
                                     : bgColor,
                                 borderRadius: BorderRadius.circular(20),
@@ -333,16 +324,15 @@ class _DashboardScreenState extends State<InspectionList> {
                                 //     color: ColorManager.white,
                                 //
                                 //   ),
-                                  child: Text(
-                                    item.sStatus,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                    ),
+                                child: Text(
+                                  item.status,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
                                   ),
                                 ),
                               ),
-
+                            ),
                           ),
                         ),
                       ],
@@ -362,9 +352,9 @@ class _DashboardScreenState extends State<InspectionList> {
                     ),
                     //  fPaneltyCharges
                     Padding(
-                      padding:EdgeInsets.only(left: 24),
+                      padding: EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        "₹ ${item.fPaneltyCharges}",
+                        "₹ ${item.penaltyCharges}", //  AppStrings.powerd_by.tr(}",
                         type: AppTextType.subtitle,
                         color: Colors.red,
                       ),
@@ -385,10 +375,9 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        (
-                            item.sDescription.isNotEmpty &&
-                            item.sDescription.isNotEmpty)
-                            ? item.sDescription
+                        (item.description.isNotEmpty &&
+                                item.description.isNotEmpty)
+                            ? item.description
                             : "No Description",
                         type: AppTextType.subtitle,
                       ),
@@ -409,7 +398,7 @@ class _DashboardScreenState extends State<InspectionList> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sGoogleLocation, //"Noida authority parking, B-96A, D Block, Sector 6, Noida, Uttar Pradesh 201301,India Noida Uttar Pradesh",
+                        item.googleLocation, //"Noida authority parking, B-96A, D Block, Sector 6, Noida, Uttar Pradesh 201301,India Noida Uttar Pradesh",
                         type: AppTextType.subtitle,
                       ),
                     ),
@@ -423,7 +412,8 @@ class _DashboardScreenState extends State<InspectionList> {
                           borderRadius: BorderRadius.circular(14),
                           side: BorderSide(color: Colors.grey.shade200),
                         ),
-                        child: ClipRRect( // 🔥 IMPORTANT: clips inner content
+                        child: ClipRRect(
+                          // 🔥 IMPORTANT: clips inner content
                           borderRadius: BorderRadius.circular(14),
                           child: SizedBox(
                             height: 52,
@@ -434,51 +424,59 @@ class _DashboardScreenState extends State<InspectionList> {
                                 Expanded(
                                   flex: 6,
                                   child: Container(
-
                                     alignment: Alignment.centerLeft,
-                                   // padding: const EdgeInsets.symmetric(horizontal: 12),
+                                    // padding: const EdgeInsets.symmetric(horizontal: 12),
                                     color: Colors.white,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.only(left: 8),
-                                                  child: Image.asset(
-                                                    "assets/images/ic_request_nw.png",
-                                                    fit: BoxFit.cover,
-                                                    height: 22,
-                                                    width: 22,
-                                                  ),
-                                                ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 8,
+                                          ),
+                                          child: Image.asset(
+                                            "assets/images/ic_request_nw.png",
+                                            fit: BoxFit.cover,
+                                            height: 22,
+                                            width: 22,
+                                          ),
+                                        ),
                                         SizedBox(width: 2),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Text('Insp At : ',style: TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 12
-                                                    ),),
-                                                    SizedBox(width: 2),
-                                                    Text(
-                                                      "${item.dInspAt}",
-                                                      maxLines: 1,
-                                                      overflow: TextOverflow.ellipsis, // 👈 prevents right overflow
-                                                      softWrap: false,
-                                                      style: const TextStyle(
-                                                        color: Colors.black54,
-                                                        fontSize: 12,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                // PlatformText(
-                                                //   "Insp At : ${item.dInspAt ?? ""}",
-                                                //   type: AppTextType.body,
-                                                // ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Insp At : ',
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            SizedBox(width: 2),
+                                            Text(
+                                              "${item.inspectedAt}",
+                                              maxLines: 1,
+                                              overflow: TextOverflow
+                                                  .ellipsis, // 👈 prevents right overflow
+                                              softWrap: false,
+                                              style: const TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
 
+                                        // PlatformText(
+                                        //   "Insp At : ${item.dInspAt ?? ""}",
+                                        //   type: AppTextType.body,
+                                        // ),
                                       ],
-                                    )
+                                    ),
                                   ),
                                 ),
 
@@ -493,7 +491,7 @@ class _DashboardScreenState extends State<InspectionList> {
                                   flex: 4,
                                   child: InkWell(
                                     onTap: () {
-                                      var images = "${item.sPhoto}";
+                                      var images = "${item.photoUrl}";
 
                                       if (images.isNotEmpty) {
                                         showGeneralDialog(
@@ -501,7 +499,9 @@ class _DashboardScreenState extends State<InspectionList> {
                                           barrierDismissible: true,
                                           barrierLabel: "Close image preview", // ✅ REQUIRED
                                           barrierColor: Colors.black,
-                                          transitionDuration: const Duration(milliseconds: 200),
+                                          transitionDuration: const Duration(
+                                            milliseconds: 200,
+                                          ),
                                           pageBuilder: (_, __, ___) {
                                             return FullScreenImageDialog(
                                               imageUrl: images,
@@ -514,24 +514,25 @@ class _DashboardScreenState extends State<InspectionList> {
                                       alignment: Alignment.centerRight,
                                       color: Colors.white,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: [
                                           Text(
                                             'Image',
                                             style: TextStyle(
                                               color: Colors.black54,
                                               fontSize: 14,
-                                              fontWeight: FontWeight.bold, // 👈 bold
+                                              fontWeight:
+                                                  FontWeight.bold, // 👈 bold
                                             ),
                                           ),
                                           SizedBox(width: 5),
                                           //Icon(Icons.arrow_forward_ios,size: 20),
                                           const GlowIcon(),
-
-
                                         ],
-                                      )
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -551,52 +552,31 @@ class _DashboardScreenState extends State<InspectionList> {
     );
   }
 
-  Future<void> pendingInternalComplaintResponse() async {
-    final int requestId = ++_listRequestId;
-
-    setState(() => isLoading = true);
-
-    final result = await InspectionStartRepo().inspectionStartRepo(
-      context,
-    );
-
-    // 🔒 IGNORE OLD RESPONSE
-    if (requestId != _listRequestId) return;
-
-    if (result != null) {
-      pendingInternalComplaintList = result;
-      _filteredData = List.from(result);
-      print("---761---ListData----: $pendingInternalComplaintList");
-    } else {
-      pendingInternalComplaintList = [];
-      _filteredData = [];
-    }
-
-    setState(() => isLoading = false);
-  }
-
-  // search logic
   void searchPark() {
-    final query = _searchController.text.toLowerCase();
+    final query = _searchController.text.trim().toLowerCase();
 
-    _filteredData = pendingInternalComplaintList.where((park) {
-      return park.sParkName.toLowerCase().contains(query) ||
-          park.sAgencyName.toLowerCase().contains(query) ||
-          park.sSectorName.toLowerCase().contains(query) ||
-          park.sDevisionName.toLowerCase().contains(query) ||
-          park.sReportType.toLowerCase().contains(query);
-    }).toList();
+    if (query.isEmpty) {
+      _filteredData = _allData;
+    } else {
+      _filteredData = _allData.where((item) {
+        return item.parkName.toLowerCase().contains(query) ||
+            item.reportType.toLowerCase().contains(query) ||
+            item.divisionName.toLowerCase().contains(query) ||
+            item.sectorName.toLowerCase().contains(query) ||
+            item.agencyName.toLowerCase().contains(query) ||
+            item.agencyName.toLowerCase().contains(query) ||
+            item.inspectedBy.toLowerCase().contains(query) ||
+            item.description.toLowerCase().contains(query) ||
+            item.googleLocation.toLowerCase().contains(query);
+      }).toList();
+    }
     setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
-    pendingInternalComplaintResponse();
-    _searchController.addListener(searchPark);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _searchFocusNode.unfocus(); // 👈 closes keyboard
-    });
+    _viewModel = instance<InspectionListViewModel>();
+    _viewModel.start();
     super.initState();
   }
 
@@ -606,96 +586,125 @@ class _DashboardScreenState extends State<InspectionList> {
     _searchController.removeListener(searchPark);
     _searchFocusNode.dispose();
     _searchController.dispose();
+    _viewModel.dispose();
     super.dispose();
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Scaffold(
-          backgroundColor: ColorManager.white,
-          appBar: AppCommonAppBar(
-           title: "Inspection List" , //title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
-            showBack: true,
-            onBackPressed: () {
-              print("Back pressed");
-              Navigator.pop(context);
-            },
-          ),
-          body: Column(
-            children: [
-              // Divider(height: 1),
-              // // SearchBar
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 4.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      border: Border.all(
-                        color: Colors.grey, // Outline border color
-                        width: 0.2, // Outline border width
-                      ),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _searchController,
-                            autofocus: false,
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.search),
-                              // hintText: 'Enter Keywords',
-                              hintText: AppStrings.enterKeywords.tr(),
-                              hintStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Color(0xFF707d83),
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              border: InputBorder.none,
-                            ),
-                          ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: ColorManager.white,
+
+        appBar: AppCommonAppBar(
+          title: "Inspection List",
+          showBack: true,
+          onBackPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            // Divider(height: 1),
+            // // SearchBar
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Container(
+                  height: 48, // 👈 standard professional height
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.shade400, width: 0.9),
+                  ),
+                  child: TextFormField(
+                    controller: _searchController,
+                    onChanged: (_) => searchPark(),
+                    textAlignVertical: TextAlignVertical.center, // 👈 KEY FIX
+                    decoration: InputDecoration(
+                      // 🔹 ICON
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Icon(
+                          Icons.search,
+                          size: 22,
+                          color: Colors.grey.shade600,
                         ),
-                      ],
+                      ),
+                      prefixIconConstraints: const BoxConstraints(
+                        minWidth: 40,
+                        minHeight: 40,
+                      ),
+
+                      // 🔹 TEXT
+                      hintText: AppStrings.enterKeywords.tr(),
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF707d83),
+                      ),
+
+                      // 🔥 REMOVE ALL INTERNAL BORDERS
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      focusedErrorBorder: InputBorder.none,
+                      // 🔹 PADDING CONTROL
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
                 ),
               ),
-              // here list item start
-              SizedBox(height: 10),
-              /// todo heere you bind the list
-              // at dynamic list you should remove this card content and uncomment below code to show
-              // dynamic data
-              /// todo here is a list i am close some time such as a i play static code.
+            ),
 
-              Expanded(
-                child: isLoading
-                    ? CommonShimmerList()
-                    : (pendingInternalComplaintList.isEmpty)
-                    ? NoDataScreenPage()
-                    : Padding(
-                  padding: const EdgeInsets.only(left: 8.0,top: 8.0,bottom: 8.0,right: 4.0),
-                  child: ListView.builder(
-                    itemCount: _filteredData.length,
+            Expanded(
+              child: StreamBuilder<List<InspectionStatusModel>>(
+                stream: _viewModel.outputInspectionList,
+                builder: (context, snapshot) {
+                  // 🔹 LOADING
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  // 🔹 ERROR / EMPTY API
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text("No inspection data found"),
+                    );
+                  }
+                  // 🔹 SUCCESS
+                  final list = snapshot.data!;
+                  // 🔹 Always keep original data updated
+                  _allData = list;
+                  // 🔹 If search box empty → show full list
+                  if (_searchController.text.isEmpty) {
+                    _filteredData = list;
+                  }
+                  final displayList = _filteredData;
+                  // 🔹 NO SEARCH RESULTS
+                  if (displayList.isEmpty) {
+                    return const Center(child: Text("No matching results"));
+                  }
+                  return ListView.builder(
+                    itemCount: displayList.length, // ✅ FIXED
                     itemBuilder: (context, index) {
-                      // final item = _filteredData[index];
-                      final InspectionStatusModel item = _filteredData[index];
-
-                      return buildCardItem(context, item,index);
+                      final item = displayList[index]; // ✅ SAFE
+                      return buildCardItem(context, item, index);
                     },
-                  ),
-                ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

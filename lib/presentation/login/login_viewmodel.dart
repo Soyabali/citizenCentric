@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:citizencentric/domain/usecase/login_usecase.dart';
 import 'package:citizencentric/presentation/base/baseviewmodel.dart';
 import 'package:citizencentric/presentation/common/freezed_data_classes.dart';
@@ -16,6 +15,7 @@ class LoginViewModel extends BaseViewModel implements LoginViewModelInputs,Login
   StreamController _userPasswordStreamController = StreamController<String>.broadcast();
   StreamController _isAllInputsValidStreamController = StreamController<void>.broadcast();
   StreamController isUserLoggedInSuccessfullyStreamController = StreamController<String>();
+  // SharedPreference
   AppPreferences _appPreferences = instance<AppPreferences>();
 
   //var loginObject = LoginObject("","");
@@ -33,8 +33,6 @@ LoginViewModel(this._loginUseCase);
     // TODO: implement start
     inputState.add(ContentState());
   }
-
-
   // toast code
   void showToast(String message) {
     Fluttertoast.showToast(
@@ -57,19 +55,14 @@ LoginViewModel(this._loginUseCase);
   // inputpart
 
   @override
-  Sink get inputMobileNumber => _userMobileNumberStreamController.sink;// this is way to put data into the stream
+  Sink get inputMobileNumber => _userMobileNumberStreamController.sink;  // this is way to put data into the stream
   Sink get inputPassword => _userPasswordStreamController.sink;
   Sink get inputIsAllInputValid => _isAllInputsValidStreamController.sink;
 
-
   @override
-
   login() async {
     inputState.add(
-      LoadingState(
-        stateRendererType: StateRendererType.POPUP_LOADING_STATE,
-      ),
-    );
+      LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
 
     (await _loginUseCase.execute(
       LoginUseCaseInput(
@@ -79,8 +72,7 @@ LoginViewModel(this._loginUseCase);
       ),
     ))
         .fold(
-
-      /// ❌ FAILURE → SHOW ERROR DIALOG
+          /// ❌ FAILURE → SHOW ERROR DIALOG
           (failure) {
             // show a toast
             showToast("This contact number not registered with us");
@@ -95,15 +87,12 @@ LoginViewModel(this._loginUseCase);
           inputState.add(ContentState());
         });
       },
-
-      /// ✅ SUCCESS → DIRECT NAVIGATION
+          /// ✅ SUCCESS → DIRECT NAVIGATION
           (data) async {
             // -----here you may be see dialog
            // inputState.add(SuccessState('Login Sucess'));
         // 🔹 remove loading popup
         inputState.add(ContentState());
-
-
         // 🔹 trigger navigation
         print("I UserID :  ${data.userId}");
         print(" Name :  ${data.name}");
@@ -116,6 +105,7 @@ LoginViewModel(this._loginUseCase);
         print(" token :  ${data.token}");
         print(" dLsstLoginAt :  ${data.lastLoginAt}");
         print(" iAgencyCode :  ${data.agencyCode}");
+
         // 🔹 Save login details
         await _appPreferences.setLoginUserData(
           userId: data.userId,
@@ -128,16 +118,14 @@ LoginViewModel(this._loginUseCase);
           lastLoginAt: data.lastLoginAt,
           agencyCode: data.agencyCode,
         );
-
-        //dLastLoginAt
+        // to store a token in a sharedPreferenc
         isUserLoggedInSuccessfullyStreamController.add(data.token);
-
         },
     );
   }
 
   @override
-  setMobileNumber(String mobileNumber) {// to take mobile no ui screen
+  setMobileNumber(String mobileNumber) {   // to take mobile no ui screen
     inputMobileNumber.add(mobileNumber);// here get a mobile no to put int sink (inputMobileNumber)
     loginObject = loginObject.copyWith(userMobileNumber: mobileNumber);// to give mobile from ui and give  loginObject that take
     _validate();
@@ -146,9 +134,10 @@ LoginViewModel(this._loginUseCase);
     });
     //loginObject = loginObject.copyWith(mobileNumber: mobileNumber);
   }
+
   @override
-  setPassword(String password) {// to take password from a ui file
-    inputPassword.add(password);// here pass password to sink (inputPassword)
+  setPassword(String password) { // to take password from a ui file
+    inputPassword.add(password); // here pass password to sink (inputPassword)
     loginObject = loginObject.copyWith(password: password);// to pass get data from a ui to loginObject
     _validate();
     // Reset typing flag after a short delay
@@ -157,14 +146,10 @@ LoginViewModel(this._loginUseCase);
   }
   // output part
   @override
-  // TODO: implement outputIsMobileNumberValid
   Stream<bool> get outputIsMobileNumberValid => _userMobileNumberStreamController.stream.map((mobileNumber)=>_isMobileNumberValid(mobileNumber));
-
   @override
-  // TODO: implement outputIsPasswordValid
   Stream<bool> get outputIsPasswordValid => _userPasswordStreamController.stream.map((password)=>_isPasswordValid(password));
   @override
-  // TODO: implement outputIsAllInputsValid
   Stream<bool> get outputIsAllInputsValid => _isAllInputsValidStreamController.stream.map((_)=>_isAllInputsValid());
 
   // create a private function for a  Validaton
@@ -176,6 +161,7 @@ LoginViewModel(this._loginUseCase);
   // bool _isMobileNumberValid(String userName) {
   //   return userName.isNotEmpty;
   // }
+
   bool _isMobileNumberValid(String mobile) {
     final trimmed = mobile.trim();
 
@@ -204,8 +190,8 @@ LoginViewModel(this._loginUseCase);
   bool _isAllInputsValid() {
     return _isMobileNumberValid(loginObject.userMobileNumber) && _isPasswordValid(loginObject.password);
   }
+}
 
- }
 abstract class LoginViewModelInputs {
   // three functions for actions
   setMobileNumber(String mobileNumber);
@@ -216,6 +202,7 @@ abstract class LoginViewModelInputs {
   Sink get inputPassword;
   Sink get inputIsAllInputValid;
 }
+
 abstract class LoginViewModelOutputs {
   Stream<bool> get outputIsMobileNumberValid;
   Stream<bool> get outputIsPasswordValid;

@@ -10,6 +10,7 @@ import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
 
 class SplashView extends StatefulWidget {
+
   const SplashView({super.key});
 
 
@@ -53,7 +54,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   /// call a version api
-  versionAliCall() async{
+  versionAliCall() async {
     /// TODO HERE YOU SHOULD CHANGE APP VERSION FLUTTER VERSION MIN 3 DIGIT SUCH AS 1.0.0
     /// HERE YOU PASS variable _appVersion
     var loginMap = await VerifyAppVersionRepo().verifyAppVersion(context,'1');

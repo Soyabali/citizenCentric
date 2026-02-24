@@ -6,7 +6,6 @@ abstract class NetworkInfo { // this is a class that is used to check internet i
 
 class NetworkInfoImpl implements NetworkInfo {
   final InternetConnection _internetConnection;
-
   NetworkInfoImpl(this._internetConnection);
 
   @override

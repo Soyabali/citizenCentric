@@ -9,7 +9,6 @@ import '../../domain/model/parklistmodel.dart';
 import '../../presentation/commponent/generalFunction.dart';
 import 'package:flutter/material.dart';
 
-
 class ParkListForLocationUpdationRepo {
   GeneralFunction generalFunction = GeneralFunction();
 
@@ -37,7 +36,6 @@ class ParkListForLocationUpdationRepo {
       });
 
       request.headers.addAll(headers);
-
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 401) {
@@ -66,64 +64,4 @@ class ParkListForLocationUpdationRepo {
     }
     return null;
   }
-
-
-// Future<List<Map<String, dynamic>>?> parklistupdate(
-  //     BuildContext context, selectedSubCategoryId, selectedDropDownSectorCode) async {
-  //
-  //   AppPreferences appPreferences = instance<AppPreferences>();
-  //   final token = await appPreferences.getUserToken();
-  //   final userData = await appPreferences.getLoginUserData();
-  //
-  //   print("-----20--$selectedSubCategoryId");
-  //   print("----21--$selectedDropDownSectorCode");
-  //
-  //   try {
-  //     var baseURL = Constant.baseUrl;
-  //     var endPoint = "ParkListForLocationUpdation/ParkListForLocationUpdation";
-  //     var apiUrl = "$baseURL$endPoint";
-  //
-  //     var headers = {
-  //       'token': token ?? '',
-  //       'Content-Type': 'application/json',
-  //     };
-  //
-  //     var request = http.Request('POST', Uri.parse(apiUrl));
-  //     request.body = jsonEncode({
-  //       "iDivisionCode": selectedSubCategoryId,
-  //       "iSectorCode": selectedDropDownSectorCode,
-  //     });
-  //
-  //     request.headers.addAll(headers);
-  //
-  //     http.StreamedResponse response = await request.send();
-  //
-  //     if (response.statusCode == 401) {
-  //       generalFunction.logout(context);
-  //       return null;
-  //     }
-  //
-  //     if (response.statusCode == 200) {
-  //       var data = await response.stream.bytesToString();
-  //       final parsedJson = jsonDecode(data);
-  //       print("-----51------data----$parsedJson");
-  //
-  //
-  //       final List<dynamic>? dataList = parsedJson['Data'];
-  //
-  //       print("-----54------data----$dataList");
-  //
-  //       if (dataList == null) return null;
-  //
-  //       // 🔥 Convert to required type
-  //       return List<Map<String, dynamic>>.from(dataList);
-  //     } else {
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Exception: $e");
-  //     return null;
-  //   }
-  // }
-
 }

@@ -23,7 +23,6 @@ import 'appGoogleMap.dart';
 import 'homeHeaderStack.dart';
 
 class Homepage extends StatefulWidget {
-
   const Homepage({super.key});
 
   @override
@@ -43,8 +42,6 @@ class _GnoidaOfficersHomeState extends State<Homepage> {
   GeneralFunction? generalFunction;
   double? lat,long;
   var userName,userContactNo;
-
-
 
   @override
   void initState() {

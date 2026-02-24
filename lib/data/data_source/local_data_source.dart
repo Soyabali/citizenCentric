@@ -1,60 +1,70 @@
 import 'package:citizencentric/data/network/error_handler.dart';
-import '../responses/response.dart';
-
-const CACHE_HOME_KEY = "CACHE_HOME_KEY";
-const CACHE_HOME_INTERVAL = 60 * 1000; // 1 min
 
 abstract class LocalDataSource {
-  Future<List<StafListResponse>> getHomeFromCache();
-  Future<void> saveHomeToCache(List<StafListResponse> data);
+
+  Future<List<T>> getListFromCache<T>(String key, int interval);
+  Future<void> saveListToCache<T>(String key, List<T> data);
+
+  Future<T> getObjectFromCache<T>(String key, int interval);
+  Future<void> saveObjectToCache<T>(String key, T data);
 
   void clearCache();
   void removeFromCache(String key);
 }
 
-class LocalDataSourceImplementer implements LocalDataSource {
-  Map<String, CachedItem> cacheMap = {};
+class LocalDataSourceImpl implements LocalDataSource {
 
+  final Map<String, CachedItem> _cacheMap = {};
+
+  // 🔹 EXISTING LIST CACHE
   @override
-  Future<List<StafListResponse>> getHomeFromCache() async {
-    CachedItem? cachedItem = cacheMap[CACHE_HOME_KEY];
+  Future<List<T>> getListFromCache<T>(String key, int interval) async {
+    final cachedItem = _cacheMap[key];
 
-    if (cachedItem != null && cachedItem.isValid(CACHE_HOME_INTERVAL)) {
-      return cachedItem.data;
+    if (cachedItem != null && cachedItem.isValid(interval)) {
+      return cachedItem.data as List<T>;
     } else {
       throw ErrorHandler.handle(DataSource.CACHE_ERROR.getFailure());
     }
   }
 
   @override
-  Future<void> saveHomeToCache(List<StafListResponse> data) async {
-    cacheMap[CACHE_HOME_KEY] = CachedItem(data);
+  Future<void> saveListToCache<T>(String key, List<T> data) async {
+    _cacheMap[key] = CachedItem(data);
+  }
+
+  // 🔹 NEW SINGLE OBJECT CACHE (IMPORTANT)
+  @override
+  Future<T> getObjectFromCache<T>(String key, int interval) async {
+    final cachedItem = _cacheMap[key];
+
+    if (cachedItem != null && cachedItem.isValid(interval)) {
+      return cachedItem.data as T;
+    } else {
+      throw ErrorHandler.handle(DataSource.CACHE_ERROR.getFailure());
+    }
   }
 
   @override
-  void clearCache() {
-    cacheMap.clear();
+  Future<void> saveObjectToCache<T>(String key, T data) async {
+    _cacheMap[key] = CachedItem(data);
   }
 
   @override
-  void removeFromCache(String key) {
-    cacheMap.remove(key);
-  }
+  void clearCache() => _cacheMap.clear();
+
+  @override
+  void removeFromCache(String key) => _cacheMap.remove(key);
 }
 
 class CachedItem {
-  dynamic data;
-  int cacheTime = DateTime.now().millisecondsSinceEpoch;
+  final dynamic data;
+  final int cacheTime = DateTime.now().millisecondsSinceEpoch;
+
   CachedItem(this.data);
-}
 
-extension CachedItemExtension on CachedItem {
   bool isValid(int expirationTimeInMillis) {
-    int currentTime = DateTime.now().millisecondsSinceEpoch;
-
-    // cacheTime is already in milliseconds
-    int cacheTimeMillis = cacheTime;
-
-    return (currentTime - cacheTimeMillis) < expirationTimeInMillis;
+    return DateTime.now().millisecondsSinceEpoch - cacheTime <
+        expirationTimeInMillis;
   }
 }

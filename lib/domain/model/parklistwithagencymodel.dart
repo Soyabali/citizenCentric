@@ -32,6 +32,7 @@ class ParkListWithAgencyModel {
   });
 
   /// 🔹 From JSON
+
   factory ParkListWithAgencyModel.fromJson(Map<String, dynamic> json) {
     return ParkListWithAgencyModel(
       iParkId: json['iParkId'] ?? 0,
@@ -50,7 +51,6 @@ class ParkListWithAgencyModel {
       sParkPhoto: json['sParkPhoto'] ?? '',
     );
   }
-
   /// 🔹 To JSON
   Map<String, dynamic> toJson() {
     return {

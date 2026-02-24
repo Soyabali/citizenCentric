@@ -18,7 +18,6 @@ import '../resources/app_text_style.dart';
 import '../resources/text_type.dart';
 import 'agencyWiseDetails.dart';
 
-
 class PostInspection extends StatefulWidget {
   const PostInspection({super.key});
 
@@ -27,7 +26,6 @@ class PostInspection extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<PostInspection> {
-
   List<dynamic> subCategoryList = [];
   List<dynamic> wardList = [];
   List<dynamic> sectorList = [];
@@ -45,7 +43,6 @@ class _DashboardScreenState extends State<PostInspection> {
   final FocusNode _searchFocusNode = FocusNode();
   //var item;
   List<Map<String, dynamic>>? item;
-
   // list of the color
   final List<Color> cardColors = [
     Color(0xFFCA7598),
@@ -93,23 +90,20 @@ class _DashboardScreenState extends State<PostInspection> {
       ),
     );
   }
-// divider
+
+  // divider
   Widget _divider() {
-    return Container(
-      height: 26,
-      width: 1,
-      color: Colors.grey.shade300,
-    );
+    return Container(height: 26, width: 1, color: Colors.grey.shade300);
   }
 
-
-
   // build CardItem
-  Widget buildCardItem(BuildContext context,  AllParkLocationModel item, int index) {
+  Widget buildCardItem(
+    BuildContext context,
+    AllParkLocationModel item,
+    int index,
+  ) {
     // bg color
-
     final Color bgColor = cardColors[index % cardColors.length];
-
     return Padding(
       padding: const EdgeInsets.only(right: 4),
       child: Card(
@@ -147,9 +141,7 @@ class _DashboardScreenState extends State<PostInspection> {
                   ),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border(
-                      left: BorderSide(color: bgColor, width: 4),
-                    ),
+                    border: Border(left: BorderSide(color: bgColor, width: 4)),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(2),
                       bottomLeft: Radius.circular(2),
@@ -162,18 +154,14 @@ class _DashboardScreenState extends State<PostInspection> {
                     ),
                     child: ListTile(
                       dense: true,
-
-                      contentPadding: const EdgeInsets.only(
-                        left: 12,
-                        right: 0,
-                      ),
+                      contentPadding: const EdgeInsets.only(left: 12, right: 0),
 
                       // ✅ TEXT CAN GROW NOW
                       title: PlatformText(
                         item.sParkName,
                         type: AppTextType.subtitle,
-                        maxLines: null,     // unlimited lines
-                        softWrap: true,     // wrap text
+                        maxLines: null, // unlimited lines
+                        softWrap: true, // wrap text
                       ),
 
                       subtitle: PlatformText(
@@ -213,73 +201,6 @@ class _DashboardScreenState extends State<PostInspection> {
                 ),
               ),
 
-              // Padding(
-              //   padding: const EdgeInsets.all(0),
-              //   child: Container(
-              //     height: 60,
-              //     decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       border: Border(
-              //         left: BorderSide(color: bgColor, width: 4),
-              //       ),
-              //       borderRadius: const BorderRadius.only(
-              //         topLeft: Radius.circular(2),
-              //         bottomLeft: Radius.circular(2),
-              //       ),
-              //     ),
-              //     child: ClipRRect(
-              //       borderRadius: const BorderRadius.only(
-              //         topLeft: Radius.circular(5),
-              //         bottomLeft: Radius.circular(5),
-              //       ),
-              //       child: ListTile(
-              //         dense: true,
-              //
-              //         // 🔥 MOST IMPORTANT LINE
-              //         contentPadding: const EdgeInsets.only(
-              //           left: 12,
-              //           right: 0, // 👈 removes right gap completely
-              //         ),
-              //
-              //         title: PlatformText(
-              //           item.sParkName ?? '',
-              //           type: AppTextType.subtitle,
-              //         ),
-              //
-              //         subtitle: PlatformText(
-              //           "Worker - ${item.iNoOfWorkers ?? ""}",
-              //           type: AppTextType.caption,
-              //         ),
-              //
-              //         trailing: SizedBox(
-              //           width: 120,
-              //           height: 40,
-              //           child: Container(
-              //             alignment: Alignment.center,
-              //             decoration: BoxDecoration(
-              //               color: bgColor,
-              //               borderRadius: const BorderRadius.only(
-              //                 topLeft: Radius.circular(20),
-              //                 bottomLeft: Radius.circular(20),
-              //               ),
-              //             ),
-              //             child: Text(
-              //               'Area : ${item.fArea ?? ""}',
-              //               maxLines: 2,
-              //               overflow: TextOverflow.ellipsis,
-              //               textAlign: TextAlign.center,
-              //               style: const TextStyle(
-              //                 color: Colors.white,
-              //                 fontSize: 10,
-              //                 fontWeight: FontWeight.w400,
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Column(
@@ -288,7 +209,11 @@ class _DashboardScreenState extends State<PostInspection> {
                   children: <Widget>[
                     SizedBox(height: 5),
                     Padding(
-                      padding: const EdgeInsets.only(left:0, right: 10, top: 5),
+                      padding: const EdgeInsets.only(
+                        left: 0,
+                        right: 10,
+                        top: 5,
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,7 +253,7 @@ class _DashboardScreenState extends State<PostInspection> {
                           Padding(
                             padding: const EdgeInsets.only(left: 24),
                             child: PlatformText(
-                              item.sDuptyDirector,//"R.Singh", //  AppStrings.powerd_by.tr(),
+                              item.sDuptyDirector, //"R.Singh", //  AppStrings.powerd_by.tr(),
                               type: AppTextType.caption,
                             ),
                           ),
@@ -359,8 +284,10 @@ class _DashboardScreenState extends State<PostInspection> {
                                     ),
                                     SizedBox(width: 2),
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         PlatformText(
                                           "Assistant Director", //  AppStrings.powerd_by.tr(),
@@ -380,117 +307,66 @@ class _DashboardScreenState extends State<PostInspection> {
                             ),
                           ),
                           Expanded(
-                              flex: 2, // 10%
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 5.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    final images = item.sParkPhoto;
+                            flex: 2, // 10%
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 5.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  final images = item.sParkPhoto;
 
-                                    if (images.isNotEmpty) {
-                                      showGeneralDialog(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        barrierLabel: "Close image preview", // ✅ REQUIRED
-                                        barrierColor: Colors.black,
-                                        transitionDuration: const Duration(milliseconds: 200),
-                                        pageBuilder: (_, __, ___) {
-                                          return FullScreenImageDialog(
-                                            imageUrl: images,
-                                          );
-                                        },
-                                      );
-                                    }
-                                  },
-                                  // onTap: (){
-                                  //   print('---forward----click---');
-                                  //   var images = "${item.sParkPhoto}";
-                                  //   print("----445---$images");
-                                  //
-                                  //   if(images!=null)
-                                  //   {
-                                  //     if (images != null && images.isNotEmpty) {
-                                  //
-                                  //       Navigator.of(context).push(
-                                  //         PageRouteBuilder(
-                                  //           pageBuilder: (_, __, ___) => FullScreenPage(
-                                  //             sBeforePhoto: images,
-                                  //           ),
-                                  //           transitionDuration: Duration.zero,
-                                  //           reverseTransitionDuration: Duration.zero,
-                                  //         ),
-                                  //       );
-                                  //       // Navigator.push(
-                                  //       //   context,
-                                  //       //   MaterialPageRoute(
-                                  //       //     builder: (context) => FullScreenPage(
-                                  //       //       sBeforePhoto: images,
-                                  //       //     ),
-                                  //       //   ),
-                                  //       // );
-                                  //     }
-                                  //   }
-                                  // },
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-
-                                    // width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey.shade200,
-                                    ),
-                                    clipBehavior: Clip.antiAlias, // 👈 important for rounded corners
-                                    child: Image.network(
-                                      item.sParkPhoto , // 👈 your internet image URL
-                                      fit: BoxFit.cover,
-                                      loadingBuilder: (context, child, loadingProgress) {
-                                        if (loadingProgress == null) return child;
-                                        return const Center(child: CircularProgressIndicator());
-                                      },
-                                      errorBuilder: (context, error, stackTrace) {
-                                        return const Center(
-                                          child: Icon(Icons.broken_image, size: 40),
+                                  if (images.isNotEmpty) {
+                                    showGeneralDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      barrierLabel:
+                                          "Close image preview", // ✅ REQUIRED
+                                      barrierColor: Colors.black,
+                                      transitionDuration: const Duration(
+                                        milliseconds: 200,
+                                      ),
+                                      pageBuilder: (_, __, ___) {
+                                        return FullScreenImageDialog(
+                                          imageUrl: images,
                                         );
                                       },
-                                    ),
+                                    );
+                                  }
+                                },
+
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+
+                                  // width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.grey.shade200,
+                                  ),
+                                  clipBehavior: Clip
+                                      .antiAlias, // 👈 important for rounded corners
+                                  child: Image.network(
+                                    item.sParkPhoto, // 👈 your internet image URL
+                                    fit: BoxFit.cover,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                          if (loadingProgress == null)
+                                            return child;
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        },
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Center(
+                                        child: Icon(
+                                          Icons.broken_image,
+                                          size: 40,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
-                              )
-
-                            // child: GestureDetector(
-                            //   onTap: () {
-                            //     print('---forward----click---');
-                            //     // navigate to markGeotaggingFrom
-                            //     //Navigator.pushNamed(context, '/markGeotaggingForm');
-                            //     var parkName =  item.sParkName ?? '';
-                            //     var parkId =  item.iParkId ?? '';
-                            //
-                            //     print("--parkname : $parkName");
-                            //     print("---parkId--: $parkId");
-                            //     Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute<void>(
-                            //         builder: (context) => ParkGeotaggingForm(parkName:parkName,parkId:parkId),
-                            //       ),
-                            //     );
-                            //
-                            //   },
-                            //   child:ColoredBox(
-                            //     color: Colors.white, // color: bgColor,
-                            //     child: Padding(
-                            //       padding: const EdgeInsets.all(6),
-                            //       child: Transform.rotate(
-                            //         angle: 90 * 3.1415926535 / 180,
-                            //         child: Image.asset(
-                            //           'assets/images/forward.jpeg',
-                            //           height: 20,
-                            //           width: 20,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -511,7 +387,7 @@ class _DashboardScreenState extends State<PostInspection> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sDirector,//"Director", //  AppStrings.powerd_by.tr(),
+                        item.sDirector, //"Director", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.caption,
                       ),
                     ),
@@ -532,7 +408,7 @@ class _DashboardScreenState extends State<PostInspection> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        item.sAgencyName,//"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
+                        item.sAgencyName, //"M/S Green Star Nursery", //  AppStrings.powerd_by.tr(),
                         type: AppTextType.caption,
                         color: ColorManager.primary,
                       ),
@@ -553,8 +429,7 @@ class _DashboardScreenState extends State<PostInspection> {
                     Padding(
                       padding: const EdgeInsets.only(left: 24),
                       child: PlatformText(
-                        (
-                            item.sGoogleLocation.trim().isNotEmpty)
+                        (item.sGoogleLocation.trim().isNotEmpty)
                             ? item.sGoogleLocation
                             : "No Location",
                         type: AppTextType.caption,
@@ -565,77 +440,74 @@ class _DashboardScreenState extends State<PostInspection> {
               ),
               SizedBox(height: 5),
               Card(
-          elevation: 0,
-          margin: EdgeInsets.zero, // ✅ remove outer padding
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-            side: BorderSide(
-              color: Colors.grey.shade200,
-            ),
-          ),
-          child: SizedBox(
-            height: 52,
-            width: double.infinity, // ✅ full width
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                /// Navigation
-                _iosActionItem(
-                  width: 110,
-                  title: "Navigation",
-                  onTap: () {
-                    final double lat = item.fLatitude;
-                    final double long = item.fLongitude;
-
-                    if (lat != 0.0 && long != 0.0) {
-                      launchGoogleMaps(lat, long);
-                    }
-                  },
+                elevation: 0,
+                margin: EdgeInsets.zero, // ✅ remove outer padding
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  side: BorderSide(color: Colors.grey.shade200),
                 ),
+                child: SizedBox(
+                  height: 52,
+                  width: double.infinity, // ✅ full width
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      /// Navigation
+                      _iosActionItem(
+                        width: 110,
+                        title: "Navigation",
+                        onTap: () {
+                          final double lat = item.fLatitude;
+                          final double long = item.fLongitude;
 
-                _divider(),
+                          if (lat != 0.0 && long != 0.0) {
+                            launchGoogleMaps(lat, long);
+                          }
+                        },
+                      ),
 
-                /// Post Inspection
-                _iosActionItem(
-                  width: 130,
-                  title: "Post Inspection",
-                  onTap: () {
-                    var iParkID = item.iParkId;
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) => ReportBottomSheet(iParkID: iParkID),
-                    );
-                  },
-                ),
+                      _divider(),
 
-                _divider(),
+                      /// Post Inspection
+                      _iosActionItem(
+                        width: 130,
+                        title: "Post Inspection",
+                        onTap: () {
+                          var iParkID = item.iParkId;
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (_) => ReportBottomSheet(iParkID: iParkID),
+                          );
+                        },
+                      ),
 
-                /// Agency Wise Details
-                Expanded(
-                  child: _iosActionItem(
-                    title: "Agency Wise Details",
-                    maxLines: 2,
-                    onTap: () {
-                      var iAgencyCode = item.iAgencyCode.toString();
+                      _divider(),
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              AgencyWiseDetails(iAgencyCode: iAgencyCode),
+                      /// Agency Wise Details
+                      Expanded(
+                        child: _iosActionItem(
+                          title: "Agency Wise Details",
+                          maxLines: 2,
+                          onTap: () {
+                            var iAgencyCode = item.iAgencyCode.toString();
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    AgencyWiseDetails(iAgencyCode: iAgencyCode),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-
+              ),
             ],
           ),
         ),
@@ -644,13 +516,11 @@ class _DashboardScreenState extends State<PostInspection> {
   }
 
   Future<void> pendingInternalComplaintResponse(
-      selectedSubCategoryId,
-      selectedDropDownSectorCode,
-      ) async {
+    selectedSubCategoryId,
+    selectedDropDownSectorCode,
+  ) async {
     final int requestId = ++_listRequestId;
-
     setState(() => isLoading = true);
-
     final result = await PostInspectionRepo().postinspection(
       context,
       selectedSubCategoryId,
@@ -668,7 +538,6 @@ class _DashboardScreenState extends State<PostInspection> {
       pendingInternalComplaintList = [];
       _filteredData = [];
     }
-
     setState(() => isLoading = false);
   }
 
@@ -682,6 +551,7 @@ class _DashboardScreenState extends State<PostInspection> {
         // here you get a division Code and hit sector api
         // iDivisionCode
         _selectedSubCategoryId = subCategoryList[0]["iDivisionCode"];
+        print("-----676---divisonCode-----$_selectedSubCategoryId");
         if (_selectedSubCategoryId != null) {
           bindBindSector(_selectedSubCategoryId);
           // if need a then call a list api
@@ -689,9 +559,7 @@ class _DashboardScreenState extends State<PostInspection> {
             _selectedSubCategoryId,
             selectedDropDownSectorCode,
           );
-          setState(() {
-
-          });
+          setState(() {});
         }
       }
       // call a bindSector Api
@@ -717,27 +585,24 @@ class _DashboardScreenState extends State<PostInspection> {
         dropDownSector = sectorList[0]["sSectorName"];
         selectedDropDownSectorCode = sectorList[0]["iSectorCode"];
       });
-
+      print("-----712---sector Code-----$_selectedSubCategoryId");
       // bind a list data behafe of both above dropdwon code
       if (_selectedSubCategoryId != null &&
           selectedDropDownSectorCode != null) {
         print("-----91--subCategoryId :sxxx----- ${_selectedSubCategoryId}");
-        print(
-          "-----92--sector   code  xxxxxx-- : ${selectedDropDownSectorCode}",
+        print("-----92--sector   code  xxxxxx-- : ${selectedDropDownSectorCode}",
         );
         // clear a list
         // 🔴 CLEAR OLD LIST FIRST
         pendingInternalComplaintList.clear();
         _filteredData.clear();
         isLoading = true;
-
         // call a ListApi here
         pendingInternalComplaintResponse(
           _selectedSubCategoryId,
           selectedDropDownSectorCode,
         );
       }
-
       print("========86----$result");
     } else {
       setState(() {
@@ -745,12 +610,12 @@ class _DashboardScreenState extends State<PostInspection> {
         dropDownSector = null;
         selectedDropDownSectorCode = null;
       });
-
       debugPrint("Sector list is null or empty");
     }
   }
 
   // search logic
+
   void searchPark() {
     final query = _searchController.text.toLowerCase();
 
@@ -869,6 +734,10 @@ class _DashboardScreenState extends State<PostInspection> {
                       if (element["sSectorName"] == newValue) {
                         selectedDropDownSectorCode = element['iSectorCode'];
 
+                        print(
+                          "------865-----sector--$selectedDropDownSectorCode",
+                        );
+
                         // ✅ CALL LIST API ONLY WHEN BOTH VALUES EXIST
                         if (_selectedSubCategoryId != null &&
                             selectedDropDownSectorCode != null) {
@@ -941,7 +810,7 @@ class _DashboardScreenState extends State<PostInspection> {
         child: Scaffold(
           backgroundColor: ColorManager.white,
           appBar: AppCommonAppBar(
-           title: "Post Inspection" , //title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
+            title: "Post Inspection", //title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
             showBack: true,
             onBackPressed: () {
               print("Back pressed");
@@ -1024,6 +893,7 @@ class _DashboardScreenState extends State<PostInspection> {
               ),
               // here list item start
               SizedBox(height: 10),
+
               /// todo heere you bind the list
               // at dynamic list you should remove this card content and uncomment below code to show
               // dynamic data
@@ -1033,17 +903,23 @@ class _DashboardScreenState extends State<PostInspection> {
                     : (pendingInternalComplaintList.isEmpty)
                     ? NoDataScreenPage()
                     : Padding(
-                  padding: const EdgeInsets.only(left: 8.0,top: 8.0,bottom: 8.0,right: 4.0),
-                  child: ListView.builder(
-                    itemCount: _filteredData.length,
-                    itemBuilder: (context, index) {
-                      // final item = _filteredData[index];
-                      final AllParkLocationModel item = _filteredData[index];
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                          top: 8.0,
+                          bottom: 8.0,
+                          right: 4.0,
+                        ),
+                        child: ListView.builder(
+                          itemCount: _filteredData.length,
+                          itemBuilder: (context, index) {
+                            // final item = _filteredData[index];
+                            final AllParkLocationModel item =
+                                _filteredData[index];
 
-                      return buildCardItem(context, item,index);
-                    },
-                  ),
-                ),
+                            return buildCardItem(context, item, index);
+                          },
+                        ),
+                      ),
               ),
             ],
           ),

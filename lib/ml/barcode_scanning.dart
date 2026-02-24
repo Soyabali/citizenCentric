@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
 
 class BarcodeScanning extends StatefulWidget {
+
   //final List<CameraDescription> cameras;
 
   const BarcodeScanning({super.key});

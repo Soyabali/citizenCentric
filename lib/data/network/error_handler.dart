@@ -21,6 +21,7 @@ enum DataSource {
   DEFAULT
 }
 //
+
 class ErrorHandler implements Exception {
   late Failure failure; // Falure is also a class in which code and msg are here
 
@@ -34,7 +35,6 @@ class ErrorHandler implements Exception {
       // of DioEception according to case {DataSource.CONNECT_TIMEOUT.getFailure();}, something as
       // Actully DataSource is a enum in this enum i mention multiple case of http response failure.
       // here {getFailure()} is a function that return errorCODE and msg, according to case
-
 
     } else {
       // default error
@@ -74,7 +74,8 @@ class ErrorHandler implements Exception {
         throw UnimplementedError();
       case DioExceptionType.badResponse:
         // TODO: Handle this case.
-        throw UnimplementedError();
+       // throw UnimplementedError();
+        return DataSource.DEFAULT.getFailure();
       case DioExceptionType.connectionError:
         // TODO: Handle this case.
         throw UnimplementedError();
@@ -102,9 +103,8 @@ class ResponseCode {
   static const int CACHE_ERROR = -6;
   static const int NO_INTERNET_CONNECTION = -7;
   static const int NO_DATA = -99;
-
-
 }
+
 
 class ResponseMessage {
   // API status codes
@@ -130,6 +130,7 @@ class ResponseMessage {
   static const String CACHE_ERROR = AppStrings.defaultError;
   static const String NO_INTERNET_CONNECTION = AppStrings.noInternetError;
 }
+
 extension DataSourceExtension on DataSource {
   Failure getFailure() {
     switch (this) {
