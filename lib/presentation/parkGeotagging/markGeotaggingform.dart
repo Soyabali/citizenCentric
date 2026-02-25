@@ -448,7 +448,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                   child: Column(
                     children: [
                       _buildSectionHeader(
-                        title: "1. Geotagging Loacation",
+                        title:    AppStrings.geotaggedPark.tr(), //"1. Geotagging Loacation",
                         isVisible: isFirstFormVisible,
                         isIconRotated: isFirstIconRotated,
                         onToggle: () {
@@ -462,7 +462,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                       if (isFirstFormVisible) _buildFirstForm(),
                       // Second Section Header
                       _buildSectionHeader(
-                        title: "2. Upload Photo",
+                        title: AppStrings.uplodePhoto.tr(),  //"2. Upload Photo",
                         isVisible: isSecondFormVisible,
                         isIconRotated: isSecondIconRotated,
                         onToggle: () {
@@ -483,7 +483,7 @@ class _DashboardScreenState extends State<ParkGeotaggingForm> {
                         ),
                         child: PlatformPrimaryButton(
                           //label: AppStrings.login.tr(),
-                          label: 'Submit',
+                          label: AppStrings.submit.tr(),
                           height: AppSize.s40,
                           // buttonType
                           buttonType: PlatformButtonType.stadium,

@@ -48,6 +48,7 @@ void main() async {
   ));
 }
 // create a easy loading function
+
 void configLoading() {
   EasyLoading.instance
 

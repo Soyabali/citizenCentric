@@ -165,7 +165,7 @@ class _DashboardScreenState extends State<PostInspection> {
                       ),
 
                       subtitle: PlatformText(
-                        "Worker - ${item.iNoOfWorkers}",
+                        "${AppStrings.worker.tr()} - ${item.iNoOfWorkers}",
                         type: AppTextType.caption,
                         maxLines: null,
                         softWrap: true,
@@ -184,7 +184,7 @@ class _DashboardScreenState extends State<PostInspection> {
                             ),
                           ),
                           child: Text(
-                            'Area : ${item.fArea}',
+                            '${AppStrings.area.tr()} : ${item.fArea}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
@@ -224,7 +224,7 @@ class _DashboardScreenState extends State<PostInspection> {
                               SizedBox(width: 5),
                               CircleWithSpacing(),
                               PlatformText(
-                                "Supervisor", //  AppStrings.powerd_by.tr(),
+                                AppStrings.supervisor.tr(),  //"Supervisor",
                                 type: AppTextType.subtitle,
                               ),
                               //Text('Supervisor', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
@@ -244,7 +244,7 @@ class _DashboardScreenState extends State<PostInspection> {
                               SizedBox(width: 5),
                               CircleWithSpacing(),
                               PlatformText(
-                                "Deputy Director", //  AppStrings.powerd_by.tr(),
+                                AppStrings.deputyDirector.tr(), //"Deputy Director",
                                 type: AppTextType.subtitle,
                               ),
                               //Text('Deputy Director', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
@@ -290,7 +290,7 @@ class _DashboardScreenState extends State<PostInspection> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         PlatformText(
-                                          "Assistant Director", //  AppStrings.powerd_by.tr(),
+                                          AppStrings.assistantDirector.tr(),//"Assistant Director", //  AppStrings.powerd_by.tr(),
                                           type: AppTextType.subtitle,
                                         ),
                                         PlatformText(
@@ -378,7 +378,7 @@ class _DashboardScreenState extends State<PostInspection> {
                         SizedBox(width: 5),
                         CircleWithSpacing(),
                         PlatformText(
-                          "Director", //  AppStrings.powerd_by.tr(),
+                          AppStrings.director.tr(), //"Director", //  AppStrings.powerd_by.tr(),
                           type: AppTextType.subtitle,
                         ),
                         //Text('Director', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
@@ -398,7 +398,7 @@ class _DashboardScreenState extends State<PostInspection> {
                         SizedBox(width: 5),
                         CircleWithSpacing(),
                         PlatformText(
-                          "Agency Name", //  AppStrings.powerd_by.tr(),
+                          AppStrings.agencyName.tr(),//"Agency Name", //  AppStrings.powerd_by.tr(),
                           type: AppTextType.subtitle,
                           color: ColorManager.primary,
                         ),
@@ -420,7 +420,7 @@ class _DashboardScreenState extends State<PostInspection> {
                         SizedBox(width: 5),
                         CircleWithSpacing(),
                         PlatformText(
-                          "Google Location", //  AppStrings.powerd_by.tr(),
+                          AppStrings.googleLocation.tr(),//"Google Location", //  AppStrings.powerd_by.tr(),
                           type: AppTextType.subtitle,
                         ),
                         //Text('Director', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
@@ -456,7 +456,7 @@ class _DashboardScreenState extends State<PostInspection> {
                       /// Navigation
                       _iosActionItem(
                         width: 110,
-                        title: "Navigation",
+                        title: AppStrings.navigation.tr(),
                         onTap: () {
                           final double lat = item.fLatitude;
                           final double long = item.fLongitude;
@@ -472,7 +472,7 @@ class _DashboardScreenState extends State<PostInspection> {
                       /// Post Inspection
                       _iosActionItem(
                         width: 130,
-                        title: "Post Inspection",
+                        title: AppStrings.postInspection.tr(),
                         onTap: () {
                           var iParkID = item.iParkId;
                           showModalBottomSheet(
@@ -489,7 +489,7 @@ class _DashboardScreenState extends State<PostInspection> {
                       /// Agency Wise Details
                       Expanded(
                         child: _iosActionItem(
-                          title: "Agency Wise Details",
+                          title:  AppStrings.agencyWiseDetails.tr() ,//"Agency Wise Details",
                           maxLines: 2,
                           onTap: () {
                             var iAgencyCode = item.iAgencyCode.toString();
@@ -810,7 +810,7 @@ class _DashboardScreenState extends State<PostInspection> {
         child: Scaffold(
           backgroundColor: ColorManager.white,
           appBar: AppCommonAppBar(
-            title: "Post Inspection", //title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
+            title:  AppStrings.postInspection.tr(),//"Post Inspection", //title: AppStrings.parkGeotagging.tr(), // title: "Park Geotagging",
             showBack: true,
             onBackPressed: () {
               print("Back pressed");
@@ -893,7 +893,6 @@ class _DashboardScreenState extends State<PostInspection> {
               ),
               // here list item start
               SizedBox(height: 10),
-
               /// todo heere you bind the list
               // at dynamic list you should remove this card content and uncomment below code to show
               // dynamic data

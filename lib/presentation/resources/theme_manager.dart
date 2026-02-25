@@ -104,9 +104,9 @@ ThemeData getApplicationTheme() {
 //    -----get application DarkTheme-----
 
 ThemeData getDarkTheme() {
+
   return ThemeData(
     brightness: Brightness.dark,
-
     primaryColor: ColorManager.darkPrimary,
     scaffoldBackgroundColor: ColorManager.black,
     disabledColor: ColorManager.grey2,

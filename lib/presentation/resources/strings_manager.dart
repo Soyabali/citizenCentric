@@ -37,7 +37,7 @@ class AppStrings {
   static const String settings = "settings";
   static const String services = "services";
   static const String stores = "stores";
-  static const String changeLanguage = "changeTheme";
+  static const String changeLanguage = "changeLanguage";
   static const String changeTheme = "changeTheme";
   static const String contactUs = "contact_us";
   static const String firebase = "FireBase";
@@ -77,5 +77,38 @@ class AppStrings {
   static const String selectSector = "selectSector";// Select Division  Enter Keywords
   static const String selectSubCategory = "selectSubCategory";
   static const String enterKeywords = "enterKeywords";
+  static const String deleteAccoount = "deleteAccoount";// version
+  static const String version = "version";
+  static const String penaltyReceived = "penaltyReceived";
+  static const String registeredPark = "registeredPark";
+  static const String geotaggedPark = "geotaggedPark";// Inspection
+  static const String inspection = "inspection";
+  // Resolved Inspection  Division
+  static const String resolvedInspection = "resolvedInspection";
+  static const String division = "division";
+  //Division-1
+  static const String searchByParkName = "searchByParkName";
+  static const String division1 = "division1";
+  static const String division2 = "division2";
+  static const String division3 = "division3";
+  // Worker Area
+  static const String worker = "worker";
+  static const String area = "area";
+  static const String supervisor = "supervisor";
+  // Assistant Director
+  static const String deputyDirector = "deputyDirector";
+  static const String assistantDirector = "assistantDirector";
+  static const String director = "director";
+  static const String agencyName = "agencyName";
+  static const String googleLocation = "googleLocation";
+  // Navigation Post Inspection   Agency Wise Details
+  static const String navigation = "navigation";
+  static const String agencyWiseDetails = "agencyWiseDetails";
+  // 1. Geotagging Loacation  2. Upload Photo
+  static const String noRecordFound = "noRecordFound";
+  static const String geotaggingLocation = "geotaggingLocation";
+  static const String uplodePhoto = "uplodePhoto";
+  static const String submit = "submit";
+
 
 }

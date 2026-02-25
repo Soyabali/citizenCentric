@@ -146,7 +146,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                 ),
 
                 subtitle: PlatformText(
-                  "Worker - ${item.iNoOfWorkers}",
+                  "${AppStrings.worker} - ${item.iNoOfWorkers}",
                   type: AppTextType.caption,
                 ),
 
@@ -162,7 +162,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                     ),
                   ),
                   child: Text(
-                    'Area : ${item.fArea}',
+                    '${AppStrings.area.tr()} : ${item.fArea}',
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -264,7 +264,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                              SizedBox(width: 5),
                              CircleWithSpacing(),
                              PlatformText(
-                               "Supervisor", //  AppStrings.powerd_by.tr(),
+                               AppStrings.supervisor.tr(),// "Supervisor", //  AppStrings.powerd_by.tr(),
                                type: AppTextType.subtitle,
                              ),
                              //Text('Supervisor', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
@@ -284,7 +284,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                              SizedBox(width: 5),
                              CircleWithSpacing(),
                              PlatformText(
-                               "Deputy Director", //  AppStrings.powerd_by.tr(),
+                              AppStrings.deputyDirector.tr(),// "Deputy Director", //  AppStrings.powerd_by.tr(),
                                type: AppTextType.subtitle,
                              ),
                              //Text('Deputy Director', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
@@ -328,7 +328,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                                      crossAxisAlignment: CrossAxisAlignment.start,
                                      children: <Widget>[
                                        PlatformText(
-                                         "Assistant Director", //  AppStrings.powerd_by.tr(),
+                                        AppStrings.assistantDirector.tr(), // "Assistant Director", //  AppStrings.powerd_by.tr(),
                                          type: AppTextType.subtitle,
                                        ),
                                        PlatformText(
@@ -390,7 +390,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                        SizedBox(width: 5),
                        CircleWithSpacing(),
                        PlatformText(
-                         "Director", //  AppStrings.powerd_by.tr(),
+                        AppStrings.director.tr(),// "Director", //  AppStrings.powerd_by.tr(),
                          type: AppTextType.subtitle,
                        ),
                        //Text('Director', style: AppTextStyle.font14OpenSansRegularBlack45TextStyle),
@@ -410,7 +410,7 @@ class _DashboardScreenState extends State<ParkGeotagging> with RouteAware {
                        SizedBox(width: 5),
                        CircleWithSpacing(),
                        PlatformText(
-                         "Agency Name", //  AppStrings.powerd_by.tr(),
+                        AppStrings.agencyName.tr(), // "Agency Name", //  AppStrings.powerd_by.tr(),
                          type: AppTextType.subtitle,
                          color: ColorManager.primary,
                        ),

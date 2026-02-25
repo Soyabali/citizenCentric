@@ -310,7 +310,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: <Widget> [
           _buildDashboard(),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -331,7 +331,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 // ),
                 SizedBox(width: 8),
                 Text(
-                  "Penalty Received",
+                  AppStrings.penaltyReceived.tr(),
                   style: const TextStyle(
                     color: Colors.black54,
                     fontSize: 14, // 👈 Better readability
@@ -371,22 +371,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 final items = [
                   _dashboardItem(
                     bgColor: const Color(0xFFE3F2FD),
-                    title: "Registered Park",
+                    title: AppStrings.registeredPark.tr(),
                     value: "$totalParks_2",
                   ),
                   _dashboardItem(
                     bgColor: const Color(0xFFF3E5F5),
-                    title: "Geotagged Park",
+                    title: AppStrings.geotaggedPark.tr(),
                     value: "$totalGeotagged_2",
                   ),
                   _dashboardItem(
                     bgColor: const Color(0xFFFBE9E7),
-                    title: "Inspection",
+                    title: AppStrings.inspection.tr(),
                     value: "$totalInspection_2",
                   ),
                   _dashboardItem(
                     bgColor: const Color(0xFFBCEAEB),
-                    title: "Resolved Inspection",
+                    title: AppStrings.resolvedInspection.tr(),
                     value: "$totalResolvedInspection_2",
                   ),
                 ];
@@ -407,7 +407,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Division", //AppStrings.selectDivision.tr(),
+                  AppStrings.division.tr(),
                   style: const TextStyle(
                     color: Colors.black54,
                     fontSize: 14, // 👈 Better readability
@@ -471,7 +471,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   autofocus: false,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                    hintText: "Search by Park Name", // hintText: AppStrings.enterKeywords.tr(),
+                   hintText: AppStrings.searchByParkName.tr(),
                     hintStyle: const TextStyle(
                       color: Color(0xFF707D83),
                       fontSize: 14,
@@ -513,7 +513,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       //     fontSize: 14
                       // ),),
                       PlatformText(
-                        "Division-1",
+                       AppStrings.division1.tr(),  //"Division-1",
                         type: AppTextType.subtitle,
                         color: const Color(0xFFFFA000),
                         // color: ColorManager.primary,
@@ -537,7 +537,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       //     fontSize: 14
                       // ),),
                       PlatformText(
-                        "Division-2",
+                        AppStrings.division3.tr(), // "Division-2",
                         type: AppTextType.subtitle,
                         color: const Color(0xFFd93124),
                         // color: ColorManager.primary,
@@ -557,7 +557,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         fit: BoxFit.cover,
                       ),
                       PlatformText(
-                        "Division-3",
+                        AppStrings.division3.tr(),//"Division-3",
                         type: AppTextType.subtitle,
                         color: const Color(0xFF3E5AFC),
                         // color: ColorManager.primary,

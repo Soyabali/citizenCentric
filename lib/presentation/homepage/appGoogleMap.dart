@@ -6,6 +6,7 @@ import '../../domain/model/park_model.dart';
 import 'package:flutter/gestures.dart';
 
 class AppGoogleMap extends StatefulWidget {
+
   final List<ParkModel> parks;
   final Function(GoogleMapController) onMapCreated;
   final LatLng? currentLocation; // 👈 ADD
@@ -22,13 +23,11 @@ class AppGoogleMap extends StatefulWidget {
 }
 
 class _AppGoogleMapState extends State<AppGoogleMap> {
-  GoogleMapController? _mapController;
 
+  GoogleMapController? _mapController;
   BitmapDescriptor? _parkMarkerIcon;
   BitmapDescriptor? _currentLocationIcon;
-
   ParkModel? _selectedPark;
-
 
   Widget _greenInfoPopup() {
     if (_selectedPark == null) return const SizedBox();
@@ -134,6 +133,7 @@ class _AppGoogleMapState extends State<AppGoogleMap> {
     LocationPermission permission;
 
     // Check if location service is enabled
+
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return;
@@ -171,6 +171,7 @@ class _AppGoogleMapState extends State<AppGoogleMap> {
   }
 
   /// ✅ Load BOTH markers safely (Android + iOS)
+
   Future<void> _loadMarkers() async {
     _parkMarkerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(devicePixelRatio: 1.0),

@@ -54,7 +54,7 @@ class DrawerContent extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Version : 1.0',
+                  AppStrings.version.tr(),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -162,9 +162,10 @@ class DrawerContent extends ConsumerWidget {
                 const SizedBox(height: 8),
                 _divider(),
                 // delete ACCOUNT
+                //  AppStrings.changeLanguage.tr(),
                 _drawerItem(
                     icon: Icons.delete_forever,
-                    title: "Delete Account",
+                    title: AppStrings.deleteAccoount.tr(),
                     iconColor: Colors.redAccent,
                     textColor: Colors.redAccent,
                     onTap: () {
@@ -230,21 +231,22 @@ class DrawerContent extends ConsumerWidget {
                 //   },
                 // ),
 
-                // _drawerItem(
-                //   icon: Icons.language,
-                //   title: "Change Language",
-                //   iconColor: const Color(0xFFFBC02D),
-                //   onTap: () => _changeLanguage(context),
-                // ),
-                // _divider(),
-                // _drawerItem(
-                //   icon: Icons.change_circle_outlined,
-                //   title: AppStrings.changeLanguage.tr(),
-                //   iconColor: ColorManager.primary,
-                //   onTap: () {
-                //     ref.read(appThemeProvider.notifier).toggleTheme();
-                //   }
-                // ),
+                _drawerItem(
+                  icon: Icons.language,
+                  title: AppStrings.changeLanguage.tr(),
+                  iconColor: const Color(0xFFFBC02D),
+                  onTap: () => _changeLanguage(context),
+                ),
+                _divider(),
+                // change theme
+                _drawerItem(
+                  icon: Icons.change_circle_outlined,
+                  title: AppStrings.changeTheme.tr(),
+                  iconColor: ColorManager.primary,
+                  onTap: () {
+                    ref.read(appThemeProvider.notifier).toggleTheme();
+                  }
+                ),
                 _divider(),
                 _drawerItem(
                   icon: Icons.logout,

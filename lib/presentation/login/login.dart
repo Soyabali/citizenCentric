@@ -15,9 +15,7 @@ import '../resources/routes_manager.dart';
 import '../riverpod/main_view_controller..dart';
 
 class LoginView extends ConsumerStatefulWidget {
-
   const LoginView({Key? key}) : super(key: key);
-
   @override
 
   _LoginViewState createState() => _LoginViewState();
@@ -32,6 +30,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   // Controller
   TextEditingController _userMobileNumberController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
   // key
   final _formKey = GlobalKey<FormState>();
 

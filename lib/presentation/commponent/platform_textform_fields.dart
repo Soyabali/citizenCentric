@@ -44,6 +44,7 @@ class PlatformTextFormField extends StatefulWidget {
 }
 
 class _PlatformTextFormFieldState extends State<PlatformTextFormField> {
+
   bool _obscureText = true;
 
   @override
